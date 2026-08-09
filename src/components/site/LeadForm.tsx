@@ -123,10 +123,10 @@ export function LeadForm() {
                     name="name"
                     required
                     maxLength={100}
-                    className={fieldClass(!!errors.name)}
+                    className={fieldClass(!!errors["name"])}
                     placeholder="Как к вам обращаться"
                   />
-                  {errors.name && <p className="mt-1 text-[10px] uppercase text-destructive tracking-wider">{errors.name}</p>}
+                  {errors["name"] && <p className="mt-1 text-[10px] uppercase text-destructive tracking-wider">{errors["name"]}</p>}
                 </div>
                 <div>
                   <label className={labelClass} htmlFor="contact">
@@ -137,22 +137,22 @@ export function LeadForm() {
                     name="contact"
                     required
                     maxLength={120}
-                    className={fieldClass(!!errors.contact)}
+                    className={fieldClass(!!errors["contact"])}
                     placeholder="+7… или @username"
                   />
-                  {errors.contact && <p className="mt-1 text-[10px] uppercase text-destructive tracking-wider">{errors.contact}</p>}
+                  {errors["contact"] && <p className="mt-1 text-[10px] uppercase text-destructive tracking-wider">{errors["contact"]}</p>}
                 </div>
                 <div>
                   <label className={labelClass} htmlFor="city">
                     Город
                   </label>
-                  <input id="city" name="city" maxLength={100} className={fieldClass(!!errors.city)} placeholder="Москва" />
+                  <input id="city" name="city" maxLength={100} className={fieldClass(!!errors["city"])} placeholder="Москва" />
                 </div>
                 <div>
                   <label className={labelClass} htmlFor="budget">
                     Бюджет
                   </label>
-                  <input id="budget" name="budget" maxLength={100} className={fieldClass(!!errors.budget)} placeholder="Ориентир по бюджету" />
+                  <input id="budget" name="budget" maxLength={100} className={fieldClass(!!errors["budget"])} placeholder="Ориентир по бюджету" />
                 </div>
                 <div>
                   <label className={labelClass} htmlFor="carType">
@@ -213,9 +213,9 @@ export function LeadForm() {
                 </div>
               </div>
 
-              {errors.form ? (
+              {errors["form"] ? (
                 <p role="alert" className="mt-5 text-sm text-destructive">
-                  {errors.form}
+                  {errors["form"]}
                 </p>
               ) : null}
 
