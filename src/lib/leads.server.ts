@@ -16,8 +16,8 @@ const SPREADSHEET_ID = "1AibLk1eprkng7xkktrFX8eC1LGuvf6pmdd3f91zHwoE";
 export async function appendLead(lead: LeadRow): Promise<void> {
   const timestamp = new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow" });
   
-  const lovableApiKey = process.env.LOVABLE_API_KEY;
-  const googleSheetsApiKey = process.env.GOOGLE_SHEETS_API_KEY;
+  const lovableApiKey = process.env['LOVABLE_API_KEY'];
+  const googleSheetsApiKey = process.env['GOOGLE_SHEETS_API_KEY'];
 
   if (!lovableApiKey || !googleSheetsApiKey) {
     console.error("Missing Google Sheets credentials");
