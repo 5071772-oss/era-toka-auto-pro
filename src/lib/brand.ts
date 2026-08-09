@@ -7,7 +7,7 @@ export const TAGLINE = "Время двигаться иначе";
 export const EXPERT = "Николаев Алексей";
 
 export const NAV_ITEMS = [
-  { label: "Каталог", href: CATALOG_URL, external: true },
+  
   { label: "Подбор", href: "#podbor" },
   { label: "Автомобили", href: "#avtomobili" },
   { label: "Поставка", href: "#postavka" },

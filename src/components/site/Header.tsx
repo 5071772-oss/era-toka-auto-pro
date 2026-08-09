@@ -35,8 +35,6 @@ export function Header() {
             <a
               key={item.href}
               href={item.href}
-              target={item.external ? "_blank" : undefined}
-              rel={item.external ? "noopener noreferrer" : undefined}
               className="text-sm text-muted-foreground transition-colors hover:text-primary"
             >
               {item.label}
@@ -103,8 +101,6 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                target={item.external ? "_blank" : undefined}
-                rel={item.external ? "noopener noreferrer" : undefined}
                 className="rounded-md px-2 py-3 text-sm text-muted-foreground transition-colors hover:text-primary"
               >
                 {item.label}
