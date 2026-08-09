@@ -7,8 +7,10 @@ import { submitLead } from "@/lib/leads.functions";
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnGhost, btnPrimary } from "./ui";
 
-const fieldClass =
-  "w-full rounded-md border border-input bg-secondary/40 px-4 py-3 text-sm text-foreground placeholder:text-steel focus:border-primary/60 focus:outline-none focus:ring-1 focus:ring-ring";
+const fieldClass = (hasError?: boolean) =>
+  `w-full rounded-md border ${
+    hasError ? "border-destructive focus:ring-destructive" : "border-input focus:border-primary/60"
+  } bg-secondary/40 px-4 py-3 text-sm text-foreground placeholder:text-steel focus:outline-none focus:ring-1 focus:ring-ring transition-colors`;
 
 const labelClass = "mb-2 block text-xs uppercase tracking-[0.16em] text-muted-foreground";
 
@@ -17,7 +19,7 @@ type Status = "idle" | "loading" | "success" | "error";
 export function LeadForm() {
   const send = useServerFn(submitLead);
   const [status, setStatus] = useState<Status>("idle");
-  const [error, setError] = useState<string>("");
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [model, setModel] = useState("");
 
   useEffect(() => {
@@ -47,19 +49,26 @@ export function LeadForm() {
 
     const parsed = leadSchema.safeParse(raw);
     if (!parsed.success) {
+      const fieldErrors: Record<string, string> = {};
+      parsed.error.issues.forEach((issue) => {
+        const path = issue.path[0];
+        if (typeof path === "string") {
+          fieldErrors[path] = issue.message;
+        }
+      });
+      setErrors(fieldErrors);
       setStatus("error");
-      setError(parsed.error.issues[0]?.message ?? "Проверьте заполнение полей");
       return;
     }
 
     setStatus("loading");
-    setError("");
+    setErrors({});
     try {
       await send({ data: parsed.data });
       setStatus("success");
     } catch {
       setStatus("error");
-      setError("Не удалось отправить заявку. Попробуйте ещё раз или напишите в Telegram.");
+      setErrors({ form: "Не удалось отправить заявку. Попробуйте ещё раз или напишите в Telegram." });
     }
   }
 
@@ -109,31 +118,47 @@ export function LeadForm() {
                   <label className={labelClass} htmlFor="name">
                     Имя
                   </label>
-                  <input id="name" name="name" required maxLength={100} className={fieldClass} placeholder="Как к вам обращаться" />
+                  <input
+                    id="name"
+                    name="name"
+                    required
+                    maxLength={100}
+                    className={fieldClass(!!errors["name"])}
+                    placeholder="Как к вам обращаться"
+                  />
+                  {errors["name"] && <p className="mt-1 text-[10px] uppercase text-destructive tracking-wider">{errors["name"]}</p>}
                 </div>
                 <div>
                   <label className={labelClass} htmlFor="contact">
                     Телефон или Telegram
                   </label>
-                  <input id="contact" name="contact" required maxLength={120} className={fieldClass} placeholder="+7… или @username" />
+                  <input
+                    id="contact"
+                    name="contact"
+                    required
+                    maxLength={120}
+                    className={fieldClass(!!errors["contact"])}
+                    placeholder="+7… или @username"
+                  />
+                  {errors["contact"] && <p className="mt-1 text-[10px] uppercase text-destructive tracking-wider">{errors["contact"]}</p>}
                 </div>
                 <div>
                   <label className={labelClass} htmlFor="city">
                     Город
                   </label>
-                  <input id="city" name="city" maxLength={100} className={fieldClass} placeholder="Москва" />
+                  <input id="city" name="city" maxLength={100} className={fieldClass(!!errors["city"])} placeholder="Москва" />
                 </div>
                 <div>
                   <label className={labelClass} htmlFor="budget">
                     Бюджет
                   </label>
-                  <input id="budget" name="budget" maxLength={100} className={fieldClass} placeholder="Ориентир по бюджету" />
+                  <input id="budget" name="budget" maxLength={100} className={fieldClass(!!errors["budget"])} placeholder="Ориентир по бюджету" />
                 </div>
                 <div>
                   <label className={labelClass} htmlFor="carType">
                     Тип автомобиля
                   </label>
-                  <select id="carType" name="carType" defaultValue="пока не знаю" className={fieldClass}>
+                  <select id="carType" name="carType" defaultValue="пока не знаю" className={fieldClass()}>
                     <option value="электромобиль">электромобиль</option>
                     <option value="гибрид">гибрид</option>
                     <option value="пока не знаю">пока не знаю</option>
@@ -149,7 +174,7 @@ export function LeadForm() {
                     maxLength={150}
                     value={model}
                     onChange={(e) => setModel(e.target.value)}
-                    className={fieldClass}
+                    className={fieldClass()}
                     placeholder="Если есть предпочтения"
                   />
                 </div>
@@ -157,7 +182,7 @@ export function LeadForm() {
                   <label className={labelClass} htmlFor="condition">
                     Новый автомобиль или с пробегом
                   </label>
-                  <select id="condition" name="condition" defaultValue="не определился" className={fieldClass}>
+                  <select id="condition" name="condition" defaultValue="не определился" className={fieldClass()}>
                     <option value="новый">новый</option>
                     <option value="с пробегом">с пробегом</option>
                     <option value="не определился">не определился</option>
@@ -167,13 +192,13 @@ export function LeadForm() {
                   <label className={labelClass} htmlFor="dailyMileage">
                     Средний пробег в день
                   </label>
-                  <input id="dailyMileage" name="dailyMileage" maxLength={60} className={fieldClass} placeholder="Например, 60 км" />
+                  <input id="dailyMileage" name="dailyMileage" maxLength={60} className={fieldClass()} placeholder="Например, 60 км" />
                 </div>
                 <div className="sm:col-span-2">
                   <label className={labelClass} htmlFor="charging">
                     Есть ли зарядка дома или на работе
                   </label>
-                  <select id="charging" name="charging" defaultValue="не знаю" className={fieldClass}>
+                  <select id="charging" name="charging" defaultValue="не знаю" className={fieldClass()}>
                     <option value="есть дома">есть дома</option>
                     <option value="есть на работе">есть на работе</option>
                     <option value="нет">нет</option>
@@ -184,13 +209,13 @@ export function LeadForm() {
                   <label className={labelClass} htmlFor="comment">
                     Комментарий
                   </label>
-                  <textarea id="comment" name="comment" rows={4} maxLength={1000} className={fieldClass} placeholder="Задачи, маршруты, пожелания" />
+                  <textarea id="comment" name="comment" rows={4} maxLength={1000} className={fieldClass()} placeholder="Задачи, маршруты, пожелания" />
                 </div>
               </div>
 
-              {status === "error" ? (
+              {errors["form"] ? (
                 <p role="alert" className="mt-5 text-sm text-destructive">
-                  {error}
+                  {errors["form"]}
                 </p>
               ) : null}
 
