@@ -1,4 +1,4 @@
-import { BRAND, EXPERT, NAV_ITEMS, TAGLINE, TELEGRAM_HANDLE, TELEGRAM_URL } from "@/lib/brand";
+import { BRAND, EXPERT, MESSENGER_MAX_URL, NAV_ITEMS, TAGLINE, TELEGRAM_HANDLE, TELEGRAM_URL } from "@/lib/brand";
 
 const LINKS = NAV_ITEMS.filter((item) => item.label !== "Услуги");
 
@@ -23,6 +23,14 @@ export function Footer() {
           >
             Telegram: {TELEGRAM_HANDLE}
           </a>
+          <a
+            href={MESSENGER_MAX_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 block text-sm text-primary transition-opacity hover:opacity-80"
+          >
+            Messenger Max
+          </a>
         </div>
 
         <nav aria-label="Навигация в подвале" className="flex flex-col gap-2">
@@ -42,6 +50,14 @@ export function Footer() {
             className="text-sm text-muted-foreground transition-colors hover:text-primary"
           >
             Telegram
+          </a>
+          <a
+            href={MESSENGER_MAX_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-muted-foreground transition-colors hover:text-primary"
+          >
+            Messenger Max
           </a>
         </nav>
       </div>
