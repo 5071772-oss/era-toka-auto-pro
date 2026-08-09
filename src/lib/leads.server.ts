@@ -1,6 +1,4 @@
-const GATEWAY_URL = "https://connector-gateway.lovable.dev/google_sheets/v4";
-const SPREADSHEET_ID = "1AibLk1eprkng7xkktrFX8eC1LGuvf6pmdd3f91zHwoE";
-const RANGE = "Leads!A:K";
+const ALBATO_WEBHOOK_URL = "https://h.albato.ru/wh/38/1lfcq3m/OuvN89TZVvcPmbJR4er3i5ny65BMQNQb1rj5I_x6f3Q/";
 
 export type LeadRow = {
   name: string;
@@ -16,47 +14,22 @@ export type LeadRow = {
 };
 
 export async function appendLead(lead: LeadRow): Promise<void> {
-  const lovableApiKey = process.env["LOVABLE_API_KEY"];
-  const connectionKey = process.env["GOOGLE_SHEETS_API_KEY"];
-
-  if (!lovableApiKey || !connectionKey) {
-    throw new Error("Хранилище заявок не настроено");
-  }
-
   const timestamp = new Date().toLocaleString("ru-RU", { timeZone: "Europe/Moscow" });
 
-  const response = await fetch(
-    `${GATEWAY_URL}/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${lovableApiKey}`,
-        "X-Connection-Api-Key": connectionKey,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        values: [
-          [
-            timestamp,
-            lead.name,
-            lead.contact,
-            lead.city,
-            lead.budget,
-            lead.carType,
-            lead.model,
-            lead.condition,
-            lead.dailyMileage,
-            lead.charging,
-            lead.comment,
-          ],
-        ],
-      }),
+  const response = await fetch(ALBATO_WEBHOOK_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-  );
+    body: JSON.stringify({
+      ...lead,
+      timestamp,
+    }),
+  });
 
   if (!response.ok) {
     const body = await response.text();
-    console.error(`Google Sheets append failed [${response.status}]: ${body}`);
+    console.error(`Webhook submission failed [${response.status}]: ${body}`);
     throw new Error("Не удалось сохранить заявку");
   }
 }
