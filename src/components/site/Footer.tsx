@@ -55,6 +55,8 @@ export function Footer() {
             <a
               key={item.href}
               href={item.href}
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noopener noreferrer" : undefined}
               className="text-sm text-muted-foreground transition-colors hover:text-primary"
             >
               {item.label}

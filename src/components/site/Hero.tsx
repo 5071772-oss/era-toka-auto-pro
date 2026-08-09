@@ -55,6 +55,15 @@ export function Hero() {
           <button type="button" onClick={scrollToForm} className={btnPrimary}>
             Получить подбор
           </button>
+          <a
+            href={CATALOG_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${btnSmall} py-3 sm:py-0 px-6`}
+          >
+            Смотреть каталог
+            <ArrowUpRight className="ml-1.5 size-4" />
+          </a>
           <div className="flex gap-2">
             <a href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" className={`${btnGhost} flex-1 sm:flex-initial`}>
               <Send className="size-4" aria-hidden="true" />

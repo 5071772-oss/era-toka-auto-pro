@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnPrimary, btnSmall, prefillModel } from "./ui";
+import { CATALOG_URL } from "@/lib/brand";
 
 const CARS = [
   {
@@ -81,6 +82,18 @@ export function Cars() {
           </Reveal>
         ))}
       </div>
+
+      <Reveal delay={300} className="mt-14 flex justify-center">
+        <a
+          href={CATALOG_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${btnPrimary} min-w-[240px] px-10`}
+        >
+          Перейти в полный каталог
+          <ArrowUpRight className="ml-2 size-5" aria-hidden="true" />
+        </a>
+      </Reveal>
     </Section>
   );
 }
