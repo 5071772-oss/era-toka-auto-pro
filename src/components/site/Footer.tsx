@@ -51,6 +51,14 @@ export function Footer() {
         </div>
 
         <nav aria-label="Навигация в подвале" className="flex flex-col gap-2">
+          <a
+            href={CATALOG_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-muted-foreground transition-colors hover:text-primary"
+          >
+            Каталог
+          </a>
           {LINKS.map((item) => (
             <a
               key={item.href}
