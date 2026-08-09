@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Menu, Send, X } from "lucide-react";
-import { BRAND, NAV_ITEMS, TAGLINE, TELEGRAM_URL } from "@/lib/brand";
+import { BRAND, MESSENGER_MAX_URL, NAV_ITEMS, TAGLINE, TELEGRAM_URL } from "@/lib/brand";
 import { btnPrimary, scrollToForm } from "./ui";
 
 export function Header() {
@@ -43,15 +43,40 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <a
-            href={TELEGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-md border border-border px-4 py-2.5 text-sm text-foreground transition-colors hover:border-primary/60 hover:text-primary"
-          >
-            <Send className="size-4" aria-hidden="true" />
-            Telegram
-          </a>
+          <div className="flex items-center gap-1.5 rounded-md border border-border p-1">
+            <a
+              href={TELEGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex size-9 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-primary"
+              title="Написать в Telegram"
+            >
+              <Send className="size-4" aria-hidden="true" />
+            </a>
+            <div className="h-4 w-px bg-border" aria-hidden="true" />
+            <a
+              href={MESSENGER_MAX_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex size-9 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-primary"
+              title="Написать в Max"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="size-4"
+                aria-hidden="true"
+              >
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+              </svg>
+            </a>
+          </div>
           <button type="button" onClick={scrollToForm} className={`${btnPrimary} py-2.5`}>
             Получить подбор
           </button>
@@ -81,15 +106,38 @@ export function Header() {
                 {item.label}
               </a>
             ))}
-            <a
-              href={TELEGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-2 inline-flex items-center gap-2 rounded-md border border-border px-4 py-3 text-sm"
-            >
-              <Send className="size-4" aria-hidden="true" />
-              Telegram
-            </a>
+            <div className="mt-2 flex items-center gap-2">
+              <a
+                href={TELEGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-1 items-center justify-center gap-2 rounded-md border border-border px-4 py-3 text-sm"
+              >
+                <Send className="size-4" aria-hidden="true" />
+                Telegram
+              </a>
+              <a
+                href={MESSENGER_MAX_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-1 items-center justify-center gap-2 rounded-md border border-border px-4 py-3 text-sm"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="size-4"
+                >
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                </svg>
+                Max
+              </a>
+            </div>
             <button
               type="button"
               onClick={() => {
