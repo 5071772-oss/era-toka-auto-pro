@@ -29,7 +29,7 @@ export function Footer() {
             rel="noopener noreferrer"
             className="mt-2 block text-sm text-primary transition-opacity hover:opacity-80"
           >
-            Messenger Max
+            Написать в Max
           </a>
         </div>
 
@@ -57,7 +57,7 @@ export function Footer() {
             rel="noopener noreferrer"
             className="text-sm text-muted-foreground transition-colors hover:text-primary"
           >
-            Messenger Max
+            Написать в Max
           </a>
         </nav>
       </div>
