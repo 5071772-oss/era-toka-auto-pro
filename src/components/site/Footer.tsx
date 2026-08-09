@@ -1,5 +1,5 @@
 import { Menu, Send, X } from "lucide-react";
-import { BRAND, EXPERT, MESSENGER_MAX_URL, NAV_ITEMS, TAGLINE, TELEGRAM_HANDLE, TELEGRAM_URL } from "@/lib/brand";
+import { BRAND, CATALOG_URL, EXPERT, MESSENGER_MAX_URL, NAV_ITEMS, TAGLINE, TELEGRAM_HANDLE, TELEGRAM_URL } from "@/lib/brand";
 
 const LINKS = NAV_ITEMS.filter((item) => item.label !== "Услуги");
 
@@ -63,8 +63,6 @@ export function Footer() {
             <a
               key={item.href}
               href={item.href}
-              target={item.external ? "_blank" : undefined}
-              rel={item.external ? "noopener noreferrer" : undefined}
               className="text-sm text-muted-foreground transition-colors hover:text-primary"
             >
               {item.label}
