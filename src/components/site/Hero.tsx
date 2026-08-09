@@ -1,6 +1,6 @@
 import { Send } from "lucide-react";
 import heroImage from "@/assets/hero-ev.jpg";
-import { EXPERT, TELEGRAM_URL } from "@/lib/brand";
+import { EXPERT, MESSENGER_MAX_URL, TELEGRAM_URL } from "@/lib/brand";
 import { btnGhost, btnPrimary, scrollToForm } from "./ui";
 
 const BADGES = ["BEV", "HEV", "PHEV", "EREV", "Китай", "Европа", "Америка", "Корея"];
@@ -55,10 +55,28 @@ export function Hero() {
           <button type="button" onClick={scrollToForm} className={btnPrimary}>
             Получить подбор
           </button>
-          <a href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" className={btnGhost}>
-            <Send className="size-4" aria-hidden="true" />
-            Написать Алексею в Telegram
-          </a>
+          <div className="flex gap-2">
+            <a href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" className={`${btnGhost} flex-1 sm:flex-initial`}>
+              <Send className="size-4" aria-hidden="true" />
+              Telegram
+            </a>
+            <a href={MESSENGER_MAX_URL} target="_blank" rel="noopener noreferrer" className={`${btnGhost} flex-1 sm:flex-initial`}>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="size-4"
+              >
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+              </svg>
+              Max
+            </a>
+          </div>
         </div>
 
         <div className="glass mt-14 max-w-2xl rounded-xl p-6 sm:p-8">
