@@ -233,6 +233,11 @@ export function LeadForm() {
                   "Получить консультацию"
                 )}
               </button>
+              <p className="mt-4 text-center text-[10px] text-muted-foreground leading-relaxed">
+                Нажимая кнопку «Получить консультацию», вы подтверждаете, что принимаете{" "}
+                <a href="#" className="underline hover:text-primary transition-colors">пользовательское соглашение</a>, 
+                даёте поручение и согласие на обработку персональных данных.
+              </p>
             </form>
           )}
         </Reveal>
