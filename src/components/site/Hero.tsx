@@ -1,7 +1,7 @@
-import { Send } from "lucide-react";
+import { ArrowUpRight, Send } from "lucide-react";
 import heroImage from "@/assets/hero-ev.jpg";
-import { EXPERT, MESSENGER_MAX_URL, TELEGRAM_URL } from "@/lib/brand";
-import { btnGhost, btnPrimary, scrollToForm } from "./ui";
+import { CATALOG_URL, EXPERT, MESSENGER_MAX_URL, TELEGRAM_URL } from "@/lib/brand";
+import { btnGhost, btnPrimary, btnSmall, scrollToForm } from "./ui";
 
 const BADGES = ["BEV", "HEV", "PHEV", "EREV", "Китай", "Европа", "Америка", "Корея"];
 
@@ -55,6 +55,15 @@ export function Hero() {
           <button type="button" onClick={scrollToForm} className={btnPrimary}>
             Получить подбор
           </button>
+          <a
+            href={CATALOG_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${btnSmall} flex items-center justify-center py-3 sm:py-0 px-6`}
+          >
+            Смотреть каталог
+            <ArrowUpRight className="ml-1.5 size-4" />
+          </a>
           <div className="flex gap-2">
             <a href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" className={`${btnGhost} flex-1 sm:flex-initial`}>
               <Send className="size-4" aria-hidden="true" />
