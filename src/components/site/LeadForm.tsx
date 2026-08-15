@@ -40,17 +40,41 @@ export function LeadForm() {
     const email = String(data.get(FIELD_EMAIL) ?? "").trim();
 
     const next: Errors = {};
-    if (name.length < 2) next.name = "Укажите имя";
-    if (phone.replace(/\D/g, "").length < 10) next.phone = "Укажите корректный телефон";
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) next.email = "Некорректный e-mail";
+
+    // Name validation
+    if (name.length < 2) {
+      next.name = "Пожалуйста, введите ваше имя";
+    }
+
+    // Phone validation (more strict)
+    // Russian phones typically have 11 digits (including country code) or 10 without.
+    const digitsOnly = phone.replace(/\D/g, "");
+    if (!digitsOnly) {
+      next.phone = "Введите номер телефона";
+    } else if (digitsOnly.length < 10) {
+      next.phone = "Номер слишком короткий";
+    } else if (digitsOnly.length > 12) {
+      next.phone = "Номер слишком длинный";
+    }
+
+    // Email validation (strict)
+    if (!email) {
+      next.email = "Введите ваш e-mail";
+    } else if (
+      !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/.test(
+        email,
+      )
+    ) {
+      next.email = "Некорректный формат e-mail";
+    }
+
     setErrors(next);
 
     if (Object.keys(next).length > 0) {
       e.preventDefault();
       return;
     }
-    
-    // We don't call e.preventDefault() here to let the browser submit the form to the iframe target
+
     setSent(true);
   };
 
