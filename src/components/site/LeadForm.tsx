@@ -9,7 +9,7 @@ export function LeadForm() {
     const scriptId = "amoforms_script_1738426";
     
     if (!document.getElementById(scriptId)) {
-      // 1. Setup the global structure exactly as amoCRM script expects
+      // 1. Setup the global structure exactly as amoCRM snippet expects
       const win = window as any;
       win.amo_forms_params = win.amo_forms_params || {
         setMeta: function(p: any) { this.params = (this.params || []).concat([p]); }
@@ -28,19 +28,15 @@ export function LeadForm() {
         locale: "ru"
       });
 
-      // 3. Inject the external loader script targeting the container
+      // 3. Inject the external loader script targeting the end of the body
       const script = document.createElement("script");
       script.id = scriptId;
       script.async = true;
       script.charset = "utf-8";
       script.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1786780023";
       
-      const container = document.getElementById("amoforms_container_1738426");
-      if (container) {
-        container.appendChild(script);
-      } else {
-        document.body.appendChild(script);
-      }
+      // Inject to body, not container, to ensure it executes in the right context
+      document.body.appendChild(script);
     }
   }, []);
 
