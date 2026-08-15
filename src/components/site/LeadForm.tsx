@@ -6,39 +6,51 @@ import { Section, SectionHeading, btnGhost } from "./ui";
 
 export function LeadForm() {
   useEffect(() => {
-    // 1. Initialize globals exactly as in the user snippet
-    (window as any)["amo_forms_params"] = (window as any)["amo_forms_params"] || {
-      setMeta: function(p: any) {
-        this.params = (this.params || []).concat([p]);
-      }
-    };
+    const win = window as any;
+    const scriptId = "amoforms_script_1738426";
     
-    (window as any)["amo_forms_load"] = (window as any)["amo_forms_load"] || function(f: any) {
-      (window as any)["amo_forms_load"].f = ((window as any)["amo_forms_load"].f || []).concat([f]);
-    };
+    // 1. Define globals in a robust way
+    if (!win.amo_forms_params) {
+      win.amo_forms_params = {
+        setMeta: function(p: any) {
+          this.params = (this.params || []).concat([p]);
+        }
+      };
+    }
     
-    (window as any)["amo_forms_load"]({
+    if (!win.amo_forms_load) {
+      win.amo_forms_load = function(f: any) {
+        win.amo_forms_load.f = (win.amo_forms_load.f || []).concat([f]);
+      };
+      win.amo_forms_load.f = [];
+    }
+    
+    if (!win.amo_forms_loaded) {
+      win.amo_forms_loaded = function(f: any, k: any) {
+        win.amo_forms_loaded.f = (win.amo_forms_loaded.f || []).concat([[f, k]]);
+      };
+      win.amo_forms_loaded.f = [];
+    }
+
+    // 2. Trigger load
+    win.amo_forms_load({
       id: "1738426",
       hash: "d240b72cfd16ae50e8044e0f6730c9aa",
       locale: "ru"
     });
 
-    (window as any)["amo_forms_loaded"] = (window as any)["amo_forms_loaded"] || function(f: any, k: any) {
-      (window as any)["amo_forms_loaded"].f = ((window as any)["amo_forms_loaded"].f || []).concat([[f, k]]);
-    };
-
-    // 2. Load the external script
-    const script = document.createElement("script");
-    script.id = "amoforms_script_1738426";
-    script.async = true;
-    script.charset = "utf-8";
-    script.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1786780023";
-    document.body.appendChild(script);
+    // 3. Inject script if not present
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.async = true;
+      script.charset = "utf-8";
+      script.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1786780023";
+      document.body.appendChild(script);
+    }
 
     return () => {
-      const scriptToRemove = document.getElementById("amoforms_script_1738426");
-      if (scriptToRemove) scriptToRemove.remove();
-      // We don't remove globals to avoid issues if the script tries to reference them later
+      // We keep scripts to avoid re-initialization issues in SPAs
     };
   }, []);
 
@@ -67,48 +79,42 @@ export function LeadForm() {
         </Reveal>
 
         <Reveal delay={80}>
-          <div className="glass rounded-xl p-6 min-h-[450px] relative overflow-hidden bg-[#0A0A0A]/80 border-[#B4FF00]/20 flex items-center justify-center">
-            {/* 
-              The amoCRM script provided by the user is a "button" or "modal" type by default 
-              if it doesn't specify a container. It will likely appear as a floating button 
-              or we might need to trigger it.
-              
-              However, most users expect the form to appear inside the designated area.
-              If it's a floating button, it will still work for amoCRM.
-            */}
-            <div className="text-center">
-              <div className="mb-4 text-primary animate-pulse">
-                <div className="size-12 rounded-full border-2 border-primary border-t-transparent animate-spin mx-auto mb-4" />
-                Инициализация формы amoCRM...
+          <div className="glass rounded-xl p-6 min-h-[500px] relative overflow-hidden bg-[#0A0A0A]/80 border-[#B4FF00]/20 flex flex-col items-center justify-center">
+            {/* Target container for script injection */}
+            <div id="amoforms_container_1738426" className="w-full h-full min-h-[400px] flex items-center justify-center">
+              <div className="text-center py-20">
+                <div className="mb-4 text-primary animate-pulse">
+                  <div className="size-10 rounded-full border-2 border-primary border-t-transparent animate-spin mx-auto mb-4" />
+                  Загрузка формы...
+                </div>
               </div>
-              <p className="text-xs text-muted-foreground max-w-xs mx-auto">
-                Форма откроется автоматически или появится кнопка для заполнения заявки.
-              </p>
             </div>
           </div>
         </Reveal>
       </div>
       
       <style>{`
-        /* Style the amoCRM elements to match the theme */
-        .amoforms-form-container, .amoforms-modal, .amoforms-overlay {
+        /* Styles to blend amoCRM with the site design */
+        .amoforms-form-container, .amoforms-modal, .amoforms-overlay, [id^="amoforms_"] {
           --amoforms-primary-color: #B4FF00 !important;
           font-family: 'Inter', sans-serif !important;
         }
         
-        /* Attempt to force the button to look like our primary button if it appears */
         .amoforms-button {
           background-color: #B4FF00 !important;
           color: #0A0A0A !important;
           border-radius: 8px !important;
           font-weight: 600 !important;
-          box-shadow: 0 0 20px rgba(180, 255, 0, 0.2) !important;
         }
 
-        /* If it's an iframe, try to round corners */
         iframe[id^="amoforms_"] {
+          background: transparent !important;
           border-radius: 12px !important;
-          background-color: transparent !important;
+        }
+        
+        .amoforms-modal-content {
+          background-color: #0A0A0A !important;
+          border: 1px solid rgba(180, 255, 0, 0.2) !important;
         }
       `}</style>
     </Section>
