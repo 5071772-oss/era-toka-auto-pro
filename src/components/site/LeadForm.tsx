@@ -9,27 +9,30 @@ export function LeadForm() {
     const scriptId = "amoforms_script_1738426";
     
     if (!document.getElementById(scriptId)) {
-      // 1. Define global object
-      (window as any).amo_forms_params = {
-        id: "1738426",
-        hash: "d240b72cfd16ae50e8044e0f6730c9aa",
-        locale: "ru"
-      };
-
-      // 2. Define global functions the script might call
       const win = window as any;
-      win.amo_forms_ = win.amo_forms_ || function() {
+      
+      // The snippet initializes a function that collects parameters
+      win.amo_forms_ = win.amo_forms_ || function () {
         (win.amo_forms_.a = win.amo_forms_.a || []).push(arguments);
       };
       win.amo_forms_.l = +new Date();
+      
+      // Inject parameters
+      win.amo_forms_("params", {
+        id: "1738426",
+        hash: "d240b72cfd16ae50e8044e0f6730c9aa",
+        locale: "ru"
+      });
+      
+      // Trigger load
+      win.amo_forms_("load");
 
-      // 3. Append script to document head
       const script = document.createElement("script");
       script.id = scriptId;
       script.async = true;
       script.charset = "utf-8";
       script.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1738426";
-      document.head.appendChild(script);
+      document.body.appendChild(script);
     }
   }, []);
 
