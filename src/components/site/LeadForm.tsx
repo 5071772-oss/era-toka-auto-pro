@@ -8,36 +8,38 @@ export function LeadForm() {
   useEffect(() => {
     const scriptId = "amoforms_script_1738426";
     
-    // Ensure we don't double-inject on re-renders, but allow re-initialization if container is empty
     if (document.getElementById(scriptId)) return;
 
     const win = window as any;
     
-    // Exact IIFE from amoCRM snippet to ensure correct internal state
-    (function(a: any, m: Document, o: string, c: string, r?: any, i?: any) {
-      a[o] = a[o] || function() {
-        (a[o].a = a[o].a || []).push(arguments);
-      };
-      a[o].l = +new Date();
-      i = m.createElement(c);
-      r = m.getElementsByTagName(c)[0];
-      i.async = 1;
-      i.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1738426";
-      i.id = scriptId;
-      if (r && r.parentNode) {
-        r.parentNode.insertBefore(i, r);
-      } else {
-        m.body.appendChild(i);
+    // Setup the global object and function
+    win.amo_forms_params = win.amo_forms_params || {
+      setMeta: function(p: any) {
+        this.params = (this.params || []).concat([p]);
       }
-    })(window, document, "amo_forms_", "script");
+    };
+    
+    win.amo_forms_load = win.amo_forms_load || function(f: any) {
+      win.amo_forms_load.f = (win.amo_forms_load.f || []).concat([f]);
+    };
+    
+    win.amo_forms_loaded = win.amo_forms_loaded || function(f: any, k: any) {
+      win.amo_forms_loaded.f = (win.amo_forms_loaded.f || []).concat([[f, k]]);
+    };
 
-    // Queue parameters as the snippet does
-    win.amo_forms_("params", {
+    // Load form directly via the function
+    win.amo_forms_load({
       id: "1738426",
       hash: "d240b72cfd16ae50e8044e0f6730c9aa",
       locale: "ru"
     });
-    win.amo_forms_("load");
+
+    const script = document.createElement("script");
+    script.id = scriptId;
+    script.async = true;
+    script.charset = "utf-8";
+    script.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1738426";
+    document.body.appendChild(script);
   }, []);
 
   return (
