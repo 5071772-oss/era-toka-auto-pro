@@ -11,41 +11,30 @@ export function LeadForm() {
 
     const win = window as any;
     
-    // Universal initialization (includes both potential naming conventions)
-    win.amo_forms_params = win.amo_forms_params || {
-      setMeta: function(p: any) { this.params = (this.params || []).concat([p]); }
-    };
-    
-    win.amo_forms_load = win.amo_forms_load || function(f: any) {
-      win.amo_forms_load.f = (win.amo_forms_load.f || []).concat([f]);
-    };
-    
-    win.amo_forms_loaded = win.amo_forms_loaded || function(f: any, k: any) {
-      win.amo_forms_loaded.f = (win.amo_forms_loaded.f || []).concat([[f, k]]);
-    };
+    // Exact initialization logic based on amoCRM standard
+    (function (a, m, o, c, r, m_sub) {
+      a[o] = a[o] || function () {
+        (a[o].a = a[o].a || []).push(arguments);
+      };
+      a[o].l = 1 * (new Date() as any);
+      r = m.createElement(c);
+      m_sub = m.getElementsByTagName(c)[0];
+      (r as any).async = 1;
+      (r as any).src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1738426";
+      (r as any).id = scriptId;
+      if (m_sub && m_sub.parentNode) {
+        m_sub.parentNode.insertBefore(r, m_sub);
+      } else {
+        m.head.appendChild(r);
+      }
+    })(win, document, "amo_forms_", "script", null, null);
 
-    win.amo_forms_ = win.amo_forms_ || function () {
-      (win.amo_forms_.a = win.amo_forms_.a || []).push(arguments);
-    };
-    win.amo_forms_.l = +new Date();
-
-    const formData = {
+    win.amo_forms_("params", {
       id: "1738426",
       hash: "d240b72cfd16ae50e8044e0f6730c9aa",
-      locale: "ru"
-    };
-
-    // Push to both possible queues
-    win.amo_forms_load(formData);
-    win.amo_forms_("params", formData);
+      locale: "ru",
+    });
     win.amo_forms_("load");
-
-    const script = document.createElement("script");
-    script.id = scriptId;
-    script.async = true;
-    script.charset = "utf-8";
-    script.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1738426";
-    document.body.appendChild(script);
   }, []);
 
   return (
