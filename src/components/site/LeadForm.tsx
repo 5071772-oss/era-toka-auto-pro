@@ -34,8 +34,7 @@ export function LeadForm() {
   }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    const form = e.currentTarget;
-    const data = new FormData(form);
+    const data = new FormData(e.currentTarget);
     const name = String(data.get(FIELD_NAME) ?? "").trim();
     const phone = String(data.get(FIELD_PHONE) ?? "").trim();
     const email = String(data.get(FIELD_EMAIL) ?? "").trim();
@@ -50,6 +49,8 @@ export function LeadForm() {
       e.preventDefault();
       return;
     }
+    
+    // We don't call e.preventDefault() here to let the browser submit the form to the iframe target
     setSent(true);
   };
 
@@ -87,12 +88,12 @@ export function LeadForm() {
               </div>
             ) : (
               <>
-                <iframe name="amo_sink" title="amo" className="hidden" />
+                <iframe name="amo_sink" title="amo" className="fixed top-0 left-0 w-1 h-1 opacity-0 pointer-events-none" />
                 <form
                   ref={formRef}
                   action={AMO_ACTION}
                   method="POST"
-                  encType="multipart/form-data"
+                  encType="application/x-www-form-urlencoded"
                   target="amo_sink"
                   noValidate
                   onSubmit={handleSubmit}
