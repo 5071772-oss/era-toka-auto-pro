@@ -1,54 +1,58 @@
-import { useEffect, useState } from "react";
-import { Send } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Send, Check } from "lucide-react";
 import { EXPERT, TELEGRAM_URL } from "@/lib/brand";
 import { Reveal } from "./Reveal";
-import { Section, SectionHeading, btnGhost } from "./ui";
+import { Section, SectionHeading, btnGhost, btnPrimary } from "./ui";
+
+const AMO_ACTION = "https://forms.amocrm.ru/queue/add";
+const AMO_FORM_ID = "1738426";
+const AMO_HASH = "d240b72cfd16ae50e8044e0f6730c9aa";
+const FIELD_NAME = "fields[name_1]";
+const FIELD_PHONE = "fields[985603_1][1442081]";
+const FIELD_EMAIL = "fields[985605_1][1442093]";
+const FIELD_NOTE = "fields[note_2]";
+
+const inputClass =
+  "w-full rounded-md border border-border bg-background/60 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus:border-primary/70 focus:outline-none focus:ring-2 focus:ring-primary/25";
+const labelClass = "mb-2 block text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground";
+
+type Errors = Partial<Record<"name" | "phone" | "email", string>>;
 
 export function LeadForm() {
-  const [loaded, setLoaded] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const [errors, setErrors] = useState<Errors>({});
+  const [sent, setSent] = useState(false);
+  const [note, setNote] = useState("");
 
   useEffect(() => {
-    // 1. Initialize amo_forms_ globals matching the provided script snippet exactly
-    window.amo_forms_params = window.amo_forms_params || {
-      setMeta: function (p: any) {
-        this.params = (this.params || []).concat([p]);
-      }
+    const onPrefill = (e: Event) => {
+      const model = (e as CustomEvent<string>).detail;
+      if (model) setNote(`Интересует: ${model}`);
     };
-    
-    window.amo_forms_load = window.amo_forms_load || function (f: any) {
-      (window.amo_forms_load.f = window.amo_forms_load.f || []).concat([f]);
-    };
-    
-    window.amo_forms_loaded = window.amo_forms_loaded || function (f: any, k: any) {
-      (window.amo_forms_loaded.f = window.amo_forms_loaded.f || []).concat([[f, k]]);
-    };
-
-    // 2. Set form params using the provided ID and Hash
-    window.amo_forms_load({
-      id: "1738426",
-      hash: "d240b72cfd16ae50e8044e0f6730c9aa",
-      locale: "ru"
-    });
-
-    // 3. Inject the external script
-    const scriptId = "amoforms_script_1738426";
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement("script");
-      script.id = scriptId;
-      script.async = true;
-      script.charset = "utf-8";
-      script.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1786786704";
-      script.onload = () => {
-        console.log("amoCRM script loaded");
-        setLoaded(true);
-      };
-      document.body.appendChild(script);
-    } else {
-      setLoaded(true);
-    }
-
-    // Cleanup: we don't strictly need to remove the script as it handles its own singleton state
+    window.addEventListener("era-toka:prefill", onPrefill);
+    return () => window.removeEventListener("era-toka:prefill", onPrefill);
   }, []);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const data = new FormData(e.currentTarget);
+    const name = String(data.get(FIELD_NAME) ?? "").trim();
+    const phone = String(data.get(FIELD_PHONE) ?? "").trim();
+    const email = String(data.get(FIELD_EMAIL) ?? "").trim();
+
+    const next: Errors = {};
+    if (name.length < 2) next.name = "Укажите имя";
+    if (phone.replace(/\D/g, "").length < 10) next.phone = "Укажите корректный телефон";
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) next.email = "Некорректный e-mail";
+    setErrors(next);
+
+    if (Object.keys(next).length > 0) {
+      e.preventDefault();
+      return;
+    }
+    
+    // We don't call e.preventDefault() here to let the browser submit the form to the iframe target
+    setSent(true);
+  };
 
   return (
     <Section id="zayavka">
@@ -70,42 +74,115 @@ export function LeadForm() {
         </Reveal>
 
         <Reveal delay={80}>
-          <div className="glass relative min-h-[450px] rounded-xl border border-primary/20 bg-background/70 p-6 shadow-[0_0_60px_-30px_var(--neon-soft)] sm:p-8">
-            {!loaded && (
-              <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm transition-opacity">
-                <div className="size-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+          <div className="glass rounded-xl border border-primary/20 bg-background/70 p-6 shadow-[0_0_60px_-30px_var(--neon-soft)] sm:p-8">
+            {sent ? (
+              <div className="flex min-h-[320px] flex-col items-center justify-center text-center">
+                <span className="mb-5 flex size-14 items-center justify-center rounded-full bg-primary/15 text-primary">
+                  <Check className="size-7" aria-hidden="true" />
+                </span>
+                <p className="text-xl font-semibold tracking-tight">Заявка отправлена</p>
+                <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">
+                  {EXPERT} свяжется с вами в ближайшее рабочее время. Для быстрого ответа напишите в
+                  Telegram.
+                </p>
               </div>
-            )}
-            
-            {/* 
-               amoCRM will inject its widget here or at the end of body. 
-               The div below provides a target if the script looks for a container by convention.
-            */}
-            <div id="amoforms_container_1738426" className="w-full"></div>
-            
-            <style>{`
-              /* Custom styles to blend the amoCRM widget with the neon dark theme */
-              #amoforms_container_1738426 iframe,
-              .amoforms__iframe {
-                background: transparent !important;
-              }
-              .amoforms-footer { display: none !important; }
-            `}</style>
+            ) : (
+              <>
+                <iframe name="amo_sink" title="amo" className="fixed top-0 left-0 w-1 h-1 opacity-0 pointer-events-none" />
+                <form
+                  ref={formRef}
+                  action={AMO_ACTION}
+                  method="POST"
+                  encType="application/x-www-form-urlencoded"
+                  target="amo_sink"
+                  noValidate
+                  onSubmit={handleSubmit}
+                  className="space-y-5"
+                >
+                  <input type="hidden" name="form_id" value={AMO_FORM_ID} />
+                  <input type="hidden" name="hash" value={AMO_HASH} />
+                  <input type="hidden" name="user_origin" value="" />
 
-            <p className="mt-6 text-xs leading-relaxed text-muted-foreground">
-              Нажимая кнопку «Продолжить», вы подтверждаете, что принимаете пользовательское соглашение и соглашаетесь на обработку персональных данных.
-            </p>
+                  <div>
+                    <label className={labelClass} htmlFor="lead-name">
+                      Имя
+                    </label>
+                    <input
+                      id="lead-name"
+                      name={FIELD_NAME}
+                      type="text"
+                      autoComplete="name"
+                      placeholder="Как к вам обращаться"
+                      className={`${inputClass} ${errors.name ? "border-destructive" : ""}`}
+                    />
+                    {errors.name ? (
+                      <p className="mt-2 text-xs text-destructive">{errors.name}</p>
+                    ) : null}
+                  </div>
+
+                  <div>
+                    <label className={labelClass} htmlFor="lead-phone">
+                      Телефон
+                    </label>
+                    <input
+                      id="lead-phone"
+                      name={FIELD_PHONE}
+                      type="tel"
+                      autoComplete="tel"
+                      placeholder="+7 (900) 000-00-00"
+                      className={`${inputClass} ${errors.phone ? "border-destructive" : ""}`}
+                    />
+                    {errors.phone ? (
+                      <p className="mt-2 text-xs text-destructive">{errors.phone}</p>
+                    ) : null}
+                  </div>
+
+                  <div>
+                    <label className={labelClass} htmlFor="lead-email">
+                      E-mail
+                    </label>
+                    <input
+                      id="lead-email"
+                      name={FIELD_EMAIL}
+                      type="email"
+                      autoComplete="email"
+                      placeholder="you@example.com"
+                      className={`${inputClass} ${errors.email ? "border-destructive" : ""}`}
+                    />
+                    {errors.email ? (
+                      <p className="mt-2 text-xs text-destructive">{errors.email}</p>
+                    ) : null}
+                  </div>
+
+                  <div>
+                    <label className={labelClass} htmlFor="lead-note">
+                      Комментарий
+                    </label>
+                    <textarea
+                      id="lead-note"
+                      name={FIELD_NOTE}
+                      rows={3}
+                      value={note}
+                      onChange={(e) => setNote(e.target.value)}
+                      placeholder="Модель, бюджет, сроки — по желанию"
+                      className={`${inputClass} resize-none`}
+                    />
+                  </div>
+
+                  <button type="submit" className={`${btnPrimary} w-full`}>
+                    Получить консультацию
+                  </button>
+
+                  <p className="text-xs leading-relaxed text-muted-foreground">
+                    Нажимая кнопку, вы соглашаетесь с обработкой персональных данных и принимаете
+                    пользовательское соглашение.
+                  </p>
+                </form>
+              </>
+            )}
           </div>
         </Reveal>
       </div>
     </Section>
   );
-}
-
-declare global {
-  interface Window {
-    amo_forms_params: any;
-    amo_forms_load: any;
-    amo_forms_loaded: any;
-  }
 }
