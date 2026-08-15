@@ -6,33 +6,40 @@ import { Section, SectionHeading, btnGhost } from "./ui";
 
 export function LeadForm() {
   useEffect(() => {
-    // 1. Setup the global amoCRM structure
     const win = window as any;
+    const scriptId = "amoforms_script_1738426";
     
-    // Using a more standard initialization pattern
-    win["amo_forms_params"] = win["amo_forms_params"] || {
-      setMeta: function(p: any) {
-        this.params = (this.params || []).concat([p]);
-      }
-    };
+    // 1. Define globals in a robust way
+    if (!win.amo_forms_params) {
+      win.amo_forms_params = {
+        setMeta: function(p: any) {
+          this.params = (this.params || []).concat([p]);
+        }
+      };
+    }
     
-    win["amo_forms_load"] = win["amo_forms_load"] || function(f: any) {
-      win["amo_forms_load"].f = (win["amo_forms_load"].f || []).concat([f]);
-    };
+    if (!win.amo_forms_load) {
+      win.amo_forms_load = function(f: any) {
+        win.amo_forms_load.f = (win.amo_forms_load.f || []).concat([f]);
+      };
+      win.amo_forms_load.f = [];
+    }
     
-    win["amo_forms_loaded"] = win["amo_forms_loaded"] || function(f: any, k: any) {
-      win["amo_forms_loaded"].f = (win["amo_forms_loaded"].f || []).concat([[f, k]]);
-    };
+    if (!win.amo_forms_loaded) {
+      win.amo_forms_loaded = function(f: any, k: any) {
+        win.amo_forms_loaded.f = (win.amo_forms_loaded.f || []).concat([[f, k]]);
+      };
+      win.amo_forms_loaded.f = [];
+    }
 
-    // Trigger the load
-    win["amo_forms_load"]({
+    // 2. Trigger load
+    win.amo_forms_load({
       id: "1738426",
       hash: "d240b72cfd16ae50e8044e0f6730c9aa",
       locale: "ru"
     });
 
-    // 2. Inject the script manually to ensure it exists
-    const scriptId = "amoforms_script_1738426";
+    // 3. Inject script if not present
     if (!document.getElementById(scriptId)) {
       const script = document.createElement("script");
       script.id = scriptId;
@@ -43,7 +50,7 @@ export function LeadForm() {
     }
 
     return () => {
-      // Optional cleanup - usually better to keep it if navigating back and forth
+      // We keep scripts to avoid re-initialization issues in SPAs
     };
   }, []);
 
@@ -73,9 +80,7 @@ export function LeadForm() {
 
         <Reveal delay={80}>
           <div className="glass rounded-xl p-6 min-h-[500px] relative overflow-hidden bg-[#0A0A0A]/80 border-[#B4FF00]/20 flex flex-col items-center justify-center">
-            {/* 
-              Target container.
-            */}
+            {/* Target container for script injection */}
             <div id="amoforms_container_1738426" className="w-full h-full min-h-[400px] flex items-center justify-center">
               <div className="text-center py-20">
                 <div className="mb-4 text-primary animate-pulse">
@@ -105,6 +110,11 @@ export function LeadForm() {
         iframe[id^="amoforms_"] {
           background: transparent !important;
           border-radius: 12px !important;
+        }
+        
+        .amoforms-modal-content {
+          background-color: #0A0A0A !important;
+          border: 1px solid rgba(180, 255, 0, 0.2) !important;
         }
       `}</style>
     </Section>
