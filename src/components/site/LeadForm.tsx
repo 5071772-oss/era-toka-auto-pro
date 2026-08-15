@@ -11,19 +11,23 @@ export function LeadForm() {
     if (!document.getElementById(scriptId)) {
       const win = window as any;
       
-      // Exact initialization from the snippet provided by the user
-      !(function (a: any, m: any, o: any, c: any, r: any, i: any) {
+      // Exact initialization from the snippet provided by the user, with TS fixes
+      (function (a: any, m: Document, o: string, c: string) {
         a[o] = a[o] || function () {
           (a[o].a = a[o].a || []).push(arguments);
         };
-        a[o].l = 1 * new Date() as any;
-        i = m.createElement(c);
-        r = m.getElementsByTagName(c)[0];
-        i.async = 1;
-        i.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1738426"; // Using the user's snippet ID
+        a[o].l = +new Date();
+        const i = m.createElement(c) as HTMLScriptElement;
+        const r = m.getElementsByTagName(c)[0];
+        i.async = true;
+        i.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1738426";
         i.id = scriptId;
-        r.parentNode.insertBefore(i, r);
-      })(window, document, "amo_forms_", "script", null, null);
+        if (r && r.parentNode) {
+          r.parentNode.insertBefore(i, r);
+        } else {
+          m.body.appendChild(i);
+        }
+      })(window, document, "amo_forms_", "script");
 
       win.amo_forms_params = {
         id: "1738426",
