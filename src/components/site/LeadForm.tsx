@@ -9,37 +9,14 @@ export function LeadForm() {
     const win = window as any;
     const scriptId = "amoforms_script_1738426";
     
-    // 1. Define globals in a robust way
-    if (!win.amo_forms_params) {
-      win.amo_forms_params = {
-        setMeta: function(p: any) {
-          this.params = (this.params || []).concat([p]);
-        }
-      };
-    }
-    
-    if (!win.amo_forms_load) {
-      win.amo_forms_load = function(f: any) {
-        win.amo_forms_load.f = (win.amo_forms_load.f || []).concat([f]);
-      };
-      win.amo_forms_load.f = [];
-    }
-    
-    if (!win.amo_forms_loaded) {
-      win.amo_forms_loaded = function(f: any, k: any) {
-        win.amo_forms_loaded.f = (win.amo_forms_loaded.f || []).concat([[f, k]]);
-      };
-      win.amo_forms_loaded.f = [];
-    }
+    // The exact snippet provided by the user
+    (function(a,m,o,c,r,m_prop){
+      a[o+c]=a[o+c]||{setMeta:function(p: any){this.params=(this.params||[]).concat([p])}};
+      a[o+r]=a[o+r]||function(f: any){a[o+r].f=(a[o+r].f||[]).concat([f])};
+      a[o+r]({id:"1738426",hash:"d240b72cfd16ae50e8044e0f6730c9aa",locale:"ru"});
+      a[o+m_prop]=a[o+m_prop]||function(f: any,k: any){a[o+m_prop].f=(a[o+m_prop].f||[]).concat([[f,k]])}
+    })(win,0,"amo_forms_","params","load","loaded");
 
-    // 2. Trigger load
-    win.amo_forms_load({
-      id: "1738426",
-      hash: "d240b72cfd16ae50e8044e0f6730c9aa",
-      locale: "ru"
-    });
-
-    // 3. Inject script if not present
     if (!document.getElementById(scriptId)) {
       const script = document.createElement("script");
       script.id = scriptId;
@@ -48,10 +25,6 @@ export function LeadForm() {
       script.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1786780023";
       document.body.appendChild(script);
     }
-
-    return () => {
-      // We keep scripts to avoid re-initialization issues in SPAs
-    };
   }, []);
 
   return (
