@@ -28,13 +28,19 @@ export function LeadForm() {
         locale: "ru"
       });
 
-      // 3. Inject the external loader script
+      // 3. Inject the external loader script targeting the container
       const script = document.createElement("script");
       script.id = scriptId;
       script.async = true;
       script.charset = "utf-8";
       script.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1786780023";
-      document.body.appendChild(script);
+      
+      const container = document.getElementById("amoforms_container_1738426");
+      if (container) {
+        container.appendChild(script);
+      } else {
+        document.body.appendChild(script);
+      }
     }
   }, []);
 
