@@ -9,34 +9,27 @@ export function LeadForm() {
     const scriptId = "amoforms_script_1738426";
     
     if (!document.getElementById(scriptId)) {
-      // 1. Setup the global structure exactly as amoCRM snippet expects
       const win = window as any;
-      win.amo_forms_params = win.amo_forms_params || {
-        setMeta: function(p: any) { this.params = (this.params || []).concat([p]); }
-      };
-      win.amo_forms_load = win.amo_forms_load || function(f: any) {
-        win.amo_forms_load.f = (win.amo_forms_load.f || []).concat([f]);
-      };
-      win.amo_forms_loaded = win.amo_forms_loaded || function(f: any, k: any) {
-        win.amo_forms_loaded.f = (win.amo_forms_loaded.f || []).concat([[f, k]]);
-      };
+      
+      // Exact initialization from the snippet provided by the user
+      !(function (a: any, m: any, o: any, c: any, r: any, i: any) {
+        a[o] = a[o] || function () {
+          (a[o].a = a[o].a || []).push(arguments);
+        };
+        a[o].l = 1 * new Date() as any;
+        i = m.createElement(c);
+        r = m.getElementsByTagName(c)[0];
+        i.async = 1;
+        i.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1738426"; // Using the user's snippet ID
+        i.id = scriptId;
+        r.parentNode.insertBefore(i, r);
+      })(window, document, "amo_forms_", "script", null, null);
 
-      // 2. Queue the specific form load
-      win.amo_forms_load({
+      win.amo_forms_params = {
         id: "1738426",
         hash: "d240b72cfd16ae50e8044e0f6730c9aa",
         locale: "ru"
-      });
-
-      // 3. Inject the external loader script targeting the end of the body
-      const script = document.createElement("script");
-      script.id = scriptId;
-      script.async = true;
-      script.charset = "utf-8";
-      script.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1786780023";
-      
-      // Inject to body, not container, to ensure it executes in the right context
-      document.body.appendChild(script);
+      };
     }
   }, []);
 
