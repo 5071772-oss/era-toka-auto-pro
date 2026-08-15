@@ -8,39 +8,36 @@ export function LeadForm() {
   useEffect(() => {
     const scriptId = "amoforms_script_1738426";
     
-    // Cleanup function to remove old scripts if they exist
-    const oldScript = document.getElementById(scriptId);
-    if (oldScript) {
-      oldScript.remove();
-    }
+    // Ensure we don't double-inject on re-renders, but allow re-initialization if container is empty
+    if (document.getElementById(scriptId)) return;
 
     const win = window as any;
     
-    // Initialize global function
-    win.amo_forms_ = win.amo_forms_ || function () {
-      (win.amo_forms_.a = win.amo_forms_.a || []).push(arguments);
-    };
-    win.amo_forms_.l = +new Date();
-    
-    // Inject parameters and load
+    // Exact IIFE from amoCRM snippet to ensure correct internal state
+    (function(a: any, m: Document, o: string, c: string, r?: any, i?: any) {
+      a[o] = a[o] || function() {
+        (a[o].a = a[o].a || []).push(arguments);
+      };
+      a[o].l = +new Date();
+      i = m.createElement(c);
+      r = m.getElementsByTagName(c)[0];
+      i.async = 1;
+      i.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1738426";
+      i.id = scriptId;
+      if (r && r.parentNode) {
+        r.parentNode.insertBefore(i, r);
+      } else {
+        m.body.appendChild(i);
+      }
+    })(window, document, "amo_forms_", "script");
+
+    // Queue parameters as the snippet does
     win.amo_forms_("params", {
       id: "1738426",
       hash: "d240b72cfd16ae50e8044e0f6730c9aa",
       locale: "ru"
     });
     win.amo_forms_("load");
-
-    // Add script
-    const script = document.createElement("script");
-    script.id = scriptId;
-    script.async = true;
-    script.charset = "utf-8";
-    script.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1738426";
-    document.body.appendChild(script);
-
-    return () => {
-      // Optional: Cleanup on unmount if needed, but usually amo scripts are sticky
-    };
   }, []);
 
   return (
