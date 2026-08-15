@@ -22,6 +22,8 @@ export function LeadForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [errors, setErrors] = useState<Errors>({});
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+
   const [note, setNote] = useState("");
 
   useEffect(() => {
@@ -33,8 +35,10 @@ export function LeadForm() {
     return () => window.removeEventListener("era-toka:prefill", onPrefill);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    const data = new FormData(e.currentTarget);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
     const name = String(data.get(FIELD_NAME) ?? "").trim();
     const phone = String(data.get(FIELD_PHONE) ?? "").trim();
     const email = String(data.get(FIELD_EMAIL) ?? "").trim();
@@ -44,15 +48,26 @@ export function LeadForm() {
     if (phone.replace(/\D/g, "").length < 10) next.phone = "Укажите корректный телефон";
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) next.email = "Некорректный e-mail";
     setErrors(next);
+    if (Object.keys(next).length > 0) return;
 
-    if (Object.keys(next).length > 0) {
-      e.preventDefault();
-      return;
+    setSending(true);
+    const body = new URLSearchParams();
+    data.forEach((value, key) => body.append(key, String(value)));
+    try {
+      await fetch(AMO_ACTION, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
+        body: body.toString(),
+      });
+      setSent(true);
+    } catch {
+      setErrors({ name: "Не удалось отправить. Напишите в Telegram." });
+    } finally {
+      setSending(false);
     }
-    
-    // We don't call e.preventDefault() here to let the browser submit the form to the iframe target
-    setSent(true);
   };
+
 
   return (
     <Section id="zayavka">
@@ -88,17 +103,15 @@ export function LeadForm() {
               </div>
             ) : (
               <>
-                <iframe name="amo_sink" title="amo" className="fixed top-0 left-0 w-1 h-1 opacity-0 pointer-events-none" />
                 <form
                   ref={formRef}
                   action={AMO_ACTION}
                   method="POST"
-                  encType="application/x-www-form-urlencoded"
-                  target="amo_sink"
                   noValidate
                   onSubmit={handleSubmit}
                   className="space-y-5"
                 >
+
                   <input type="hidden" name="form_id" value={AMO_FORM_ID} />
                   <input type="hidden" name="hash" value={AMO_HASH} />
                   <input type="hidden" name="user_origin" value="" />
@@ -169,9 +182,10 @@ export function LeadForm() {
                     />
                   </div>
 
-                  <button type="submit" className={`${btnPrimary} w-full`}>
-                    Получить консультацию
+                  <button type="submit" disabled={sending} className={`${btnPrimary} w-full disabled:opacity-60`}>
+                    {sending ? "Отправляем…" : "Получить консультацию"}
                   </button>
+
 
                   <p className="text-xs leading-relaxed text-muted-foreground">
                     Нажимая кнопку, вы соглашаетесь с обработкой персональных данных и принимаете
