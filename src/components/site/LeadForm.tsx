@@ -93,7 +93,7 @@ export function LeadForm() {
                   ref={formRef}
                   action={AMO_ACTION}
                   method="POST"
-                  encType="multipart/form-data"
+                  encType="application/x-www-form-urlencoded"
                   target="amo_sink"
                   noValidate
                   onSubmit={handleSubmit}
