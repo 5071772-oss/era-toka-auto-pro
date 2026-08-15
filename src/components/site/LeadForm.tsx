@@ -11,21 +11,23 @@ export function LeadForm() {
 
     const win = window as any;
     
-    // amoCRM standard initialization
-    (function(a,m,o,c,r,i) {
+    // amoCRM standard initialization with proper typing for TS
+    const initAmo = (a: any, m: Document, o: string, c: string) => {
       a[o] = a[o] || function() { (a[o].a = a[o].a || []).push(arguments) };
       a[o].l = 1 * (new Date() as any);
-      r = m.createElement(c);
-      i = m.getElementsByTagName(c)[0];
-      (r as any).async = 1;
-      (r as any).src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1738426";
-      (r as any).id = scriptId;
+      const r = m.createElement(c) as any;
+      const i = m.getElementsByTagName(c)[0];
+      r.async = 1;
+      r.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1738426";
+      r.id = scriptId;
       if (i && i.parentNode) {
         i.parentNode.insertBefore(r, i);
       } else {
-        m.head.appendChild(r as any);
+        m.head.appendChild(r);
       }
-    })(win, document, "amo_forms_", "script", null, null);
+    };
+
+    initAmo(win, document, "amo_forms_", "script");
 
     win.amo_forms_("params", {
       id: "1738426",
