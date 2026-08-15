@@ -8,15 +8,27 @@ export function LeadForm() {
   useEffect(() => {
     const scriptId = "amoforms_script_1738426";
     
-    // Inject the external script tag exactly as requested
-    // This is the source of truth for amoCRM to find its container
     if (!document.getElementById(scriptId)) {
-      // First, the initialization script
-      const initScript = document.createElement("script");
-      initScript.text = `!function(a,m,o,c,r,m_prop){a[o+c]=a[o+c]||{setMeta:function(p){this.params=(this.params||[]).concat([p])}},a[o+r]=a[o+r]||function(f){a[o+r].f=(a[o+r].f||[]).concat([f])},a[o+r]({id:"1738426",hash:"d240b72cfd16ae50e8044e0f6730c9aa",locale:"ru"}),a[o+m_prop]=a[o+m_prop]||function(f,k){a[o+m_prop].f=(a[o+m_prop].f||[]).concat([[f,k]])}}(window,0,"amo_forms_","params","load","loaded");`;
-      document.body.appendChild(initScript);
+      // 1. Setup the global structure exactly as amoCRM script expects
+      const win = window as any;
+      win.amo_forms_params = win.amo_forms_params || {
+        setMeta: function(p: any) { this.params = (this.params || []).concat([p]); }
+      };
+      win.amo_forms_load = win.amo_forms_load || function(f: any) {
+        win.amo_forms_load.f = (win.amo_forms_load.f || []).concat([f]);
+      };
+      win.amo_forms_loaded = win.amo_forms_loaded || function(f: any, k: any) {
+        win.amo_forms_loaded.f = (win.amo_forms_loaded.f || []).concat([[f, k]]);
+      };
 
-      // Then, the loader script
+      // 2. Queue the specific form load
+      win.amo_forms_load({
+        id: "1738426",
+        hash: "d240b72cfd16ae50e8044e0f6730c9aa",
+        locale: "ru"
+      });
+
+      // 3. Inject the external loader script
       const script = document.createElement("script");
       script.id = scriptId;
       script.async = true;
