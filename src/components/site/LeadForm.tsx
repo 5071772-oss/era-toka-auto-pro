@@ -103,17 +103,15 @@ export function LeadForm() {
               </div>
             ) : (
               <>
-                <iframe name="amo_sink" title="amo" className="fixed top-0 left-0 w-1 h-1 opacity-0 pointer-events-none" />
                 <form
                   ref={formRef}
                   action={AMO_ACTION}
                   method="POST"
-                  encType="application/x-www-form-urlencoded"
-                  target="amo_sink"
                   noValidate
                   onSubmit={handleSubmit}
                   className="space-y-5"
                 >
+
                   <input type="hidden" name="form_id" value={AMO_FORM_ID} />
                   <input type="hidden" name="hash" value={AMO_HASH} />
                   <input type="hidden" name="user_origin" value="" />
