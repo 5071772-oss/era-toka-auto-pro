@@ -1,25 +1,28 @@
 ---
-title: Simplifying the lead form and removing external integrations
-description: Remove Google Sheets connection and simplify the lead form to only include Name, Phone, and Email fields with validation.
+title: Integrate amoCRM lead form
+description: Replace the custom lead form with an official amoCRM embedded form script and container.
 ---
 
-## Simplification Plan
+## User Request
+The user wants to integrate an amoCRM form into the website to handle leads and ensure they are sent directly to their amoCRM account.
 
-The user wants to remove Google Sheets integration and simplify the lead form to collect only Name, Phone, and Email.
+## Technical Details
+- **amoCRM Script**: An initialization script and an external script `https://forms.amocrm.ru/forms/assets/js/amoforms.js` need to be loaded.
+- **Placement**: The `LeadForm` component in `src/components/site/LeadForm.tsx` will be modified to render the amoCRM container instead of the manual React form.
+- **Script Injection**: We will use a `useEffect` hook in the component to safely inject the scripts into the DOM when the component mounts, ensuring it doesn't break SSR.
 
-### Technical Tasks
+## Implementation Plan
 
-1.  **Schema Update**: Modify `src/lib/leads.schema.ts` to only include `name`, `phone`, and `email` fields with appropriate Zod validation.
-2.  **Server Logic Update**:
-    *   Update `src/lib/leads.server.ts` to remove Google Sheets fetching and logic. Replace with a simple console log for now (or prepare for future CRM/Email integration if requested later, but for now, just "disconnect").
-    *   Update `src/lib/leads.functions.ts` to match the new schema.
-3.  **UI Update**:
-    *   Modify `src/components/site/LeadForm.tsx` to remove all unused fields (city, budget, car type, etc.).
-    *   Add Email and Phone fields to the form.
-    *   Update the `onSubmit` handler to process the new simplified fields.
-    *   Ensure validation and error messages are correctly displayed for the new fields.
+### 1. Update LeadForm Component
+- Modify `src/components/site/LeadForm.tsx`.
+- Remove the manual form state (`status`, `errors`, `onSubmit`).
+- Remove the `form` JSX.
+- Add a `useEffect` to inject the amoCRM script and initialization code.
+- Provide a target container with the ID or class expected by amoCRM (usually it looks for a script with a specific ID, but here the provided script seems to append itself or target a specific ID).
+- *Observation*: The provided script uses `a[o+r]({id:\"1738426\", ...})` and looks for script `amoforms_script_1738426`.
 
-### User Impact
+### 2. Clean up unused code
+- Remove `src/lib/leads.schema.ts`, `src/lib/leads.functions.ts`, and `src/lib/leads.server.ts` if they are no longer needed (since amoCRM handles the submission directly).
 
-*   The form will become significantly shorter and easier to fill out.
-*   External data storage (Google Sheets) will be disabled as requested.
+### 3. Verify
+- Open the preview and ensure the form renders correctly.
