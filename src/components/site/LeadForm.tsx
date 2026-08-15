@@ -11,29 +11,21 @@ export function LeadForm() {
     if (!document.getElementById(scriptId)) {
       const win = window as any;
       
-      // Exact initialization from the snippet provided by the user, with TS fixes
-      (function (a: any, m: Document, o: string, c: string) {
-        a[o] = a[o] || function () {
-          (a[o].a = a[o].a || []).push(arguments);
-        };
-        a[o].l = +new Date();
-        const i = m.createElement(c) as HTMLScriptElement;
-        const r = m.getElementsByTagName(c)[0];
-        i.async = true;
-        i.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1738426";
-        i.id = scriptId;
-        if (r && r.parentNode) {
-          r.parentNode.insertBefore(i, r);
-        } else {
-          m.body.appendChild(i);
-        }
-      })(window, document, "amo_forms_", "script");
-
+      // Queued params for the script
       win.amo_forms_params = {
         id: "1738426",
         hash: "d240b72cfd16ae50e8044e0f6730c9aa",
         locale: "ru"
       };
+
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.async = true;
+      script.charset = "utf-8";
+      // Using the exact URL from the snippet
+      script.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1738426";
+      
+      document.body.appendChild(script);
     }
   }, []);
 
