@@ -99,7 +99,8 @@ export function LeadForm() {
       return;
     }
 
-    setSent(true);
+    // Small delay to ensure browser handles the action before UI swap
+    setTimeout(() => setSent(true), 50);
   };
 
   return (
@@ -149,7 +150,7 @@ export function LeadForm() {
                 >
                   <input type="hidden" name="form_id" value={AMO_FORM_ID} />
                   <input type="hidden" name="hash" value={AMO_HASH} />
-                  <input type="hidden" name="user_origin" value="" />
+                  <input type="hidden" name="user_origin" value='{"datetime":"Sun Aug 17 2026 09:33:00 GMT+0000","referer":""}' />
 
                   <div>
                     <label className={labelClass} htmlFor="lead-name">
