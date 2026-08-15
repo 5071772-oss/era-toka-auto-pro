@@ -88,7 +88,7 @@ export function LeadForm() {
               </div>
             ) : (
               <>
-                <iframe name="amo_sink" title="amo" className="hidden" />
+                <iframe name="amo_sink" title="amo" className="fixed top-0 left-0 w-1 h-1 opacity-0 pointer-events-none" />
                 <form
                   ref={formRef}
                   action={AMO_ACTION}
