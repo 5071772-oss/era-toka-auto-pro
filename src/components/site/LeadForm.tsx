@@ -8,36 +8,39 @@ export function LeadForm() {
   useEffect(() => {
     const scriptId = "amoforms_script_1738426";
     
-    if (!document.getElementById(scriptId)) {
-      // 1. Setup the global structure exactly as amoCRM snippet expects
-      const win = window as any;
-      win.amo_forms_params = win.amo_forms_params || {
-        setMeta: function(p: any) { this.params = (this.params || []).concat([p]); }
-      };
-      win.amo_forms_load = win.amo_forms_load || function(f: any) {
-        win.amo_forms_load.f = (win.amo_forms_load.f || []).concat([f]);
-      };
-      win.amo_forms_loaded = win.amo_forms_loaded || function(f: any, k: any) {
-        win.amo_forms_loaded.f = (win.amo_forms_loaded.f || []).concat([[f, k]]);
-      };
-
-      // 2. Queue the specific form load
-      win.amo_forms_load({
-        id: "1738426",
-        hash: "d240b72cfd16ae50e8044e0f6730c9aa",
-        locale: "ru"
-      });
-
-      // 3. Inject the external loader script targeting the end of the body
-      const script = document.createElement("script");
-      script.id = scriptId;
-      script.async = true;
-      script.charset = "utf-8";
-      script.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1786780023";
-      
-      // Inject to body, not container, to ensure it executes in the right context
-      document.body.appendChild(script);
+    // Cleanup function to remove old scripts if they exist
+    const oldScript = document.getElementById(scriptId);
+    if (oldScript) {
+      oldScript.remove();
     }
+
+    const win = window as any;
+    
+    // Initialize global function
+    win.amo_forms_ = win.amo_forms_ || function () {
+      (win.amo_forms_.a = win.amo_forms_.a || []).push(arguments);
+    };
+    win.amo_forms_.l = +new Date();
+    
+    // Inject parameters and load
+    win.amo_forms_("params", {
+      id: "1738426",
+      hash: "d240b72cfd16ae50e8044e0f6730c9aa",
+      locale: "ru"
+    });
+    win.amo_forms_("load");
+
+    // Add script
+    const script = document.createElement("script");
+    script.id = scriptId;
+    script.async = true;
+    script.charset = "utf-8";
+    script.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1738426";
+    document.body.appendChild(script);
+
+    return () => {
+      // Optional: Cleanup on unmount if needed, but usually amo scripts are sticky
+    };
   }, []);
 
   return (
@@ -66,7 +69,7 @@ export function LeadForm() {
 
         <Reveal delay={80}>
           <div className="glass rounded-xl p-6 min-h-[500px] relative overflow-hidden bg-[#0A0A0A]/80 border-[#B4FF00]/20 flex flex-col items-center justify-center">
-            {/* Standard amoCRM container */}
+            {/* The ID matches what amoCRM script expects */}
             <div id="amoforms_container_1738426" className="w-full h-full min-h-[400px]">
               <div className="text-center py-20 flex flex-col items-center justify-center h-full">
                 <div className="mb-4 text-primary animate-pulse">
@@ -80,7 +83,6 @@ export function LeadForm() {
       </div>
       
       <style>{`
-        /* Styles to blend amoCRM with the site design */
         .amoforms-form-container, .amoforms-modal, .amoforms-overlay, [id^="amoforms_"] {
           --amoforms-primary-color: #B4FF00 !important;
           font-family: 'Inter', sans-serif !important;
