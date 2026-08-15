@@ -23,6 +23,30 @@ export function LeadForm() {
   const [errors, setErrors] = useState<Errors>({});
   const [sent, setSent] = useState(false);
   const [note, setNote] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const formatPhone = (value: string) => {
+    const digits = value.replace(/\D/g, "");
+    if (!digits) return "";
+    
+    let res = "";
+    if (digits.startsWith("7") || digits.startsWith("8")) {
+      const main = digits.slice(1);
+      res = "+7 ";
+      if (main.length > 0) res += "(" + main.slice(0, 3);
+      if (main.length > 3) res += ") " + main.slice(3, 6);
+      if (main.length > 6) res += "-" + main.slice(6, 8);
+      if (main.length > 8) res += "-" + main.slice(8, 10);
+    } else {
+      res = "+" + digits.slice(0, 15);
+    }
+    return res;
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhone(e.target.value);
+    setPhone(formatted);
+  };
 
   useEffect(() => {
     const onPrefill = (e: Event) => {
@@ -152,6 +176,8 @@ export function LeadForm() {
                       id="lead-phone"
                       name={FIELD_PHONE}
                       type="tel"
+                      value={phone}
+                      onChange={handlePhoneChange}
                       autoComplete="tel"
                       placeholder="+7 (900) 000-00-00"
                       className={`${inputClass} ${errors.phone ? "border-destructive" : ""}`}
