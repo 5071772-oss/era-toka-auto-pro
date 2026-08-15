@@ -6,52 +6,38 @@ import { Section, SectionHeading, btnGhost } from "./ui";
 
 export function LeadForm() {
   useEffect(() => {
-    const win = window as any;
     const scriptId = "amoforms_script_1738426";
     
-    // 1. Define globals in a robust way
-    if (!win.amo_forms_params) {
-      win.amo_forms_params = {
-        setMeta: function(p: any) {
-          this.params = (this.params || []).concat([p]);
-        }
+    if (!document.getElementById(scriptId)) {
+      // 1. Setup the global structure exactly as amoCRM snippet expects
+      const win = window as any;
+      win.amo_forms_params = win.amo_forms_params || {
+        setMeta: function(p: any) { this.params = (this.params || []).concat([p]); }
       };
-    }
-    
-    if (!win.amo_forms_load) {
-      win.amo_forms_load = function(f: any) {
+      win.amo_forms_load = win.amo_forms_load || function(f: any) {
         win.amo_forms_load.f = (win.amo_forms_load.f || []).concat([f]);
       };
-      win.amo_forms_load.f = [];
-    }
-    
-    if (!win.amo_forms_loaded) {
-      win.amo_forms_loaded = function(f: any, k: any) {
+      win.amo_forms_loaded = win.amo_forms_loaded || function(f: any, k: any) {
         win.amo_forms_loaded.f = (win.amo_forms_loaded.f || []).concat([[f, k]]);
       };
-      win.amo_forms_loaded.f = [];
-    }
 
-    // 2. Trigger load
-    win.amo_forms_load({
-      id: "1738426",
-      hash: "d240b72cfd16ae50e8044e0f6730c9aa",
-      locale: "ru"
-    });
+      // 2. Queue the specific form load
+      win.amo_forms_load({
+        id: "1738426",
+        hash: "d240b72cfd16ae50e8044e0f6730c9aa",
+        locale: "ru"
+      });
 
-    // 3. Inject script if not present
-    if (!document.getElementById(scriptId)) {
+      // 3. Inject the external loader script targeting the end of the body
       const script = document.createElement("script");
       script.id = scriptId;
       script.async = true;
       script.charset = "utf-8";
       script.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1786780023";
+      
+      // Inject to body, not container, to ensure it executes in the right context
       document.body.appendChild(script);
     }
-
-    return () => {
-      // We keep scripts to avoid re-initialization issues in SPAs
-    };
   }, []);
 
   return (
@@ -80,9 +66,9 @@ export function LeadForm() {
 
         <Reveal delay={80}>
           <div className="glass rounded-xl p-6 min-h-[500px] relative overflow-hidden bg-[#0A0A0A]/80 border-[#B4FF00]/20 flex flex-col items-center justify-center">
-            {/* Target container for script injection */}
-            <div id="amoforms_container_1738426" className="w-full h-full min-h-[400px] flex items-center justify-center">
-              <div className="text-center py-20">
+            {/* Standard amoCRM container */}
+            <div id="amoforms_container_1738426" className="w-full h-full min-h-[400px]">
+              <div className="text-center py-20 flex flex-col items-center justify-center h-full">
                 <div className="mb-4 text-primary animate-pulse">
                   <div className="size-10 rounded-full border-2 border-primary border-t-transparent animate-spin mx-auto mb-4" />
                   Загрузка формы...
