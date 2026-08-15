@@ -182,9 +182,10 @@ export function LeadForm() {
                     />
                   </div>
 
-                  <button type="submit" className={`${btnPrimary} w-full`}>
-                    Получить консультацию
+                  <button type="submit" disabled={sending} className={`${btnPrimary} w-full disabled:opacity-60`}>
+                    {sending ? "Отправляем…" : "Получить консультацию"}
                   </button>
+
 
                   <p className="text-xs leading-relaxed text-muted-foreground">
                     Нажимая кнопку, вы соглашаетесь с обработкой персональных данных и принимаете
