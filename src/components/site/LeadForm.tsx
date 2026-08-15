@@ -64,9 +64,9 @@ export function LeadForm() {
 
         <Reveal delay={80}>
           <div className="glass rounded-xl p-6 min-h-[500px] relative overflow-hidden bg-[#0A0A0A]/80 border-[#B4FF00]/20 flex flex-col items-center justify-center">
-            {/* Target container for script injection */}
-            <div id="amoforms_container_1738426" className="w-full h-full min-h-[400px] flex items-center justify-center">
-              <div className="text-center py-20">
+            {/* Standard amoCRM container */}
+            <div id="amoforms_container_1738426" className="w-full h-full min-h-[400px]">
+              <div className="text-center py-20 flex flex-col items-center justify-center h-full">
                 <div className="mb-4 text-primary animate-pulse">
                   <div className="size-10 rounded-full border-2 border-primary border-t-transparent animate-spin mx-auto mb-4" />
                   Загрузка формы...
