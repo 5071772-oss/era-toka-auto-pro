@@ -1,36 +1,25 @@
-## Что построю
+---
+title: Simplifying the lead form and removing external integrations
+description: Remove Google Sheets connection and simplify the lead form to only include Name, Phone, and Email fields with validation.
+---
 
-Одностраничный премиальный сайт на русском языке для бренда «ЭРА ТОКА» (слоган «Время двигаться иначе»), тёмный технологичный стиль, полная адаптация desktop/tablet/mobile.
+## Simplification Plan
 
-## Визуальный язык
+The user wants to remove Google Sheets integration and simplify the lead form to collect only Name, Phone, and Email.
 
-- Фон `#0A0A0A`, акцент `#B4FF00`, белый, холодный серый, графит — как семантические токены в `src/styles.css` (oklch).
-- Шрифт Inter (подключение через `<link>` в корневом роуте), крупная grotesk-типографика.
-- Аккуратные стеклянные панели, тонкие границы, минимум карточной «пестроты».
-- Плавные появления секций при скролле (IntersectionObserver), тонкая неоновая линия прогресса прокрутки сверху.
+### Technical Tasks
 
-## Структура (одна страница + якорная навигация)
+1.  **Schema Update**: Modify `src/lib/leads.schema.ts` to only include `name`, `phone`, and `email` fields with appropriate Zod validation.
+2.  **Server Logic Update**:
+    *   Update `src/lib/leads.server.ts` to remove Google Sheets fetching and logic. Replace with a simple console log for now (or prepare for future CRM/Email integration if requested later, but for now, just "disconnect").
+    *   Update `src/lib/leads.functions.ts` to match the new schema.
+3.  **UI Update**:
+    *   Modify `src/components/site/LeadForm.tsx` to remove all unused fields (city, budget, car type, etc.).
+    *   Add Email and Phone fields to the form.
+    *   Update the `onSubmit` handler to process the new simplified fields.
+    *   Ensure validation and error messages are correctly displayed for the new fields.
 
-Секции по вашему ТЗ: навигация (Подбор, Автомобили, Поставка, Услуги, FAQ + кнопка Telegram + «Получить подбор»), hero с неоновым выделением «под ключ», бейджами BEV/HEV/PHEV/EREV и странами, панель эксперта; преимущества (6); «Актуальные автомобили» (5 карточек: Audi Q4 e-tron 50 quattro, Avatr 07, Xiaomi YU7 Max, Huawei Aito M8, Li Auto L8 Ultra) с кнопками «Узнать стоимость» / «Подобрать аналог»; типы электротяги (4 + кнопка «Не знаю, что выбрать»); полный цикл поставки (7 этапов + «Финансовая логистика» + «Рассчитать поставку»); география (Китай, Европа, Америка, Корея) с оговоркой о проверке возможности поставки; аккордеон «Разбираем риски до покупки» (6); форма заявки; FAQ (13 вопросов, формулировки «зависит от модели», «рассчитывается индивидуально»); финальный CTA; футер с юридической подписью.
+### User Impact
 
-Все Telegram-кнопки → `https://t.me/Exellenz` (target="_blank", rel="noopener"). Кнопки CTA скроллят к форме, кнопки карточек предзаполняют поле «Желаемая модель». Никаких цен, сроков, отзывов и цифр — везде «рассчитаем актуальную стоимость под вашу конфигурацию».
-
-## Форма заявки → Google Sheets
-
-Поля: Имя, Телефон/Telegram, Город, Бюджет, Тип автомобиля, Желаемая модель, Новый/с пробегом, Средний пробег в день, Наличие зарядки, Комментарий. Валидация zod (лимиты длины, обязательные Имя и контакт).
-
-Технически:
-1. Подключаю коннектор Google Sheets (вам нужно будет авторизовать Google-аккаунт в карточке подключения).
-2. Спрошу ID вашей таблицы (или создам новую через API) и запишу его в настройки.
-3. Серверная функция `submitLead` валидирует данные и делает `values:append` в лист заявок через Lovable-гейтвей — ключи остаются на сервере.
-4. Состояния формы: загрузка, успех («Заявка отправлена. Алексей свяжется с вами по указанному контакту.»), ошибка с возможностью повтора + альтернативная кнопка «Написать в Telegram».
-
-## Изображения
-
-Сгенерирую 2–3 абстрактных премиальных визуала (энергия/электротяга, ночной город, световые линии) для hero и фоновых акцентов — без фотографий реальных людей и без подмены конкретных моделей вымышленными фото. Карточки автомобилей — типографика + абстрактный градиентный визуал.
-
-## Технические детали
-
-- Один роут `src/routes/index.tsx` (заменяет плейсхолдер) + секции как компоненты в `src/components/`.
-- SEO: уникальный `head()` — title, description, og:title, og:description, og:type, twitter:card; один H1; семантические теги; alt для изображений.
-- Никаких хардкод-цветов в компонентах — только токены дизайн-системы.
+*   The form will become significantly shorter and easier to fill out.
+*   External data storage (Google Sheets) will be disabled as requested.
