@@ -1,42 +1,9 @@
-import { useEffect } from "react";
 import { Send } from "lucide-react";
 import { EXPERT, TELEGRAM_URL } from "@/lib/brand";
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnGhost } from "./ui";
 
 export function LeadForm() {
-  useEffect(() => {
-    const scriptId = "amoforms_script_1738426";
-    if (document.getElementById(scriptId)) return;
-
-    const win = window as any;
-    
-    // amoCRM standard initialization with proper typing for TS
-    const initAmo = (a: any, m: Document, o: string, c: string) => {
-      a[o] = a[o] || function() { (a[o].a = a[o].a || []).push(arguments) };
-      a[o].l = 1 * (new Date() as any);
-      const r = m.createElement(c) as any;
-      const i = m.getElementsByTagName(c)[0];
-      r.async = 1;
-      r.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1738426";
-      r.id = scriptId;
-      if (i && i.parentNode) {
-        i.parentNode.insertBefore(r, i);
-      } else {
-        m.head.appendChild(r);
-      }
-    };
-
-    initAmo(win, document, "amo_forms_", "script");
-
-    win.amo_forms_("params", {
-      id: "1738426",
-      hash: "d240b72cfd16ae50e8044e0f6730c9aa",
-      locale: "ru",
-    });
-    win.amo_forms_("load");
-  }, []);
-
   return (
     <Section id="zayavka">
       <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr]">
@@ -62,42 +29,17 @@ export function LeadForm() {
         </Reveal>
 
         <Reveal delay={80}>
-          <div className="glass rounded-xl p-6 min-h-[500px] relative overflow-hidden bg-[#0A0A0A]/80 border-[#B4FF00]/20 flex flex-col items-center justify-center">
-            <div id="amoforms_container_1738426" className="w-full h-full min-h-[400px]">
-              <div className="text-center py-20 flex flex-col items-center justify-center h-full">
-                <div className="mb-4 text-primary animate-pulse">
-                  <div className="size-10 rounded-full border-2 border-primary border-t-transparent animate-spin mx-auto mb-4" />
-                  Загрузка формы...
-                </div>
-              </div>
-            </div>
+          <div className="glass overflow-hidden rounded-xl border border-primary/20 bg-background/80 p-2 sm:p-4">
+            <iframe
+              src="https://forms.amocrm.ru/forms/html/form_1738426_d240b72cfd16ae50e8044e0f6730c9aa.html"
+              title="Форма заявки amoCRM"
+              className="block h-[620px] w-full border-0 bg-transparent sm:h-[580px]"
+              loading="eager"
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
           </div>
         </Reveal>
       </div>
-      
-      <style>{`
-        .amoforms-form-container, .amoforms-modal, .amoforms-overlay, [id^="amoforms_"] {
-          --amoforms-primary-color: #B4FF00 !important;
-          font-family: 'Inter', sans-serif !important;
-        }
-        
-        .amoforms-button {
-          background-color: #B4FF00 !important;
-          color: #0A0A0A !important;
-          border-radius: 8px !important;
-          font-weight: 600 !important;
-        }
-
-        iframe[id^="amoforms_"] {
-          background: transparent !important;
-          border-radius: 12px !important;
-        }
-        
-        .amoforms-modal-content {
-          background-color: #0A0A0A !important;
-          border: 1px solid rgba(180, 255, 0, 0.2) !important;
-        }
-      `}</style>
     </Section>
   );
 }
