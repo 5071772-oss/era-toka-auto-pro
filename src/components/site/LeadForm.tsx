@@ -9,23 +9,27 @@ export function LeadForm() {
     const scriptId = "amoforms_script_1738426";
     
     if (!document.getElementById(scriptId)) {
-      const win = window as any;
-      
-      // Queued params for the script
-      win.amo_forms_params = {
+      // 1. Define global object
+      (window as any).amo_forms_params = {
         id: "1738426",
         hash: "d240b72cfd16ae50e8044e0f6730c9aa",
         locale: "ru"
       };
 
+      // 2. Define global functions the script might call
+      const win = window as any;
+      win.amo_forms_ = win.amo_forms_ || function() {
+        (win.amo_forms_.a = win.amo_forms_.a || []).push(arguments);
+      };
+      win.amo_forms_.l = +new Date();
+
+      // 3. Append script to document head
       const script = document.createElement("script");
       script.id = scriptId;
       script.async = true;
       script.charset = "utf-8";
-      // Using the exact URL from the snippet
       script.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1738426";
-      
-      document.body.appendChild(script);
+      document.head.appendChild(script);
     }
   }, []);
 
@@ -55,7 +59,6 @@ export function LeadForm() {
 
         <Reveal delay={80}>
           <div className="glass rounded-xl p-6 min-h-[500px] relative overflow-hidden bg-[#0A0A0A]/80 border-[#B4FF00]/20 flex flex-col items-center justify-center">
-            {/* Standard amoCRM container */}
             <div id="amoforms_container_1738426" className="w-full h-full min-h-[400px]">
               <div className="text-center py-20 flex flex-col items-center justify-center h-full">
                 <div className="mb-4 text-primary animate-pulse">
@@ -69,7 +72,6 @@ export function LeadForm() {
       </div>
       
       <style>{`
-        /* Styles to blend amoCRM with the site design */
         .amoforms-form-container, .amoforms-modal, .amoforms-overlay, [id^="amoforms_"] {
           --amoforms-primary-color: #B4FF00 !important;
           font-family: 'Inter', sans-serif !important;
