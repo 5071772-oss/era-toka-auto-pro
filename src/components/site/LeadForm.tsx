@@ -22,6 +22,8 @@ export function LeadForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [errors, setErrors] = useState<Errors>({});
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+
   const [note, setNote] = useState("");
 
   useEffect(() => {
