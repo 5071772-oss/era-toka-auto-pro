@@ -2,19 +2,16 @@ import { z } from "zod";
 
 export const leadSchema = z.object({
   name: z.string().trim().min(2, "Укажите имя").max(100, "Слишком длинное имя"),
-  contact: z
+  phone: z
     .string()
     .trim()
-    .min(3, "Укажите телефон или Telegram")
-    .max(120, "Слишком длинный контакт"),
-  city: z.string().trim().max(100).optional().default(""),
-  budget: z.string().trim().max(100).optional().default(""),
-  carType: z.string().trim().max(60).optional().default(""),
-  model: z.string().trim().max(150).optional().default(""),
-  condition: z.string().trim().max(60).optional().default(""),
-  dailyMileage: z.string().trim().max(60).optional().default(""),
-  charging: z.string().trim().max(60).optional().default(""),
-  comment: z.string().trim().max(1000, "Не более 1000 символов").optional().default(""),
+    .min(5, "Укажите корректный телефон")
+    .max(30, "Слишком длинный номер"),
+  email: z
+    .string()
+    .trim()
+    .email("Укажите корректный email")
+    .max(120, "Слишком длинный email"),
 });
 
-export type LeadInput = z.input<typeof leadSchema>;
+export type LeadInput = z.infer<typeof leadSchema>;
