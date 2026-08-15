@@ -34,8 +34,7 @@ export function LeadForm() {
   }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    const form = e.currentTarget;
-    const data = new FormData(form);
+    const data = new FormData(e.currentTarget);
     const name = String(data.get(FIELD_NAME) ?? "").trim();
     const phone = String(data.get(FIELD_PHONE) ?? "").trim();
     const email = String(data.get(FIELD_EMAIL) ?? "").trim();
@@ -50,6 +49,8 @@ export function LeadForm() {
       e.preventDefault();
       return;
     }
+    
+    // We don't call e.preventDefault() here to let the browser submit the form to the iframe target
     setSent(true);
   };
 
