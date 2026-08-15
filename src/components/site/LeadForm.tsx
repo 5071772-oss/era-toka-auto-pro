@@ -6,51 +6,43 @@ import { Section, SectionHeading, btnGhost } from "./ui";
 
 export function LeadForm() {
   useEffect(() => {
-    // 1. Clear any old script instances to avoid conflicts
-    const scriptId = "amoforms_script_1738426";
-    const existingScript = document.getElementById(scriptId);
-    if (existingScript) existingScript.remove();
+    // 1. Remove any old script instances
+    const oldScript = document.getElementById("amoforms_script_1738426");
+    if (oldScript) oldScript.remove();
 
-    // 2. Setup the global amoCRM structure exactly as provided
-    (window as any)["amo_forms_params"] = (window as any)["amo_forms_params"] || {
-      setMeta: function(p: any) {
-        this.params = (this.params || []).concat([p]);
-      }
-    };
-    
-    (window as any)["amo_forms_load"] = (window as any)["amo_forms_load"] || function(f: any) {
-      (window as any)["amo_forms_load"].f = ((window as any)["amo_forms_load"].f || []).concat([f]);
-    };
+    // 2. Define the script loader function exactly as amoCRM expects
+    (function(a, m, o, c, r, n) {
+      a[o + c] = a[o + c] || {
+        setMeta: function(p: any) {
+          this.params = (this.params || []).concat([p]);
+        },
+      };
+      a[o + r] = a[o + r] || function(f: any) {
+        (a[o + r] as any).f = ((a[o + r] as any).f || []).concat([f]);
+      };
+      // Load the form
+      (a[o + r] as any)({
+        id: "1738426",
+        hash: "d240b72cfd16ae50e8044e0f6730c9aa",
+        locale: "ru",
+      });
+      a[o + n] = a[o + n] || function(f: any, k: any) {
+        (a[o + n] as any).f = ((a[o + n] as any).f || []).concat([[f, k]]);
+      };
+    })(window as any, 0, "amo_forms_", "params", "load", "loaded");
 
-    // 3. Register the form configuration
-    (window as any)["amo_forms_load"]({
-      id: "1738426",
-      hash: "d240b72cfd16ae50e8044e0f6730c9aa",
-      locale: "ru"
-    });
-
-    (window as any)["amo_forms_loaded"] = (window as any)["amo_forms_loaded"] || function(f: any, k: any) {
-      (window as any)["amo_forms_loaded"].f = ((window as any)["amo_forms_loaded"].f || []).concat([[f, k]]);
-    };
-
-    // 4. Inject the script directly into the container instead of body
-    // Some amoCRM scripts look for their parent element
+    // 3. Create and append the script
     const script = document.createElement("script");
-    script.id = scriptId;
+    script.id = "amoforms_script_1738426";
     script.async = true;
     script.charset = "utf-8";
     script.src = "https://forms.amocrm.ru/forms/assets/js/amoforms.js?1786780023";
     
-    const container = document.getElementById("amoforms_container_1738426");
-    if (container) {
-      container.appendChild(script);
-    } else {
-      document.body.appendChild(script);
-    }
+    // We append to body to ensure it's outside any React shadow DOM or restricted areas if any
+    document.body.appendChild(script);
 
     return () => {
-      // Basic cleanup
-      const scriptToRemove = document.getElementById(scriptId);
+      const scriptToRemove = document.getElementById("amoforms_script_1738426");
       if (scriptToRemove) scriptToRemove.remove();
     };
   }, []);
@@ -82,12 +74,13 @@ export function LeadForm() {
         <Reveal delay={80}>
           <div className="glass rounded-xl p-6 min-h-[500px] relative overflow-hidden bg-[#0A0A0A]/80 border-[#B4FF00]/20 flex flex-col items-center justify-center">
             {/* 
-              Target container for the amoCRM form injection.
-              If the script doesn't automatically target this ID, 
-              amoCRM usually appends to its own script tag.
+              Target container. The amoCRM script usually looks for a 
+              script tag with its ID or appends to a specific class.
+              If it's a modal form, it won't appear here, but we style 
+              it anyway.
             */}
-            <div id="amoforms_container_1738426" className="w-full h-full flex items-center justify-center min-h-[400px]">
-              <div className="text-center">
+            <div id="amoforms_container_1738426" className="w-full h-full min-h-[400px]">
+              <div className="text-center py-20">
                 <div className="mb-4 text-primary animate-pulse">
                   <div className="size-10 rounded-full border-2 border-primary border-t-transparent animate-spin mx-auto mb-4" />
                   Загрузка формы amoCRM...
@@ -105,27 +98,26 @@ export function LeadForm() {
           font-family: 'Inter', sans-serif !important;
         }
         
-        /* Force form elements to fit our dark theme where possible */
         .amoforms-button {
           background-color: #B4FF00 !important;
           color: #0A0A0A !important;
           border-radius: 8px !important;
           font-weight: 600 !important;
-          border: none !important;
-          padding: 12px 24px !important;
-        }
-
-        .amoforms-input {
-          background-color: rgba(255, 255, 255, 0.05) !important;
-          border: 1px solid rgba(180, 255, 0, 0.2) !important;
-          color: white !important;
-          border-radius: 6px !important;
+          text-transform: uppercase !important;
+          letter-spacing: 0.05em !important;
         }
 
         iframe[id^="amoforms_"] {
           background: transparent !important;
           border-radius: 12px !important;
-          min-height: 450px !important;
+          width: 100% !important;
+        }
+
+        /* If the form is in a modal, adjust its background */
+        .amoforms-modal-content {
+          background-color: #0A0A0A !important;
+          border: 1px solid rgba(180, 255, 0, 0.2) !important;
+          border-radius: 16px !important;
         }
       `}</style>
     </Section>
