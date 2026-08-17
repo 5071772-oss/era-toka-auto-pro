@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnPrimary, btnSmall, prefillModel } from "./ui";
+import zeekr001frAsset from "@/assets/zeekr-001-fr.jpg.asset.json";
 
 interface CarCardProps {
   name: string;
@@ -110,7 +111,7 @@ const CARS = [
     name: "Zeekr 001 FR",
     specs: ["Электромобиль", "1265 л.с."],
     text: "Гипер-хэтчбек с четырьмя электромоторами. Бескомпромиссная мощность и управляемость в сочетании с премиальным интерьером.",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/zeekr-001-fr-ev-specs-features-price-1_400x0.jpg",
+    img: zeekr001frAsset.url,
   },
 ];
 
