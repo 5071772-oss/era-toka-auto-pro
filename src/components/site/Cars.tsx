@@ -6,6 +6,7 @@ import { Section, SectionHeading, btnPrimary, btnSmall, prefillModel } from "./u
 import zeekr001frAsset from "@/assets/zeekr-001-fr.jpg.asset.json";
 import l9UltraAsset from "@/assets/l9-ultra.jpg.asset.json";
 import aitoM9Asset from "@/assets/aito-m9.jpg.asset.json";
+import xiaomiSu7Asset from "@/assets/xiaomi-su7-ultra.jpg.asset.json";
 
 interface CarCardProps {
   name: string;
@@ -95,7 +96,7 @@ const CARS = [
     name: "Xiaomi SU7 Ultra",
     specs: ["Электромобиль"],
     text: "Ультра-скоростной электрический седан с рекордными характеристиками. Для тех, кто ценит максимальный драйв и передовые технологии Xiaomi.",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/Снимок экрана 2024-10-31 в 09.06.33_400x0.png",
+    img: xiaomiSu7Asset.url,
   },
   {
     name: "Huawei Aito M9, 6 мест",
