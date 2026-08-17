@@ -3,6 +3,8 @@ import { CATALOG_URL } from "@/lib/brand";
 import { btnPrimary, btnSmall, prefillModel, SectionHeading } from "./ui";
 import l7Asset from "@/assets/l7-ultra.jpg.asset.json";
 
+import avatrAsset from "@/assets/avatr-07.jpg.asset.json";
+
 const CARS = [
   {
     title: "Zeekr 9X Max",
@@ -61,7 +63,7 @@ const CARS = [
   },
   {
     title: "Avatr 07 Ultra",
-    img: "https://images.unsplash.com/photo-1621359953476-b0600b1730ea?q=80&w=800&auto=format&fit=crop",
+    img: avatrAsset.url,
     price: "От 5 420 000 ₽",
   },
 ];
