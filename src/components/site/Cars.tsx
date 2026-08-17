@@ -67,7 +67,7 @@ function CarCard({ name, specs, text, img, index }: CarCardProps) {
             <button
               type="button"
               onClick={() => prefillModel(`Аналог: ${name}`)}
-              className={`${btnSmall} py-2.5`}
+              className={`${btnSmall} flex-1`}
             >
               Подобрать аналог
               <ArrowUpRight className="size-3.5" aria-hidden="true" />
