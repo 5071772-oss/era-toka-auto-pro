@@ -60,7 +60,7 @@ function CarCard({ name, specs, text, img, index }: CarCardProps) {
             <button
               type="button"
               onClick={() => prefillModel(name)}
-              className={`${btnPrimary} py-2.5`}
+              className={`${btnPrimary} flex-1`}
             >
               Узнать стоимость
             </button>
