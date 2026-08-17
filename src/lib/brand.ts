@@ -1,6 +1,8 @@
 export const TELEGRAM_URL = "https://t.me/Exellenz";
 export const TELEGRAM_HANDLE = "@Exellenz";
 export const MESSENGER_MAX_URL = "https://max.ru/u/f9LHodD0cOIknpoSdEj5jAF1syYG_EuX0OeibHu7xlI75ewuRd8cVRCP_UI";
+export const PHONE = "+79162253359";
+export const PHONE_FORMATTED = "+7 (916) 225-33-59";
 export const CATALOG_URL = "https://uk3963.craftum.io/products";
 export const BRAND = "ЭРА ТОКА";
 export const TAGLINE = "Время двигаться иначе";

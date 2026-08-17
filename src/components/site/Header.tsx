@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Menu, Send, X } from "lucide-react";
+import { Menu, Phone, Send, X } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { BRAND, MESSENGER_MAX_URL, NAV_ITEMS, TAGLINE, TELEGRAM_URL } from "@/lib/brand";
+import { BRAND, MESSENGER_MAX_URL, NAV_ITEMS, PHONE, PHONE_FORMATTED, TAGLINE, TELEGRAM_URL } from "@/lib/brand";
 import { btnPrimary, scrollToForm } from "./ui";
 
 export function Header() {
@@ -53,7 +53,14 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-6 md:flex">
+          <a
+            href={`tel:${PHONE}`}
+            className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary"
+          >
+            <Phone className="size-4" />
+            <span>{PHONE_FORMATTED}</span>
+          </a>
           <div className="flex items-center gap-1.5 rounded-md border border-border p-1">
             <a
               href={TELEGRAM_URL}
@@ -128,6 +135,14 @@ export function Header() {
                 </a>
               )
             ))}
+            <a
+              href={`tel:${PHONE}`}
+              className="flex w-full items-center justify-center gap-2 rounded-md border border-border px-4 py-3 text-sm font-medium"
+              onClick={() => setOpen(false)}
+            >
+              <Phone className="size-4" />
+              {PHONE_FORMATTED}
+            </a>
             <div className="mt-2 flex items-center gap-2">
               <a
                 href={TELEGRAM_URL}

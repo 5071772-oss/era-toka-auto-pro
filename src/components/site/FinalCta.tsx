@@ -1,5 +1,5 @@
-import { Send } from "lucide-react";
-import { MESSENGER_MAX_URL, TELEGRAM_URL } from "@/lib/brand";
+import { Phone, Send } from "lucide-react";
+import { MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_URL } from "@/lib/brand";
 import { Reveal } from "./Reveal";
 import { Section, btnGhost, btnPrimary, scrollToForm } from "./ui";
 
@@ -20,6 +20,10 @@ export function FinalCta() {
             <button type="button" onClick={scrollToForm} className={btnPrimary}>
               Начать подбор
             </button>
+            <a href={`tel:${PHONE}`} className={`${btnGhost} flex-1 sm:flex-initial`}>
+              <Phone className="size-4" aria-hidden="true" />
+              {PHONE_FORMATTED}
+            </a>
             <div className="flex gap-2">
               <a href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" className={`${btnGhost} flex-1 sm:flex-initial`}>
                 <Send className="size-4" aria-hidden="true" />
