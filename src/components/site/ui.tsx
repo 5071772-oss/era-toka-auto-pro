@@ -1,13 +1,13 @@
 import type { ReactNode } from "react";
 
 export const btnPrimary =
-  "inline-flex items-center justify-center gap-2 rounded-md bg-primary px-5 py-3 text-sm font-semibold tracking-tight text-primary-foreground transition-all hover:brightness-110 hover:shadow-[0_0_28px_var(--neon-soft)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+  "inline-flex items-center justify-center gap-2 rounded-md bg-primary px-5 py-2.5 text-[13px] font-semibold tracking-tight text-primary-foreground transition-all hover:brightness-110 hover:shadow-[0_0_20px_var(--neon-soft)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
 export const btnGhost =
-  "inline-flex items-center justify-center gap-2 rounded-md border border-border bg-transparent px-5 py-3 text-sm font-medium tracking-tight text-foreground transition-colors hover:border-primary/60 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+  "inline-flex items-center justify-center gap-2 rounded-md border border-border bg-transparent px-5 py-2.5 text-[13px] font-medium tracking-tight text-foreground transition-colors hover:border-primary/60 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
 export const btnSmall =
-  "inline-flex items-center justify-center gap-2 rounded-md border border-border px-4 py-2 text-xs font-medium tracking-tight text-muted-foreground transition-colors hover:border-primary/60 hover:text-primary";
+  "inline-flex items-center justify-center gap-2 rounded-md border border-border px-4 py-2 text-[11px] font-medium tracking-tight text-muted-foreground transition-colors hover:border-primary/60 hover:text-primary";
 
 export function Section({
   id,
