@@ -2,81 +2,17 @@ import * as React from "react";
 import { Reveal } from "./Reveal";
 import { CATALOG_URL } from "@/lib/brand";
 import { btnPrimary, btnSmall, prefillModel, SectionHeading } from "./ui";
-import l7Asset from "@/assets/l7-ultra.jpg.asset.json";
+import { CARS, Car } from "@/lib/catalog-data";
+import { Search, X, Info } from "lucide-react";
 
-import avatrAsset from "@/assets/avatr-07.jpg.asset.json";
-
-const CARS = [
-  {
-    title: "Zeekr 9X Max",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/zeekr-9x-5_400x0.jpg",
-    price: "От 5 239 000 ₽",
-  },
-  {
-    title: "Geely Galaxy M9",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-08-26%20%D0%B2%2023.59.43_400x0.png",
-    price: "От 5 205 000 ₽",
-  },
-  {
-    title: "Voyah Free+",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/voyah_free_launch-800x450_400x0.jpg",
-    price: "От 4 915 000 ₽",
-  },
-  {
-    title: "Lixiang i8",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/hq720_400x0.jpg",
-    price: "От 5 085 000 ₽",
-  },
-  {
-    title: "Xiaomi YU7 Max",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/foto-yu7_01_400x0.jpg",
-    price: "От 4 999 000 ₽",
-  },
-  {
-    title: "Huawei Aito M8 Ultra",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/AITO-M8_04_400x0.jpg",
-    price: "От 5 190 000 ₽",
-  },
-  {
-    title: "Maextro S800",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/1400x1050_autohomecar__ChxoHmd3luWAJxOaABgT1mnJmII850_large_400x0.jpg",
-    price: "От 8 800 000 ₽",
-  },
-  {
-    title: "Zeekr 007 GT",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/zeekr-007-gt-7gt_400x0.jpg",
-    price: "От 5 007 000 ₽",
-  },
-  {
-    title: "BYD Tang L dm",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/photo_2025-04-13_20-09-39_400x0.jpg",
-    price: "От 5 050 000 ₽",
-  },
-  {
-    title: "BYD Tang L EV",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/photo_2025-01-15_20-17-19_400x0.jpg",
-    price: "От 5 040 000 ₽",
-  },
-  {
-    title: "Li Auto L7 Ultra",
-    img: l7Asset.url,
-    price: "От 4 850 000 ₽",
-  },
-  {
-    title: "Avatr 07 Ultra",
-    img: avatrAsset.url,
-    price: "От 5 420 000 ₽",
-  },
-];
-
-function CarCard({ car }: { car: typeof CARS[0] }) {
+function CarCard({ car, onShowDetails }: { car: Car; onShowDetails: (car: Car) => void }) {
   const [error, setError] = React.useState(false);
 
   return (
     <div className="group glass overflow-hidden rounded-2xl border border-border transition-all hover:border-primary/40 hover:shadow-[0_0_32px_rgba(180,255,0,0.05)]">
       <div 
         className="relative aspect-[16/10] overflow-hidden cursor-pointer bg-muted flex items-center justify-center"
-        onClick={() => prefillModel(car.title)}
+        onClick={() => onShowDetails(car)}
       >
         {error ? (
           <div className="flex flex-col items-center gap-2 p-4 text-center">
@@ -94,9 +30,19 @@ function CarCard({ car }: { car: typeof CARS[0] }) {
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-60" />
+        <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="bg-black/60 backdrop-blur-md p-2 rounded-full border border-white/10">
+            <Info className="size-5 text-primary" />
+          </div>
+        </div>
       </div>
       <div className="p-6">
-        <h3 className="text-xl font-semibold tracking-tight">{car.title}</h3>
+        <div className="flex items-start justify-between gap-2">
+          <h3 className="text-xl font-semibold tracking-tight leading-tight">{car.title}</h3>
+          <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider">
+            {car.brand}
+          </span>
+        </div>
         <div className="mt-4 flex items-center justify-between gap-4">
           <div>
             <p className="text-xs uppercase tracking-wider text-muted-foreground">Цена</p>
@@ -104,7 +50,10 @@ function CarCard({ car }: { car: typeof CARS[0] }) {
           </div>
           <button
             type="button"
-            onClick={() => prefillModel(car.title)}
+            onClick={(e) => {
+              e.stopPropagation();
+              prefillModel(car.title);
+            }}
             className={btnSmall}
           >
             Заказать
@@ -115,31 +64,186 @@ function CarCard({ car }: { car: typeof CARS[0] }) {
   );
 }
 
-export function CatalogGrid() {
+function DetailModal({ car, onClose }: { car: Car | null; onClose: () => void }) {
+  if (!car) return null;
+
   return (
-    <section className="py-20 sm:py-28">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+      <div 
+        className="absolute inset-0 bg-background/80 backdrop-blur-xl animate-in fade-in duration-300"
+        onClick={onClose}
+      />
+      <div className="relative w-full max-w-2xl glass border border-primary/20 rounded-2xl overflow-hidden animate-in zoom-in-95 duration-300 shadow-[0_0_80px_rgba(0,0,0,0.5)]">
+        <button 
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/50 text-white/80 hover:text-white hover:bg-black/80 transition-colors"
+        >
+          <X className="size-6" />
+        </button>
+        
+        <div className="max-h-[85vh] overflow-y-auto">
+          <div className="relative aspect-video">
+             <img src={car.img} alt={car.title} className="w-full h-full object-cover" />
+             <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+          </div>
+          
+          <div className="p-6 sm:p-8">
+            <div className="flex items-center gap-3 mb-4">
+               <span className="px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-[0.2em]">
+                 {car.brand}
+               </span>
+               <div className="h-px flex-1 bg-border/40" />
+            </div>
+            
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2">{car.title}</h2>
+            <p className="text-2xl font-bold text-primary mb-8">{car.price}</p>
+            
+            <div className="space-y-6">
+              <div>
+                <h4 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-4">Характеристики</h4>
+            <div className="grid gap-3 text-sm leading-relaxed text-foreground/90 bg-white/5 rounded-xl p-5 border border-white/5">
+                  {(car.specs.split('|')[0] || '').replace('Характеристики:', '').trim().split('. ').map((spec, i) => (
+                    spec && <div key={i} className="flex items-start gap-3">
+                      <div className="mt-1.5 size-1.5 rounded-full bg-primary shrink-0" />
+                      <span>{spec}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {car.specs && car.specs.includes('|') && (
+                <div>
+                   <h4 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-4">Условия покупки</h4>
+                   <div className="text-sm leading-relaxed text-muted-foreground bg-black/20 rounded-xl p-5 border border-white/5">
+                     {(car.specs.split('|')[1] || '').trim()}
+                   </div>
+                </div>
+              )}
+            </div>
+
+            <div className="mt-10 flex flex-col sm:flex-row gap-4">
+              <button 
+                onClick={() => {
+                  prefillModel(car.title);
+                  onClose();
+                }}
+                className={`${btnPrimary} flex-1 py-4 text-base`}
+              >
+                Оформить заявку
+              </button>
+              <button 
+                onClick={onClose}
+                className="px-8 py-4 rounded-full border border-border hover:bg-white/5 transition-colors text-sm font-medium"
+              >
+                Закрыть
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function CatalogGrid() {
+  const [search, setSearch] = React.useState("");
+  const [activeBrand, setActiveBrand] = React.useState<string | null>(null);
+  const [selectedCar, setSelectedCar] = React.useState<Car | null>(null);
+
+  const brands = React.useMemo(() => {
+    const set = new Set(CARS.map(c => c.brand));
+    return Array.from(set).sort();
+  }, []);
+
+  const filteredCars = React.useMemo(() => {
+    return CARS.filter(car => {
+      const matchesSearch = car.title.toLowerCase().includes(search.toLowerCase());
+      const matchesBrand = activeBrand ? car.brand === activeBrand : true;
+      return matchesSearch && matchesBrand;
+    });
+  }, [search, activeBrand]);
+
+  return (
+    <section className="py-20 sm:py-28 relative">
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
         <Reveal>
           <SectionHeading
             eyebrow="Каталог 2026"
-            title="Актуальные модели в наличии и под заказ"
-            subtitle="Мы подобрали лучшие электромобили и гибриды, которые можно привезти в РФ прямо сейчас. Цены указаны ориентировочно с учетом логистики и таможни."
+            title="Более 130 премиальных моделей"
+            subtitle="Актуальные электромобили и гибриды. Все машины разбиты по производителям для удобного поиска."
           />
         </Reveal>
 
+        {/* Search & Filters */}
+        <div className="mt-12 space-y-6">
+          <Reveal delay={50}>
+            <div className="relative group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
+              <input 
+                type="text"
+                placeholder="Поиск по названию модели..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all"
+              />
+              {search && (
+                <button 
+                  onClick={() => setSearch("")}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/10 transition-colors"
+                >
+                  <X className="size-4" />
+                </button>
+              )}
+            </div>
+          </Reveal>
+
+          <Reveal delay={100}>
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => setActiveBrand(null)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${!activeBrand ? 'bg-primary text-black' : 'bg-white/5 border border-white/10 text-muted-foreground hover:text-foreground hover:border-white/20'}`}
+              >
+                Все марки
+              </button>
+              {brands.map(brand => (
+                <button
+                  key={brand}
+                  onClick={() => setActiveBrand(brand)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeBrand === brand ? 'bg-primary text-black' : 'bg-white/5 border border-white/10 text-muted-foreground hover:text-foreground hover:border-white/20'}`}
+                >
+                  {brand}
+                </button>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+
+        {/* Grid */}
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {CARS.map((car, i) => (
-            <Reveal key={i} delay={i * 50}>
-              <CarCard car={car} />
+          {filteredCars.map((car, i) => (
+            <Reveal key={car.title} delay={(i % 12) * 30}>
+              <CarCard car={car} onShowDetails={setSelectedCar} />
             </Reveal>
           ))}
         </div>
 
+        {filteredCars.length === 0 && (
+          <div className="mt-20 text-center py-20 glass rounded-3xl border-dashed border-2 border-border/50">
+             <p className="text-xl text-muted-foreground">По вашему запросу ничего не найдено</p>
+             <button 
+               onClick={() => { setSearch(""); setActiveBrand(null); }}
+               className="mt-4 text-primary hover:underline"
+             >
+               Сбросить фильтры
+             </button>
+          </div>
+        )}
+
         <Reveal delay={200}>
           <div className="mt-20 flex flex-col items-center text-center">
-            <h3 className="text-2xl font-semibold tracking-tight">Не нашли подходящий автомобиль?</h3>
+            <h3 className="text-2xl font-semibold tracking-tight">Нужен полный прайс-лист?</h3>
             <p className="mt-4 max-w-2xl text-muted-foreground">
-              В нашем полном каталоге представлено более 500 моделей. Переходите на наш основной ресурс, чтобы увидеть весь ассортимент.
+              В нашем расширенном каталоге представлено более 500 моделей. Вы можете ознакомиться с ними на нашем внешнем ресурсе.
             </p>
             <a 
               href={CATALOG_URL} 
@@ -152,6 +256,9 @@ export function CatalogGrid() {
           </div>
         </Reveal>
       </div>
+
+      {/* Detail Modal */}
+      <DetailModal car={selectedCar} onClose={() => setSelectedCar(null)} />
     </section>
   );
 }
