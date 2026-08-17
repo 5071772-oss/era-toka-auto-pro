@@ -1,5 +1,7 @@
 import { Menu, Send, X } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { BRAND, CATALOG_URL, EXPERT, MESSENGER_MAX_URL, NAV_ITEMS, TAGLINE, TELEGRAM_HANDLE, TELEGRAM_URL } from "@/lib/brand";
+
 
 const LINKS = NAV_ITEMS.filter((item) => item.label !== "Услуги");
 
@@ -51,22 +53,30 @@ export function Footer() {
         </div>
 
         <nav aria-label="Навигация в подвале" className="flex flex-col gap-2">
-          <a
-            href={CATALOG_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/catalog"
             className="text-sm text-muted-foreground transition-colors hover:text-primary"
           >
             Каталог
-          </a>
+          </Link>
           {LINKS.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="text-sm text-muted-foreground transition-colors hover:text-primary"
-            >
-              {item.label}
-            </a>
+            item.href.startsWith('/') ? (
+              <Link
+                key={item.href}
+                to={item.href}
+                className="text-sm text-muted-foreground transition-colors hover:text-primary"
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <a
+                key={item.href}
+                href={item.href}
+                className="text-sm text-muted-foreground transition-colors hover:text-primary"
+              >
+                {item.label}
+              </a>
+            )
           ))}
           <a
             href={TELEGRAM_URL}
