@@ -42,11 +42,20 @@ export function Cars() {
         />
       </Reveal>
 
-      <div className="mt-14 grid gap-5 md:grid-cols-2">
+      <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {CARS.map((car, i) => (
           <Reveal key={car.name} delay={i * 60} className="h-full">
-            <article className="glass flex h-full flex-col rounded-xl p-7">
-              <div className="flex flex-wrap gap-2">
+            <article className="glass group flex h-full flex-col overflow-hidden rounded-xl">
+              <div className="aspect-video w-full overflow-hidden bg-white/5">
+                <img
+                  src={car.img}
+                  alt={car.name}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              <div className="flex flex-1 flex-col p-7">
+                <div className="flex flex-wrap gap-2">
                 {car.specs.map((spec) => (
                   <span
                     key={spec}
@@ -77,6 +86,7 @@ export function Cars() {
                   Подобрать аналог
                   <ArrowUpRight className="size-3.5" aria-hidden="true" />
                 </button>
+                </div>
               </div>
             </article>
           </Reveal>
