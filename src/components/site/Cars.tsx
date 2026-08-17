@@ -101,7 +101,7 @@ const CARS = [
     name: "Huawei Aito M9, 6 мест",
     specs: ["Гибрид", "3 ряда сидений"],
     text: "Флагманский семейный кроссовер с интеллектуальной системой Huawei. Максимальный комфорт, безопасность и передовые функции автопилота.",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/huawei-aito-m9-ev-specs-features-price-1_400x0.jpg",
+    img: aitoM9Asset.url,
   },
   {
     name: "Li Auto L9 Ultra",
