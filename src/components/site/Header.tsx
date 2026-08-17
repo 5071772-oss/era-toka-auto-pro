@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Menu, Send, X } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { BRAND, MESSENGER_MAX_URL, NAV_ITEMS, TAGLINE, TELEGRAM_URL } from "@/lib/brand";
 import { btnPrimary, scrollToForm } from "./ui";
 
@@ -21,24 +22,34 @@ export function Header() {
       }`}
     >
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
-        <a href="#hero" className="group flex flex-col leading-none">
+        <Link to="/" className="group flex flex-col leading-none">
           <span className="text-base font-semibold tracking-[0.18em] text-foreground">
             {BRAND}
           </span>
           <span className="mt-1 text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
             {TAGLINE}
           </span>
-        </a>
+        </Link>
 
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Основная навигация">
           {NAV_ITEMS.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="text-sm text-muted-foreground transition-colors hover:text-primary"
-            >
-              {item.label}
-            </a>
+            item.href.startsWith('/') ? (
+              <Link
+                key={item.href}
+                to={item.href}
+                className="text-sm text-muted-foreground transition-colors hover:text-primary"
+              >
+                {item.label}
+              </Link>
+            ) : (
+              <a
+                key={item.href}
+                href={item.href}
+                className="text-sm text-muted-foreground transition-colors hover:text-primary"
+              >
+                {item.label}
+              </a>
+            )
           ))}
         </nav>
 
@@ -97,14 +108,25 @@ export function Header() {
         <div className="glass border-t border-border md:hidden">
           <div className="mx-auto flex w-full max-w-6xl flex-col gap-1 px-5 py-4">
             {NAV_ITEMS.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className="rounded-md px-2 py-3 text-sm text-muted-foreground transition-colors hover:text-primary"
-              >
-                {item.label}
-              </a>
+              item.href.startsWith('/') ? (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  onClick={() => setOpen(false)}
+                  className="rounded-md px-2 py-3 text-sm text-muted-foreground transition-colors hover:text-primary"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className="rounded-md px-2 py-3 text-sm text-muted-foreground transition-colors hover:text-primary"
+                >
+                  {item.label}
+                </a>
+              )
             ))}
             <div className="mt-2 flex items-center gap-2">
               <a
