@@ -5,6 +5,7 @@ import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnPrimary, btnSmall, prefillModel } from "./ui";
 import zeekr001frAsset from "@/assets/zeekr-001-fr.jpg.asset.json";
 import l9UltraAsset from "@/assets/l9-ultra.jpg.asset.json";
+import aitoM9Asset from "@/assets/aito-m9.jpg.asset.json";
 
 interface CarCardProps {
   name: string;
@@ -100,7 +101,7 @@ const CARS = [
     name: "Huawei Aito M9, 6 мест",
     specs: ["Гибрид", "3 ряда сидений"],
     text: "Флагманский семейный кроссовер с интеллектуальной системой Huawei. Максимальный комфорт, безопасность и передовые функции автопилота.",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/huawei-aito-m9-ev-specs-features-price-1_400x0.jpg",
+    img: aitoM9Asset.url,
   },
   {
     name: "Li Auto L9 Ultra",
