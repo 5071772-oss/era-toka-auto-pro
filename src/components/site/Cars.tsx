@@ -96,7 +96,7 @@ const CARS = [
     name: "Xiaomi SU7 Ultra",
     specs: ["Электромобиль"],
     text: "Ультра-скоростной электрический седан с рекордными характеристиками. Для тех, кто ценит максимальный драйв и передовые технологии Xiaomi.",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/Снимок экрана 2024-10-31 в 09.06.33_400x0.png",
+    img: xiaomiSu7Asset.url,
   },
   {
     name: "Huawei Aito M9, 6 мест",
