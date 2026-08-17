@@ -1,28 +1,31 @@
----
-title: Integrate amoCRM lead form
-description: Replace the custom lead form with an official amoCRM embedded form script and container.
----
 
-## User Request
-The user wants to integrate an amoCRM form into the website to handle leads and ensure they are sent directly to their amoCRM account.
+# Plan - Catalog Integration
+
+Create a new dedicated catalog page featuring vehicles scraped from gscarbuy.com, integrated seamlessly with the "ЭРА ТОКА" premium brand identity.
+
+## User Review Required
+
+> [!IMPORTANT]
+> The catalog will be a static snapshot of the current inventory on gscarbuy.com. Would you like a way to update this data later, or is a one-time integration sufficient for now?
+
+## Proposed Changes
+
+### 1. New Catalog Page
+- Create `src/routes/catalog.tsx` for the dedicated catalog view.
+- Implement a premium grid layout for car cards using the branding tokens.
+- Add "Order" buttons on each car that link to the consultation form.
+
+### 2. Navigation Updates
+- Update `src/lib/brand.ts` to include the new catalog route in navigation.
+- Modify `src/components/site/Header.tsx` to include the link.
+- Ensure the mobile menu and footer also reflect the new page.
+
+### 3. Catalog Component
+- Create `src/components/site/CatalogGrid.tsx` to manage the display of cars.
+- Use the data extracted: Zeekr 9X, Geely Galaxy M9, Voyah Free+, Lixiang i8, Xiaomi YU7, Huawei Aito M8, Maextro S800, BYD Tang L.
 
 ## Technical Details
-- **amoCRM Script**: An initialization script and an external script `https://forms.amocrm.ru/forms/assets/js/amoforms.js` need to be loaded.
-- **Placement**: The `LeadForm` component in `src/components/site/LeadForm.tsx` will be modified to render the amoCRM container instead of the manual React form.
-- **Script Injection**: We will use a `useEffect` hook in the component to safely inject the scripts into the DOM when the component mounts, ensuring it doesn't break SSR.
-
-## Implementation Plan
-
-### 1. Update LeadForm Component
-- Modify `src/components/site/LeadForm.tsx`.
-- Remove the manual form state (`status`, `errors`, `onSubmit`).
-- Remove the `form` JSX.
-- Add a `useEffect` to inject the amoCRM script and initialization code.
-- Provide a target container with the ID or class expected by amoCRM (usually it looks for a script with a specific ID, but here the provided script seems to append itself or target a specific ID).
-- *Observation*: The provided script uses `a[o+r]({id:\"1738426\", ...})` and looks for script `amoforms_script_1738426`.
-
-### 2. Clean up unused code
-- Remove `src/lib/leads.schema.ts`, `src/lib/leads.functions.ts`, and `src/lib/leads.server.ts` if they are no longer needed (since amoCRM handles the submission directly).
-
-### 3. Verify
-- Open the preview and ensure the form renders correctly.
+- The data is stored in a static JSON file or a server function for easy updates.
+- Images will be proxied or referenced directly from the source.
+- Responsive design for mobile/desktop.
+- SEO metadata for the /catalog route.
