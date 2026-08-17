@@ -101,8 +101,8 @@ function DetailModal({ car, onClose }: { car: Car | null; onClose: () => void })
             <div className="space-y-6">
               <div>
                 <h4 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-4">Характеристики</h4>
-                <div className="grid gap-3 text-sm leading-relaxed text-foreground/90 bg-white/5 rounded-xl p-5 border border-white/5">
-                  {car.specs.split('|')[0].replace('Характеристики:', '').trim().split('. ').map((spec, i) => (
+            <div className="grid gap-3 text-sm leading-relaxed text-foreground/90 bg-white/5 rounded-xl p-5 border border-white/5">
+                  {(car.specs.split('|')[0] || '').replace('Характеристики:', '').trim().split('. ').map((spec, i) => (
                     spec && <div key={i} className="flex items-start gap-3">
                       <div className="mt-1.5 size-1.5 rounded-full bg-primary shrink-0" />
                       <span>{spec}</span>
@@ -111,11 +111,11 @@ function DetailModal({ car, onClose }: { car: Car | null; onClose: () => void })
                 </div>
               </div>
 
-              {car.specs.includes('|') && (
+              {car.specs && car.specs.includes('|') && (
                 <div>
                    <h4 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-4">Условия покупки</h4>
                    <div className="text-sm leading-relaxed text-muted-foreground bg-black/20 rounded-xl p-5 border border-white/5">
-                     {car.specs.split('|')[1].trim()}
+                     {(car.specs.split('|')[1] || '').trim()}
                    </div>
                 </div>
               )}
