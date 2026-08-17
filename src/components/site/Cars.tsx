@@ -1,7 +1,79 @@
+import * as React from "react";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnPrimary, btnSmall, prefillModel } from "./ui";
+
+interface CarCardProps {
+  name: string;
+  specs: string[];
+  text: string;
+  img: string;
+  index: number;
+}
+
+function CarCard({ name, specs, text, img, index }: CarCardProps) {
+  const [error, setError] = React.useState(false);
+
+  return (
+    <Reveal delay={index * 60} className="h-full">
+      <article className="glass group flex h-full flex-col overflow-hidden rounded-xl">
+        <div className="aspect-[16/10] w-full overflow-hidden bg-white/5 flex items-center justify-center">
+          {error ? (
+            <div className="flex flex-col items-center gap-2 p-4 text-center">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="text-primary text-xl font-bold">{name[0]}</span>
+              </div>
+              <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">{name}</p>
+            </div>
+          ) : (
+            <img
+              src={img}
+              alt={name}
+              loading="lazy"
+              onError={() => setError(true)}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+            />
+          )}
+        </div>
+        <div className="flex flex-1 flex-col p-7">
+          <div className="flex flex-wrap gap-2">
+            {specs.map((spec) => (
+              <span
+                key={spec}
+                className="rounded-full border border-primary/30 px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-primary"
+              >
+                {spec}
+              </span>
+            ))}
+          </div>
+          <h3 className="mt-5 text-xl font-semibold tracking-tight">{name}</h3>
+          <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{text}</p>
+          <p className="mt-5 text-xs leading-relaxed text-steel">
+            Рассчитаем актуальную стоимость под вашу конфигурацию.
+          </p>
+          <div className="mt-6 flex flex-col gap-2 sm:flex-row">
+            <button
+              type="button"
+              onClick={() => prefillModel(name)}
+              className={`${btnPrimary} py-2.5`}
+            >
+              Узнать стоимость
+            </button>
+            <button
+              type="button"
+              onClick={() => prefillModel(`Аналог: ${name}`)}
+              className={`${btnSmall} py-2.5`}
+            >
+              Подобрать аналог
+              <ArrowUpRight className="size-3.5" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+      </article>
+    </Reveal>
+  );
+}
 
 const CARS = [
   {
@@ -55,52 +127,7 @@ export function Cars() {
 
       <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {CARS.map((car, i) => (
-          <Reveal key={car.name} delay={i * 60} className="h-full">
-            <article className="glass group flex h-full flex-col overflow-hidden rounded-xl">
-              <div className="aspect-video w-full overflow-hidden bg-white/5">
-                <img
-                  src={car.img}
-                  alt={car.name}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-              </div>
-              <div className="flex flex-1 flex-col p-7">
-                <div className="flex flex-wrap gap-2">
-                  {car.specs.map((spec) => (
-                    <span
-                      key={spec}
-                      className="rounded-full border border-primary/30 px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-primary"
-                    >
-                      {spec}
-                    </span>
-                  ))}
-                </div>
-                <h3 className="mt-5 text-xl font-semibold tracking-tight">{car.name}</h3>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{car.text}</p>
-                <p className="mt-5 text-xs leading-relaxed text-steel">
-                  Рассчитаем актуальную стоимость под вашу конфигурацию.
-                </p>
-                <div className="mt-6 flex flex-col gap-2 sm:flex-row">
-                  <button
-                    type="button"
-                    onClick={() => prefillModel(car.name)}
-                    className={`${btnPrimary} py-2.5`}
-                  >
-                    Узнать стоимость
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => prefillModel(`Аналог: ${car.name}`)}
-                    className={`${btnSmall} py-2.5`}
-                  >
-                    Подобрать аналог
-                    <ArrowUpRight className="size-3.5" aria-hidden="true" />
-                  </button>
-                </div>
-              </div>
-            </article>
-          </Reveal>
+          <CarCard key={car.name} {...car} index={i} />
         ))}
       </div>
 
