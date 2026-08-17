@@ -1,6 +1,6 @@
-import { Menu, Send, X } from "lucide-react";
+import { Menu, Phone, Send, X } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { BRAND, CATALOG_URL, EXPERT, MESSENGER_MAX_URL, NAV_ITEMS, TAGLINE, TELEGRAM_HANDLE, TELEGRAM_URL } from "@/lib/brand";
+import { BRAND, CATALOG_URL, EXPERT, MESSENGER_MAX_URL, NAV_ITEMS, PHONE, PHONE_FORMATTED, TAGLINE, TELEGRAM_HANDLE, TELEGRAM_URL } from "@/lib/brand";
 
 
 const LINKS = NAV_ITEMS.filter((item) => item.label !== "Услуги");
@@ -18,6 +18,12 @@ export function Footer() {
 
         <div>
           <p className="text-sm font-medium">{EXPERT}</p>
+          <a
+            href={`tel:${PHONE}`}
+            className="mt-2 block text-sm transition-colors hover:text-primary"
+          >
+            {PHONE_FORMATTED}
+          </a>
           <div className="mt-2 flex items-center gap-2">
             <a
               href={TELEGRAM_URL}

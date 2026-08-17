@@ -1,6 +1,6 @@
-import { ArrowUpRight, Send } from "lucide-react";
+import { ArrowUpRight, Phone, Send } from "lucide-react";
 import heroImage from "@/assets/hero-ev.jpg";
-import { CATALOG_URL, EXPERT, MESSENGER_MAX_URL, TELEGRAM_URL } from "@/lib/brand";
+import { CATALOG_URL, EXPERT, MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_URL } from "@/lib/brand";
 import { btnGhost, btnPrimary, btnSmall, scrollToForm } from "./ui";
 
 const BADGES = ["BEV", "HEV", "PHEV", "EREV", "Китай", "Европа", "Америка", "Корея"];
@@ -55,6 +55,10 @@ export function Hero() {
           <button type="button" onClick={scrollToForm} className={btnPrimary}>
             Получить подбор
           </button>
+          <a href={`tel:${PHONE}`} className={`${btnGhost} flex-1 sm:flex-initial`}>
+            <Phone className="size-4" aria-hidden="true" />
+            {PHONE_FORMATTED}
+          </a>
           <div className="flex gap-2">
             <a href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" className={`${btnGhost} flex-1 sm:flex-initial`}>
               <Send className="size-4" aria-hidden="true" />
