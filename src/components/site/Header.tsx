@@ -54,45 +54,47 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-6 md:flex">
-          <a
-            href={`tel:${PHONE}`}
-            className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary"
-          >
-            <Phone className="size-4" />
-            <span>{PHONE_FORMATTED}</span>
-          </a>
-          <div className="flex items-center gap-1.5 rounded-md border border-border p-1">
-            <a
-              href={TELEGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex size-9 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-primary"
-              title="Написать в Telegram"
-            >
-              <Send className="size-4" aria-hidden="true" />
-            </a>
-            <div className="h-4 w-px bg-border" aria-hidden="true" />
-            <a
-              href={MESSENGER_MAX_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex size-9 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-primary"
-              title="Написать в Max"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="size-4"
-                aria-hidden="true"
+          <div className="flex flex-col items-end gap-1">
+            <div className="flex items-center gap-1.5 rounded-md border border-border p-1">
+              <a
+                href={TELEGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex size-8 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-primary"
+                title="Написать в Telegram"
               >
-                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-              </svg>
+                <Send className="size-3.5" aria-hidden="true" />
+              </a>
+              <div className="h-3 w-px bg-border" aria-hidden="true" />
+              <a
+                href={MESSENGER_MAX_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex size-8 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-primary"
+                title="Написать в Max"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="size-3.5"
+                  aria-hidden="true"
+                >
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                </svg>
+              </a>
+            </div>
+            <a
+              href={`tel:${PHONE}`}
+              className="flex items-center gap-1.5 text-[11px] font-medium tracking-wide text-muted-foreground transition-colors hover:text-primary"
+            >
+              <Phone className="size-3" />
+              <span>{PHONE_FORMATTED}</span>
             </a>
           </div>
           <button type="button" onClick={scrollToForm} className={`${btnPrimary} py-2.5`}>
