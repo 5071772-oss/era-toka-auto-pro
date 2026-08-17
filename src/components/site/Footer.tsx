@@ -72,22 +72,6 @@ export function Footer() {
               </a>
             )
           ))}
-          <a
-            href={TELEGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-muted-foreground transition-colors hover:text-primary"
-          >
-            Telegram
-          </a>
-          <a
-            href={MESSENGER_MAX_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-muted-foreground transition-colors hover:text-primary"
-          >
-            Написать в Max
-          </a>
         </nav>
       </div>
 
