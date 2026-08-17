@@ -4,6 +4,7 @@ import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnPrimary, btnSmall, prefillModel } from "./ui";
 import zeekr001frAsset from "@/assets/zeekr-001-fr.jpg.asset.json";
+import l9UltraAsset from "@/assets/l9-ultra.jpg.asset.json";
 
 interface CarCardProps {
   name: string;
@@ -105,7 +106,7 @@ const CARS = [
     name: "Li Auto L9 Ultra",
     specs: ["Гибрид"],
     text: "Вершина комфорта от Li Auto. Семейный особняк на колесах с пневмоподвеской, холодильником, экранами и невероятной плавностью хода.",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/li-auto-l9-ultra-hybrid-specs-features-price-1_400x0.jpg",
+    img: l9UltraAsset.url,
   },
   {
     name: "Zeekr 001 FR",
