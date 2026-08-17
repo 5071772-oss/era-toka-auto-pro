@@ -70,7 +70,7 @@ const CARS = [
 ];
 
 function CarCard({ car }: { car: typeof CARS[0] }) {
-  const [error, setError] = import.meta.env.SSR ? [false] : React.useState(false);
+  const [error, setError] = React.useState(false);
 
   return (
     <div className="group glass overflow-hidden rounded-2xl border border-border transition-all hover:border-primary/40 hover:shadow-[0_0_32px_rgba(180,255,0,0.05)]">
