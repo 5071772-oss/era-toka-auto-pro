@@ -2,7 +2,7 @@ import geoImage from "@/assets/geo-grid.jpg";
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading } from "./ui";
 
-const REGIONS = ["Китай", "Европа", "Америка", "Корея"];
+const REGIONS = ["Китай", "Европа", "Америка", "Корея", "Япония", "ОАЭ"];
 const DESCRIPTION =
   "Подбор моделей, проверка доступности, организация покупки, логистика и документальное сопровождение.";
 
@@ -19,10 +19,13 @@ export function Geography() {
       />
 
       <Reveal>
-        <SectionHeading eyebrow="География" title="Поставляем из ключевых автомобильных рынков" />
+        <SectionHeading 
+          eyebrow="География" 
+          title="Со всего мира, из любого уголка мира" 
+        />
       </Reveal>
 
-      <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {REGIONS.map((region, i) => (
           <Reveal key={region} delay={i * 60} className="h-full">
             <article className="glass h-full rounded-xl p-6">
