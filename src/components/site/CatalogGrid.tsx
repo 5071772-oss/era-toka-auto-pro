@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Reveal } from "./Reveal";
 import { CATALOG_URL } from "@/lib/brand";
 import { btnPrimary, btnSmall, prefillModel, SectionHeading } from "./ui";
@@ -68,6 +69,52 @@ const CARS = [
   },
 ];
 
+function CarCard({ car }: { car: typeof CARS[0] }) {
+  const [error, setError] = import.meta.env.SSR ? [false] : React.useState(false);
+
+  return (
+    <div className="group glass overflow-hidden rounded-2xl border border-border transition-all hover:border-primary/40 hover:shadow-[0_0_32px_rgba(180,255,0,0.05)]">
+      <div 
+        className="relative aspect-[16/10] overflow-hidden cursor-pointer bg-muted flex items-center justify-center"
+        onClick={() => prefillModel(car.title)}
+      >
+        {error ? (
+          <div className="flex flex-col items-center gap-2 p-4 text-center">
+            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+              <span className="text-primary text-xl font-bold">{car.title[0]}</span>
+            </div>
+            <p className="text-sm font-medium text-muted-foreground">{car.title}</p>
+          </div>
+        ) : (
+          <img
+            src={car.img}
+            alt={car.title}
+            onError={() => setError(true)}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-60" />
+      </div>
+      <div className="p-6">
+        <h3 className="text-xl font-semibold tracking-tight">{car.title}</h3>
+        <div className="mt-4 flex items-center justify-between gap-4">
+          <div>
+            <p className="text-xs uppercase tracking-wider text-muted-foreground">Цена</p>
+            <p className="mt-1 text-lg font-bold text-primary">{car.price}</p>
+          </div>
+          <button
+            type="button"
+            onClick={() => prefillModel(car.title)}
+            className={btnSmall}
+          >
+            Заказать
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function CatalogGrid() {
   return (
     <section className="py-20 sm:py-28">
@@ -83,35 +130,7 @@ export function CatalogGrid() {
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {CARS.map((car, i) => (
             <Reveal key={i} delay={i * 50}>
-            <div className="group glass overflow-hidden rounded-2xl border border-border transition-all hover:border-primary/40 hover:shadow-[0_0_32px_rgba(180,255,0,0.05)]">
-                <div 
-                  className="relative aspect-[16/10] overflow-hidden cursor-pointer"
-                  onClick={() => prefillModel(car.title)}
-                >
-                  <img
-                    src={car.img}
-                    alt={car.title}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-60" />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold tracking-tight">{car.title}</h3>
-                  <div className="mt-4 flex items-center justify-between gap-4">
-                    <div>
-                      <p className="text-xs uppercase tracking-wider text-muted-foreground">Цена</p>
-                      <p className="mt-1 text-lg font-bold text-primary">{car.price}</p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => prefillModel(car.title)}
-                      className={btnSmall}
-                    >
-                      Заказать
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <CarCard car={car} />
             </Reveal>
           ))}
         </div>
