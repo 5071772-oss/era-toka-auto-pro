@@ -1,6 +1,7 @@
 import { Reveal } from "./Reveal";
 import { CATALOG_URL } from "@/lib/brand";
 import { btnPrimary, btnSmall, prefillModel, SectionHeading } from "./ui";
+import l7Asset from "@/assets/l7-ultra.jpg.asset.json";
 
 const CARS = [
   {
@@ -55,7 +56,7 @@ const CARS = [
   },
   {
     title: "Li Auto L7 Ultra",
-    img: "https://images.unsplash.com/photo-1721664536214-411394c483d2?q=80&w=800&auto=format&fit=crop",
+    img: l7Asset.url,
     price: "От 4 850 000 ₽",
   },
   {
