@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Reveal } from "./Reveal";
-import { CATALOG_URL } from "@/lib/brand";
 import { btnPrimary, btnSmall, prefillModel, SectionHeading } from "./ui";
 import { CARS, Car } from "@/lib/catalog-data";
 import { Search, X, Info } from "lucide-react";
@@ -239,22 +238,6 @@ export function CatalogGrid() {
           </div>
         )}
 
-        <Reveal delay={200}>
-          <div className="mt-20 flex flex-col items-center text-center">
-            <h3 className="text-2xl font-semibold tracking-tight">Нужен полный прайс-лист?</h3>
-            <p className="mt-4 max-w-2xl text-muted-foreground">
-              В нашем расширенном каталоге представлено более 500 моделей. Вы можете ознакомиться с ними на нашем внешнем ресурсе.
-            </p>
-            <a 
-              href={CATALOG_URL} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className={`${btnPrimary} mt-8 px-10`}
-            >
-              Перейти в полный каталог
-            </a>
-          </div>
-        </Reveal>
       </div>
 
       {/* Detail Modal */}
