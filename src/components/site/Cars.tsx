@@ -6,6 +6,7 @@ import { Section, SectionHeading, btnPrimary, btnSmall, prefillModel } from "./u
 import zeekr001frAsset from "@/assets/zeekr-001-fr.jpg.asset.json";
 import l9UltraAsset from "@/assets/l9-ultra.jpg.asset.json";
 import aitoM9Asset from "@/assets/aito-m9.jpg.asset.json";
+import xiaomiSu7Asset from "@/assets/xiaomi-su7-ultra.jpg.asset.json";
 
 interface CarCardProps {
   name: string;
