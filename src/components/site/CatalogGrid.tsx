@@ -1,4 +1,5 @@
 import { Reveal } from "./Reveal";
+import { CATALOG_URL } from "@/lib/brand";
 import { btnPrimary, btnSmall, prefillModel, SectionHeading } from "./ui";
 
 const CARS = [
@@ -98,6 +99,23 @@ export function CatalogGrid() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal delay={200}>
+          <div className="mt-20 flex flex-col items-center text-center">
+            <h3 className="text-2xl font-semibold tracking-tight">Не нашли подходящий автомобиль?</h3>
+            <p className="mt-4 max-w-2xl text-muted-foreground">
+              В нашем полном каталоге представлено более 500 моделей. Переходите на наш основной ресурс, чтобы увидеть весь ассортимент.
+            </p>
+            <a 
+              href={CATALOG_URL} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className={`${btnPrimary} mt-8 px-10`}
+            >
+              Перейти в полный каталог
+            </a>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
