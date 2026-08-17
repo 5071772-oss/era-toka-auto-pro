@@ -70,8 +70,11 @@ export function CatalogGrid() {
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {CARS.map((car, i) => (
             <Reveal key={i} delay={i * 50}>
-              <div className="group glass overflow-hidden rounded-2xl border border-border transition-all hover:border-primary/40 hover:shadow-[0_0_32px_rgba(180,255,0,0.05)]">
-                <div className="relative aspect-[16/10] overflow-hidden">
+            <div className="group glass overflow-hidden rounded-2xl border border-border transition-all hover:border-primary/40 hover:shadow-[0_0_32px_rgba(180,255,0,0.05)]">
+                <div 
+                  className="relative aspect-[16/10] overflow-hidden cursor-pointer"
+                  onClick={() => prefillModel(car.title)}
+                >
                   <img
                     src={car.img}
                     alt={car.title}
