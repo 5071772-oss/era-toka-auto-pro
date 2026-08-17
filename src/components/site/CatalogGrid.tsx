@@ -1,0 +1,104 @@
+import { Reveal } from "./Reveal";
+import { btnPrimary, btnSmall, prefillModel, SectionHeading } from "./ui";
+
+const CARS = [
+  {
+    title: "Zeekr 9X Max",
+    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/zeekr-9x-5_400x0.jpg",
+    price: "От 5 239 000 ₽",
+  },
+  {
+    title: "Geely Galaxy M9",
+    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-08-26%20%D0%B2%2023.59.43_400x0.png",
+    price: "От 5 205 000 ₽",
+  },
+  {
+    title: "Voyah Free+",
+    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/voyah_free_launch-800x450_400x0.jpg",
+    price: "От 4 915 000 ₽",
+  },
+  {
+    title: "Lixiang i8",
+    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/hq720_400x0.jpg",
+    price: "От 5 085 000 ₽",
+  },
+  {
+    title: "Xiaomi YU7 Max",
+    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/foto-yu7_01_400x0.jpg",
+    price: "От 4 999 000 ₽",
+  },
+  {
+    title: "Huawei Aito M8 Ultra",
+    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/AITO-M8_04_400x0.jpg",
+    price: "От 5 190 000 ₽",
+  },
+  {
+    title: "Maextro S800",
+    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/1400x1050_autohomecar__ChxoHmd3luWAJxOaABgT1mnJmII850_large_400x0.jpg",
+    price: "От 8 800 000 ₽",
+  },
+  {
+    title: "Zeekr 007 GT",
+    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/zeekr-007-gt-7gt_400x0.jpg",
+    price: "От 5 007 000 ₽",
+  },
+  {
+    title: "BYD Tang L dm",
+    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/photo_2025-04-13_20-09-39_400x0.jpg",
+    price: "От 5 050 000 ₽",
+  },
+  {
+    title: "BYD Tang L EV",
+    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/photo_2025-01-15_20-17-19_400x0.jpg",
+    price: "От 5 040 000 ₽",
+  },
+];
+
+export function CatalogGrid() {
+  return (
+    <section className="py-20 sm:py-28">
+      <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
+        <Reveal>
+          <SectionHeading
+            eyebrow="Каталог 2026"
+            title="Актуальные модели в наличии и под заказ"
+            subtitle="Мы подобрали лучшие электромобили и гибриды, которые можно привезти в РФ прямо сейчас. Цены указаны ориентировочно с учетом логистики и таможни."
+          />
+        </Reveal>
+
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {CARS.map((car, i) => (
+            <Reveal key={i} delay={i * 50}>
+              <div className="group glass overflow-hidden rounded-2xl border border-border transition-all hover:border-primary/40 hover:shadow-[0_0_32px_rgba(180,255,0,0.05)]">
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <img
+                    src={car.img}
+                    alt={car.title}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-60" />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold tracking-tight">{car.title}</h3>
+                  <div className="mt-4 flex items-center justify-between gap-4">
+                    <div>
+                      <p className="text-xs uppercase tracking-wider text-muted-foreground">Цена</p>
+                      <p className="mt-1 text-lg font-bold text-primary">{car.price}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => prefillModel(car.title)}
+                      className={btnSmall}
+                    >
+                      Заказать
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
