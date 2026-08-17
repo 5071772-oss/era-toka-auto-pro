@@ -5,6 +5,7 @@ import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnPrimary, btnSmall, prefillModel } from "./ui";
 import zeekr001frAsset from "@/assets/zeekr-001-fr.jpg.asset.json";
 import l9UltraAsset from "@/assets/l9-ultra.jpg.asset.json";
+import aitoM9Asset from "@/assets/aito-m9.jpg.asset.json";
 
 interface CarCardProps {
   name: string;
