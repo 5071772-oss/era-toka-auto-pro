@@ -1,41 +1,38 @@
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnPrimary, scrollToForm } from "./ui";
 
-const STEPS = [
+const SERVICES = [
   {
-    n: "01",
-    title: "Консультация",
-    text: "Разбираем ваши задачи, бюджет, маршруты, семейный состав и требования к автомобилю.",
+    title: "Подбор и покупка",
+    text: "Индивидуальный поиск автомобиля по вашим критериям и сопровождение сделки купли-продажи.",
   },
   {
-    n: "02",
-    title: "Подбор",
-    text: "Предлагаем подходящие модели и сравниваем электромобили, гибриды и альтернативные варианты.",
+    title: "Проверка авто",
+    text: "Тщательная инспекция технического состояния, истории обслуживания и юридической чистоты.",
   },
   {
-    n: "03",
-    title: "Проверка",
-    text: "Проверяем автомобиль, историю, комплектацию, состояние и доступные данные о батарее.",
+    title: "Финансовая логистика",
+    text: "Организация международных расчётов и безопасных финансовых переводов в рамках закона.",
   },
   {
-    n: "04",
-    title: "Расчёт",
-    text: "Формируем прозрачный расчёт полной стоимости поставки.",
+    title: "Таможенное оформление",
+    text: "Полный комплекс услуг по растаможиванию автомобиля с соблюдением всех норм и правил.",
   },
   {
-    n: "05",
-    title: "Покупка",
-    text: "Организуем приобретение выбранного автомобиля и необходимые договорные процедуры.",
+    title: "Международная доставка",
+    text: "Безопасная транспортировка авто из Китая, Японии, ОАЭ, США и других стран до границы РФ.",
   },
   {
-    n: "06",
-    title: "Логистика и таможня",
-    text: "Сопровождаем доставку, таможенное оформление и подготовку документов.",
+    title: "Логистика по России",
+    text: "Доставка автомобиля в любой регион РФ проверенными автовозами с полным страхованием.",
   },
   {
-    n: "07",
-    title: "Передача клиенту",
-    text: "Передаём автомобиль и помогаем разобраться с первыми эксплуатационными вопросами.",
+    title: "Сертификация и ПТС",
+    text: "Получение СБКТС, ЭПТС и всех необходимых документов для постановки на учёт в ГИБДД.",
+  },
+  {
+    title: "Сопровождение 360°",
+    text: "Контроль каждого этапа до момента передачи ключей и постановки авто под окна вашего дома.",
   },
 ];
 
@@ -43,42 +40,44 @@ export function Process() {
   return (
     <Section id="postavka">
       <Reveal>
-        <SectionHeading eyebrow="Полный цикл поставки" title="От первой консультации до передачи ключей" />
+        <SectionHeading 
+          eyebrow="Автомобиль под ключ" 
+          title="Полный цикл доставки из Китая, Японии, ОАЭ и США" 
+        />
       </Reveal>
 
-      <ol className="mt-14 border-l border-border">
-        {STEPS.map((step, i) => (
-          <Reveal key={step.n} delay={i * 50}>
-            <li className="relative grid gap-2 py-6 pl-8 sm:grid-cols-[auto_1fr] sm:gap-8">
-              <span
-                className="absolute -left-[3px] top-9 size-1.5 rounded-full bg-primary"
-                style={{ boxShadow: "0 0 12px var(--neon)" }}
-                aria-hidden="true"
-              />
-              <div className="sm:w-56">
-                <span className="text-xs tracking-[0.2em] text-primary">{step.n}</span>
-                <h3 className="mt-2 text-lg font-semibold tracking-tight">{step.title}</h3>
+      <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {SERVICES.map((service, i) => (
+          <Reveal key={service.title} delay={i * 50}>
+            <div className="glass group relative h-full rounded-xl p-6 transition-all duration-300 hover:border-primary/50">
+              <div className="mb-4 flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-black">
+                <span className="text-sm font-bold">{String(i + 1).padStart(2, '0')}</span>
               </div>
-              <p className="max-w-xl text-sm leading-relaxed text-muted-foreground sm:pt-7">
-                {step.text}
+              <h3 className="mb-2 text-lg font-semibold tracking-tight">{service.title}</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                {service.text}
               </p>
-            </li>
+            </div>
           </Reveal>
         ))}
-      </ol>
+      </div>
 
       <div id="uslugi" className="mt-16 scroll-mt-28">
         <Reveal>
-          <div className="glass rounded-xl p-7 sm:p-9">
-            <p className="text-xs font-medium uppercase tracking-[0.28em] text-primary">Услуги</p>
-            <h3 className="mt-4 text-2xl font-semibold tracking-tight">Финансовая логистика</h3>
-            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-              Организация и сопровождение расчётов по этапам сделки в рамках действующего
-              законодательства.
-            </p>
-            <button type="button" onClick={scrollToForm} className={`${btnPrimary} mt-7`}>
-              Рассчитать поставку
-            </button>
+          <div className="glass relative overflow-hidden rounded-2xl p-8 sm:p-12">
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <p className="text-xs font-medium uppercase tracking-[0.28em] text-primary">Готовы начать?</p>
+              <h3 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">Получите расчет стоимости авто под ключ</h3>
+              <p className="mt-4 max-w-2xl text-base text-muted-foreground">
+                Мы подберем идеальный вариант, проверим его и доставим прямо к вашему порогу со всеми документами.
+              </p>
+              <button type="button" onClick={scrollToForm} className={`${btnPrimary} mt-8 px-10 py-4 text-lg`}>
+                Рассчитать стоимость доставки
+              </button>
+            </div>
+            {/* Decorative background element */}
+            <div className="absolute -right-20 -top-20 size-64 rounded-full bg-primary/10 blur-3xl" />
+            <div className="absolute -bottom-20 -left-20 size-64 rounded-full bg-primary/5 blur-3xl" />
           </div>
         </Reveal>
       </div>
