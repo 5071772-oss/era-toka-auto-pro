@@ -54,13 +54,13 @@ const CARS = [
     price: "От 5 040 000 ₽",
   },
   {
-    title: "Li Auto L7 Pro",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/l7-pro-1_400x0.jpg",
+    title: "Li Auto L7 Ultra",
+    img: "https://images.unsplash.com/photo-1721664536214-411394c483d2?q=80&w=800&auto=format&fit=crop",
     price: "От 4 850 000 ₽",
   },
   {
     title: "Avatr 07 Ultra",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/avatr-07-2_400x0.jpg",
+    img: "https://images.unsplash.com/photo-1621359953476-b0600b1730ea?q=80&w=800&auto=format&fit=crop",
     price: "От 5 420 000 ₽",
   },
 ];
