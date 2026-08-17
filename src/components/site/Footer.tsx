@@ -53,14 +53,8 @@ export function Footer() {
         </div>
 
         <nav aria-label="Навигация в подвале" className="flex flex-col gap-2">
-          <Link
-            to="/catalog"
-            className="text-sm text-muted-foreground transition-colors hover:text-primary"
-          >
-            Каталог
-          </Link>
-          {LINKS.map((item) => (
-            item.href.startsWith('/') ? (
+          {NAV_ITEMS.map((item) => (
+            item.href.startsWith('/') && !item.href.includes('#') ? (
               <Link
                 key={item.href}
                 to={item.href}
