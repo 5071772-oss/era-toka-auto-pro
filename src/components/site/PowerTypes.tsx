@@ -1,4 +1,4 @@
-import energyImage from "@/assets/energy-detail.jpg";
+import energyAsset from "@/assets/energy-detail.jpg.asset.json";
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnGhost, scrollToForm } from "./ui";
 
@@ -52,7 +52,7 @@ export function PowerTypes() {
 
         <Reveal delay={80}>
           <img
-            src={energyImage}
+            src={energyAsset.url}
             alt="Зарядный коннектор электромобиля с потоками энергии"
             width={1200}
             height={912}
