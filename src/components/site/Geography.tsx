@@ -2,6 +2,7 @@
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading } from "./ui";
 import geoAsset from "@/assets/geo-grid.jpg.asset.json";
+import { deployedAssetUrl } from "@/lib/assets";
 
 const REGIONS = ["Китай", "Европа", "Америка", "Корея", "Япония", "ОАЭ"];
 const DESCRIPTION =
@@ -11,7 +12,7 @@ export function Geography() {
   return (
     <Section className="relative overflow-hidden">
       <img
-        src={geoAsset.url}
+        src={deployedAssetUrl(geoAsset.url)}
         alt="Схема международных маршрутов поставки автомобилей"
         width={1408}
         height={912}

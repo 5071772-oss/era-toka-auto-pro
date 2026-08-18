@@ -95,8 +95,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.png", type: "image/png" },
-      { rel: "apple-touch-icon", href: "/favicon.png" },
+      { rel: "icon", href: "https://era-toka-auto-pro.lovable.app/favicon.png", type: "image/png" },
+      { rel: "apple-touch-icon", href: "https://era-toka-auto-pro.lovable.app/favicon.png" },
     ],
   }),
 
