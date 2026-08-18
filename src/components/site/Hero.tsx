@@ -1,6 +1,7 @@
 import { ArrowUpRight, Phone, Send } from "lucide-react";
 import { CATALOG_URL, EXPERT, MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_URL } from "@/lib/brand";
 import { btnGhost, btnPrimary, btnSmall, scrollToForm } from "./ui";
+import heroAsset from "@/assets/hero-ev.jpg.asset.json";
 
 const BADGES = ["BEV", "HEV", "PHEV", "EREV", "Китай", "Европа", "Америка", "Корея"];
 
@@ -9,7 +10,7 @@ export function Hero() {
     <section id="hero" className="relative overflow-hidden pb-20 pt-32 sm:pb-28 sm:pt-40">
       <div className="pointer-events-none absolute inset-0 hairline-grid opacity-50" aria-hidden="true" />
       <img
-        src="/src/assets/hero-ev.jpg"
+        src={heroAsset.url}
         alt="Электрический кроссовер с потоками энергии на тёмном фоне ночного города"
         width={1600}
         height={1104}
