@@ -8,7 +8,6 @@ import xiaomiAsset from "@/assets/xiaomi-su7-ultra.jpg.asset.json";
 import aitoAsset from "@/assets/aito-m9.jpg.asset.json";
 import l9Asset from "@/assets/l9-ultra.jpg.asset.json";
 import zeekrAsset from "@/assets/zeekr-001-fr.jpg.asset.json";
-import energyAsset from "@/assets/energy-detail.jpg.asset.json";
 
 interface CarCardProps {
   name: string;
@@ -97,7 +96,7 @@ const CARS = [
     price: "От 301 000 ¥",
     specs: ["Электро", "4WD"],
     text: "Премиальный кроссовер. Идеальное сочетание немецкого качества и современных технологий.",
-    img: energyAsset.url,
+    img: "https://gscarbuy.com/images/virtuemart/product/resized/402807-2022-audi-q4-e-tron_400x0.jpg",
   },
   {
     name: "Avatr 07 Ultra Электро",
