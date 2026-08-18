@@ -6,6 +6,8 @@ import { Section, SectionHeading, btnPrimary, btnSmall, prefillModel } from "./u
 
 interface CarCardProps {
   name: string;
+  brand: string;
+  price: string;
   specs: string[];
   text: string;
   img: string;
