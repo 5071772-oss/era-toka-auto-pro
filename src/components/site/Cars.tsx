@@ -39,11 +39,14 @@ function CarCard({ name, brand, price, specs, text, img, index }: CarCardProps) 
           )}
         </div>
         <div className="flex flex-1 flex-col p-7">
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider">
+              {brand}
+            </span>
             {specs.map((spec) => (
               <span
                 key={spec}
-                className="rounded-full border border-primary/30 px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-primary"
+                className="rounded-full border border-white/10 px-3 py-1 text-[10px] uppercase tracking-[0.14em] text-muted-foreground"
               >
                 {spec}
               </span>
