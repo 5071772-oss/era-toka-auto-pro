@@ -96,8 +96,15 @@ function DetailModal({ car, onClose }: { car: Car | null; onClose: () => void })
         </button>
         
         <div className="max-h-[85vh] overflow-y-auto">
-          <div className="relative aspect-video">
-             <img src={car.img} alt={car.title} className="w-full h-full object-cover" />
+          <div className="relative aspect-video flex items-center justify-center bg-muted">
+             <img 
+               src={car.img} 
+               alt={car.title} 
+               className="w-full h-full object-cover"
+               onError={(e) => {
+                 (e.target as HTMLImageElement).src = 'https://placehold.co/800x450/0A0A0A/B4FF00?text=' + car.brand;
+               }}
+             />
              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
           </div>
           
