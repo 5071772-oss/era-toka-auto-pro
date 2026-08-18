@@ -3,6 +3,12 @@ import { ArrowUpRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnPrimary, btnSmall, prefillModel } from "./ui";
+import avatrAsset from "@/assets/avatr-07.jpg.asset.json";
+import xiaomiAsset from "@/assets/xiaomi-su7-ultra.jpg.asset.json";
+import aitoAsset from "@/assets/aito-m9.jpg.asset.json";
+import l9Asset from "@/assets/l9-ultra.jpg.asset.json";
+import zeekrAsset from "@/assets/zeekr-001-fr.jpg.asset.json";
+import energyAsset from "@/assets/energy-detail.jpg.asset.json";
 
 interface CarCardProps {
   name: string;
