@@ -1,4 +1,4 @@
-import geoImage from "@/assets/geo-grid.jpg";
+
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading } from "./ui";
 
@@ -10,7 +10,7 @@ export function Geography() {
   return (
     <Section className="relative overflow-hidden">
       <img
-        src={geoImage}
+        src="/src/assets/geo-grid.jpg"
         alt="Схема международных маршрутов поставки автомобилей"
         width={1408}
         height={912}
