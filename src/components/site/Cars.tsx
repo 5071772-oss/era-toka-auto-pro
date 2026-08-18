@@ -3,10 +3,6 @@ import { ArrowUpRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnPrimary, btnSmall, prefillModel } from "./ui";
-import zeekr001frAsset from "@/assets/zeekr-001-fr.jpg.asset.json";
-import l9UltraAsset from "@/assets/l9-ultra.jpg.asset.json";
-import aitoM9Asset from "@/assets/aito-m9.jpg.asset.json";
-import xiaomiSu7Asset from "@/assets/xiaomi-su7-ultra.jpg.asset.json";
 
 interface CarCardProps {
   name: string;
@@ -84,37 +80,37 @@ const CARS = [
     name: "Audi Q4 e-tron 50 quattro",
     specs: ["Электромобиль", "Полный привод"],
     text: "Премиальный электрический кроссовер для города и трассы. Подходит клиентам, которым важны европейская марка, полный привод и привычная эргономика.",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/402807-2022-audi-q4-e-tron_400x0.jpg",
+    img: "https://gscarbuy.com/images/virtuemart/product/resized/402807-2022-audi-q4-e-tron_400x0.jpg",
   },
   {
     name: "Avatr 07, топовая электрическая версия",
     specs: ["Электромобиль"],
     text: "Современный технологичный кроссовер с богатым оснащением, выразительным дизайном и электрической силовой установкой.",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202024-09-28%20%D0%B2%2010.05.113_400x0.png",
+    img: "https://gscarbuy.com/images/virtuemart/product/resized/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202024-09-28%20%D0%B2%2010.05.113_400x0.png",
   },
   {
     name: "Xiaomi SU7 Ultra",
     specs: ["Электромобиль"],
     text: "Ультра-скоростной электрический седан с рекордными характеристиками. Для тех, кто ценит максимальный драйв и передовые технологии Xiaomi.",
-    img: xiaomiSu7Asset.url,
+    img: "/__l5e/assets-v1/8f2b8249-9c20-48bc-9ffd-70dd23fe1aba/xiaomi-su7-ultra.jpg",
   },
   {
     name: "Huawei Aito M9, 6 мест",
     specs: ["Гибрид", "3 ряда сидений"],
     text: "Флагманский семейный кроссовер с интеллектуальной системой Huawei. Максимальный комфорт, безопасность и передовые функции автопилота.",
-    img: aitoM9Asset.url,
+    img: "/__l5e/assets-v1/42561536-353a-4ac3-8095-300e7e22e441/aito-m9.jpg",
   },
   {
     name: "Li Auto L9 Ultra",
     specs: ["Гибрид"],
     text: "Вершина комфорта от Li Auto. Семейный особняк на колесах с пневмоподвеской, холодильником, экранами и невероятной плавностью хода.",
-    img: l9UltraAsset.url,
+    img: "/__l5e/assets-v1/47dc5766-d971-40bb-9cf5-085fe544a49b/l9-ultra.jpg",
   },
   {
     name: "Zeekr 001 FR",
     specs: ["Электромобиль", "1265 л.с."],
     text: "Гипер-хэтчбек с четырьмя электромоторами. Бескомпромиссная мощность и управляемость в сочетании с премиальным интерьером.",
-    img: zeekr001frAsset.url,
+    img: "/__l5e/assets-v1/ecbb3f55-d32f-445f-810e-a0e0f3337dac/zeekr-001-fr.jpg",
   },
 ];
 
