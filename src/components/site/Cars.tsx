@@ -84,13 +84,13 @@ const CARS = [
     name: "Audi Q4 e-tron 50 quattro",
     specs: ["Электромобиль", "Полный привод"],
     text: "Премиальный электрический кроссовер для города и трассы. Подходит клиентам, которым важны европейская марка, полный привод и привычная эргономика.",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/402807-2022-audi-q4-e-tron_400x0.jpg",
+    img: "https://gscarbuy.com/images/virtuemart/product/resized/402807-2022-audi-q4-e-tron_400x0.jpg",
   },
   {
     name: "Avatr 07, топовая электрическая версия",
     specs: ["Электромобиль"],
     text: "Современный технологичный кроссовер с богатым оснащением, выразительным дизайном и электрической силовой установкой.",
-    img: "https://www.gscarbuy.com/images/virtuemart/product/resized/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202024-09-28%20%D0%B2%2010.05.113_400x0.png",
+    img: "https://gscarbuy.com/images/virtuemart/product/resized/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202024-09-28%20%D0%B2%2010.05.113_400x0.png",
   },
   {
     name: "Xiaomi SU7 Ultra",
