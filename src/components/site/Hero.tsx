@@ -10,7 +10,7 @@ export function Hero() {
     <section id="hero" className="relative overflow-hidden pb-20 pt-32 sm:pb-28 sm:pt-40">
       <div className="pointer-events-none absolute inset-0 hairline-grid opacity-50" aria-hidden="true" />
       <img
-        src="https://era-toka-auto-pro.lovable.app/src/assets/hero-ev.jpg"
+        src="/assets/hero-ev.jpg"
         alt="Электрический кроссовер с потоками энергии на тёмном фоне ночного города"
         width={1600}
         height={1104}
