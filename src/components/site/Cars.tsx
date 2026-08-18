@@ -6,13 +6,15 @@ import { Section, SectionHeading, btnPrimary, btnSmall, prefillModel } from "./u
 
 interface CarCardProps {
   name: string;
+  brand: string;
+  price: string;
   specs: string[];
   text: string;
   img: string;
   index: number;
 }
 
-function CarCard({ name, specs, text, img, index }: CarCardProps) {
+function CarCard({ name, brand, price, specs, text, img, index }: CarCardProps) {
   const [error, setError] = React.useState(false);
 
   return (
@@ -37,20 +39,27 @@ function CarCard({ name, specs, text, img, index }: CarCardProps) {
           )}
         </div>
         <div className="flex flex-1 flex-col p-7">
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider">
+              {brand}
+            </span>
             {specs.map((spec) => (
               <span
                 key={spec}
-                className="rounded-full border border-primary/30 px-3 py-1 text-[11px] uppercase tracking-[0.14em] text-primary"
+                className="rounded-full border border-white/10 px-3 py-1 text-[10px] uppercase tracking-[0.14em] text-muted-foreground"
               >
                 {spec}
               </span>
             ))}
           </div>
-          <h3 className="mt-5 text-xl font-semibold tracking-tight">{name}</h3>
-          <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{text}</p>
-          <p className="mt-5 text-xs leading-relaxed text-steel">
-            Рассчитаем актуальную стоимость под вашу конфигурацию.
+          <h3 className="mt-5 text-xl font-semibold tracking-tight leading-tight">{name}</h3>
+          <div className="mt-3">
+            <p className="text-xs uppercase tracking-wider text-muted-foreground">Цена в Китае</p>
+            <p className="mt-1 text-lg font-bold text-primary">{price}</p>
+          </div>
+          <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground">{text}</p>
+          <p className="mt-5 text-[10px] leading-relaxed text-muted-foreground">
+            *Цена за авто. Доставка и сборы рассчитываются отдельно.
           </p>
           <div className="mt-6 flex flex-col gap-2 sm:flex-row">
             <button
@@ -78,39 +87,51 @@ function CarCard({ name, specs, text, img, index }: CarCardProps) {
 const CARS = [
   {
     name: "Audi Q4 e-tron 50 quattro",
-    specs: ["Электромобиль", "Полный привод"],
-    text: "Премиальный электрический кроссовер для города и трассы. Подходит клиентам, которым важны европейская марка, полный привод и привычная эргономика.",
+    brand: "Audi",
+    price: "От 301 000 ¥",
+    specs: ["Электро", "4WD"],
+    text: "Премиальный кроссовер. Идеальное сочетание немецкого качества и современных технологий.",
     img: "https://gscarbuy.com/images/virtuemart/product/resized/402807-2022-audi-q4-e-tron_400x0.jpg",
   },
   {
-    name: "Avatr 07, топовая электрическая версия",
-    specs: ["Электромобиль"],
-    text: "Современный технологичный кроссовер с богатым оснащением, выразительным дизайном и электрической силовой установкой.",
+    name: "Avatr 07 Ultra Электро",
+    brand: "Avatr",
+    price: "От 315 000 ¥",
+    specs: ["Электро", "Пневма"],
+    text: "Технологичный кроссовер с футуристичным дизайном и максимальным уровнем комфорта.",
     img: "https://gscarbuy.com/images/virtuemart/product/resized/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202024-09-28%20%D0%B2%2010.05.113_400x0.png",
   },
   {
     name: "Xiaomi SU7 Ultra",
-    specs: ["Электромобиль"],
-    text: "Ультра-скоростной электрический седан с рекордными характеристиками. Для тех, кто ценит максимальный драйв и передовые технологии Xiaomi.",
-    img: "/__l5e/assets-v1/8f2b8249-9c20-48bc-9ffd-70dd23fe1aba/xiaomi-su7-ultra.jpg",
+    brand: "Xiaomi",
+    price: "От 814 000 ¥",
+    specs: ["Электро", "1548 л.с."],
+    text: "Ультра-скоростной седан. Рекордная динамика и передовая экосистема Xiaomi.",
+    img: "/src/assets/xiaomi-su7-ultra.jpg",
   },
   {
-    name: "Huawei Aito M9, 6 мест",
-    specs: ["Гибрид", "3 ряда сидений"],
-    text: "Флагманский семейный кроссовер с интеллектуальной системой Huawei. Максимальный комфорт, безопасность и передовые функции автопилота.",
-    img: "/__l5e/assets-v1/42561536-353a-4ac3-8095-300e7e22e441/aito-m9.jpg",
+    name: "Huawei Aito M9 Ultra",
+    brand: "Huawei Aito",
+    price: "От 469 000 ¥",
+    specs: ["Гибрид", "6 мест"],
+    text: "Флагманский семейный кроссовер с интеллектуальной системой автопилота от Huawei.",
+    img: "/src/assets/aito-m9.jpg",
   },
   {
     name: "Li Auto L9 Ultra",
-    specs: ["Гибрид"],
-    text: "Вершина комфорта от Li Auto. Семейный особняк на колесах с пневмоподвеской, холодильником, экранами и невероятной плавностью хода.",
-    img: "/__l5e/assets-v1/47dc5766-d971-40bb-9cf5-085fe544a49b/l9-ultra.jpg",
+    brand: "Li Auto",
+    price: "От 459 000 ¥",
+    specs: ["Гибрид", "Пневма"],
+    text: "Максимальный комфорт для всей семьи. Пожалуй, лучший гибридный кроссовер в своем классе.",
+    img: "/src/assets/l9-ultra.jpg",
   },
   {
     name: "Zeekr 001 FR",
-    specs: ["Электромобиль", "1265 л.с."],
-    text: "Гипер-хэтчбек с четырьмя электромоторами. Бескомпромиссная мощность и управляемость в сочетании с премиальным интерьером.",
-    img: "/__l5e/assets-v1/ecbb3f55-d32f-445f-810e-a0e0f3337dac/zeekr-001-fr.jpg",
+    brand: "Zeekr",
+    price: "От 769 000 ¥",
+    specs: ["Электро", "1265 л.с."],
+    text: "Бескомпромиссная мощность. Четыре мотора и управляемость спорткара в кузове хэтчбек.",
+    img: "/src/assets/zeekr-001-fr.jpg",
   },
 ];
 
