@@ -14,7 +14,7 @@ interface CarCardProps {
   index: number;
 }
 
-function CarCard({ name, specs, text, img, index }: CarCardProps) {
+function CarCard({ name, brand, price, specs, text, img, index }: CarCardProps) {
   const [error, setError] = React.useState(false);
 
   return (
