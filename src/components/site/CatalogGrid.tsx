@@ -101,8 +101,8 @@ function DetailModal({ car, onClose }: { car: Car | null; onClose: () => void })
                src={car.img} 
                alt={car.title} 
                className="w-full h-full object-cover"
-               onError={(e) => {
-                 (e.target as HTMLImageElement).src = 'https://placehold.co/800x450/0A0A0A/B4FF00?text=' + car.brand;
+               onError={(event) => {
+                 event.currentTarget.hidden = true;
                }}
              />
              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
