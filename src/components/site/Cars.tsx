@@ -97,7 +97,7 @@ const CARS = [
     price: "От 301 000 ¥",
     specs: ["Электро", "4WD"],
     text: "Премиальный кроссовер. Идеальное сочетание немецкого качества и современных технологий.",
-    img: "/assets/energy-detail.jpg",
+    img: energyAsset.url,
   },
   {
     name: "Avatr 07 Ultra Электро",
@@ -105,7 +105,7 @@ const CARS = [
     price: "От 315 000 ¥",
     specs: ["Электро", "Пневма"],
     text: "Технологичный кроссовер с футуристичным дизайном и максимальным уровнем комфорта.",
-    img: "/assets/geo-grid.jpg",
+    img: avatrAsset.url,
   },
   {
     name: "Xiaomi SU7 Ultra",
@@ -113,7 +113,7 @@ const CARS = [
     price: "От 814 000 ¥",
     specs: ["Электро", "1548 л.с."],
     text: "Ультра-скоростной седан. Рекордная динамика и передовая экосистема Xiaomi.",
-    img: "/assets/xiaomi-su7-ultra.jpg",
+    img: xiaomiAsset.url,
   },
   {
     name: "Huawei Aito M9 Ultra",
@@ -121,7 +121,7 @@ const CARS = [
     price: "От 469 000 ¥",
     specs: ["Гибрид", "6 мест"],
     text: "Флагманский семейный кроссовер с интеллектуальной системой автопилота от Huawei.",
-    img: "/assets/aito-m9.jpg",
+    img: aitoAsset.url,
   },
   {
     name: "Li Auto L9 Ultra",
@@ -129,7 +129,7 @@ const CARS = [
     price: "От 459 000 ¥",
     specs: ["Гибрид", "Пневма"],
     text: "Максимальный комфорт для всей семьи. Пожалуй, лучший гибридный кроссовер в своем классе.",
-    img: "/assets/l9-ultra.jpg",
+    img: l9Asset.url,
   },
   {
     name: "Zeekr 001 FR",
@@ -137,7 +137,7 @@ const CARS = [
     price: "От 769 000 ¥",
     specs: ["Электро", "1265 л.с."],
     text: "Бескомпромиссная мощность. Четыре мотора и управляемость спорткара в кузове хэтчбек.",
-    img: "/assets/zeekr-001-fr.jpg",
+    img: zeekrAsset.url,
   },
 ];
 
