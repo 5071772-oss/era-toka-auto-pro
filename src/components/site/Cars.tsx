@@ -52,10 +52,14 @@ function CarCard({ name, brand, price, specs, text, img, index }: CarCardProps) 
               </span>
             ))}
           </div>
-          <h3 className="mt-5 text-xl font-semibold tracking-tight">{name}</h3>
-          <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{text}</p>
-          <p className="mt-5 text-xs leading-relaxed text-steel">
-            Рассчитаем актуальную стоимость под вашу конфигурацию.
+          <h3 className="mt-5 text-xl font-semibold tracking-tight leading-tight">{name}</h3>
+          <div className="mt-3">
+            <p className="text-xs uppercase tracking-wider text-muted-foreground">Цена в Китае</p>
+            <p className="mt-1 text-lg font-bold text-primary">{price}</p>
+          </div>
+          <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground">{text}</p>
+          <p className="mt-5 text-[10px] leading-relaxed text-muted-foreground">
+            *Цена за авто. Доставка и сборы рассчитываются отдельно.
           </p>
           <div className="mt-6 flex flex-col gap-2 sm:flex-row">
             <button
