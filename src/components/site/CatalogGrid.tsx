@@ -117,7 +117,8 @@ function DetailModal({ car, onClose }: { car: Car | null; onClose: () => void })
             </div>
             
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2">{car.title}</h2>
-            <p className="text-2xl font-bold text-primary mb-8">{car.price}</p>
+            <p className="text-2xl font-bold text-primary mb-1">{car.price}</p>
+            <p className="text-xs text-muted-foreground mb-8">*Цена за авто. Доставка и сборы рассчитываются отдельно.</p>
             
             <div className="space-y-6">
               <div>
