@@ -91,7 +91,7 @@ const CARS = [
     price: "От 301 000 ¥",
     specs: ["Электро", "4WD"],
     text: "Премиальный кроссовер. Идеальное сочетание немецкого качества и современных технологий.",
-    img: "https://gscarbuy.com/images/virtuemart/product/resized/402807-2022-audi-q4-e-tron_400x0.jpg",
+    img: "/assets/energy-detail.jpg",
   },
   {
     name: "Avatr 07 Ultra Электро",
@@ -99,7 +99,7 @@ const CARS = [
     price: "От 315 000 ¥",
     specs: ["Электро", "Пневма"],
     text: "Технологичный кроссовер с футуристичным дизайном и максимальным уровнем комфорта.",
-    img: "https://gscarbuy.com/images/virtuemart/product/resized/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202024-09-28%20%D0%B2%2010.05.113_400x0.png",
+    img: "/assets/geo-grid.jpg",
   },
   {
     name: "Xiaomi SU7 Ultra",
