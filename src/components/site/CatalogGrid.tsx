@@ -44,19 +44,34 @@ function CarCard({ car, onShowDetails }: { car: Car; onShowDetails: (car: Car) =
         </div>
         <div className="mt-4 flex items-center justify-between gap-4">
           <div>
-            <p className="text-xs uppercase tracking-wider text-muted-foreground">Цена</p>
+            <p className="text-xs uppercase tracking-wider text-muted-foreground">Цена в Китае</p>
             <p className="mt-1 text-lg font-bold text-primary">{car.price}</p>
+            <p className="mt-1 text-[10px] text-muted-foreground leading-tight">
+              *Цена за авто. Доставка и сборы рассчитываются отдельно.
+            </p>
           </div>
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              prefillModel(car.title);
-            }}
-            className={btnSmall}
-          >
-            Заказать
-          </button>
+          <div className="flex flex-col gap-2">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                prefillModel(`${car.title} (Узнать стоимость)`);
+              }}
+              className={btnSmall}
+            >
+              Узнать стоимость
+            </button>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                prefillModel(`${car.title} (Подобрать аналог)`);
+              }}
+              className="px-3 py-1.5 rounded-full border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-wider hover:bg-primary/5 transition-colors text-center"
+            >
+              Подобрать аналог
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -123,18 +138,21 @@ function DetailModal({ car, onClose }: { car: Car | null; onClose: () => void })
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
               <button 
                 onClick={() => {
-                  prefillModel(car.title);
+                  prefillModel(`${car.title} (Узнать стоимость)`);
                   onClose();
                 }}
                 className={`${btnPrimary} flex-1 py-4 text-base`}
               >
-                Оформить заявку
+                Узнать стоимость
               </button>
               <button 
-                onClick={onClose}
-                className="px-8 py-4 rounded-full border border-border hover:bg-white/5 transition-colors text-sm font-medium"
+                onClick={() => {
+                  prefillModel(`${car.title} (Подобрать аналог)`);
+                  onClose();
+                }}
+                className="flex-1 py-4 px-8 rounded-full border border-primary/20 text-primary hover:bg-primary/5 transition-colors text-sm font-bold uppercase tracking-wider"
               >
-                Закрыть
+                Подобрать аналог
               </button>
             </div>
           </div>
