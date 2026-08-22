@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Send, Check } from "lucide-react";
-import { EXPERT, TELEGRAM_URL } from "@/lib/brand";
+import { EXPERT, MESSENGER_MAX_URL, TELEGRAM_URL } from "@/lib/brand";
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnGhost, btnPrimary } from "./ui";
 
@@ -79,10 +79,26 @@ export function LeadForm() {
               title="Получите варианты под ваш бюджет"
               subtitle={`${EXPERT} свяжется с вами и поможет определить подходящий тип автомобиля и направление поставки.`}
             />
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" className={btnGhost}>
                 <Send className="size-4" aria-hidden="true" />
                 Написать в Telegram
+              </a>
+              <a href={MESSENGER_MAX_URL} target="_blank" rel="noopener noreferrer" className={btnGhost}>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="size-4"
+                >
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                </svg>
+                Написать в Max
               </a>
             </div>
           </div>
