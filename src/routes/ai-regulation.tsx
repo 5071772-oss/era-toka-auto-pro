@@ -62,6 +62,9 @@ function AiRegulationPage() {
           <p>
             Контроль соблюдения Регламента осуществляет лично Оператор. Нарушение правил влечет за собой ответственность в соответствии с законодательством РФ.
           </p>
+          <p className="mt-4 italic">
+            Полный текст документа находится по адресу: <a href="https://disk.yandex.ru/i/tpZVqtW9utrjcw" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">https://disk.yandex.ru/i/tpZVqtW9utrjcw</a>
+          </p>
         </section>
       </LegalLayout>
       <Footer />
