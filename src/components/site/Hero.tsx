@@ -30,7 +30,7 @@ export function Hero() {
           Электромобили и гибриды под ключ
         </p>
 
-        <h1 className="mt-6 max-w-3xl text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
+        <h1 className="mt-6 max-w-3xl text-balance text-4xl font-bold leading-[1.1] tracking-tight drop-shadow-sm sm:text-6xl">
           Электромобили и гибриды <span className="neon-text">под ключ</span> в РФ
         </h1>
 
