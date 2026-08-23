@@ -49,12 +49,18 @@ function PersonalDataConsentPage() {
         </section>
 
         <div className="mt-12 pt-8 border-t border-white/5 text-sm space-y-1">
-          <p className="font-bold text-foreground">Оператор:</p>
-          <p>Самозанятый Николаев Алексей Викторович</p>
-          <p>ИНН: 500101036007</p>
-          <p>E-mail: 5071772@gmail.com</p>
-          <p className="mt-2">Адрес:</p>
-          <p>143909, Московская область, г. Балашиха, Московский б-р, д. 1/13, кв. 215</p>
+          <p className="font-bold text-foreground">
+</p>
+          <p>
+</p>
+          <p>
+</p>
+          <p>
+</p>
+          <p className="mt-2">
+</p>
+          <p>
+</p>
         </div>
       </LegalLayout>
       <Footer />
