@@ -94,7 +94,7 @@ export function Header() {
               className="flex items-center gap-1.5 text-[11px] font-medium tracking-wide text-muted-foreground transition-colors hover:text-primary"
             >
               <Phone className="size-3" />
-              <span>{`'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''\n                                        \n                                            \n                                            I have approved the plan`}</span>
+              <span>{PHONE_FORMATTED}</span>
             </a>
           </div>
           <button type="button" onClick={scrollToForm} className={`${btnPrimary} py-2.5`}>
