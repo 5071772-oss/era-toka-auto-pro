@@ -111,10 +111,10 @@ const CARS = [
   {
     name: "Xiaomi SU7 Ultra",
     brand: "Xiaomi",
-    price: "От 814 000 ¥",
+    price: "От 815 000 ¥",
     specs: ["Электро", "1548 л.с."],
     text: "Ультра-скоростной седан. Рекордная динамика и передовая экосистема Xiaomi.",
-    img: deployedAssetUrl(xiaomiAsset.url),
+    img: "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/era-toka-auto-pro/9-12.webp",
   },
   {
     name: "Huawei Aito M9 Ultra",
