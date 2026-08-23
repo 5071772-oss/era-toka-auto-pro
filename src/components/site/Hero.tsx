@@ -9,7 +9,7 @@ const BADGES = ["BEV", "HEV", "PHEV", "EREV", "Китай", "Европа", "А�
 
 export function Hero() {
   return (
-    <section id="hero" className="relative overflow-hidden pb-20 pt-32 sm:pb-28 sm:pt-40">
+    <section id="hero" className="group relative overflow-hidden pb-20 pt-32 sm:pb-28 sm:pt-40">
       <div className="pointer-events-none absolute inset-0 hairline-grid opacity-50" aria-hidden="true" />
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-background to-transparent"
