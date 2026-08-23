@@ -98,7 +98,7 @@ function DetailModal({ car, onClose }: { car: Car | null; onClose: () => void })
           <X className="size-6" />
         </button>
         
-        <div className="max-h-[85vh] overflow-y-auto">
+        <div className="max-h-[85vh] overflow-y-auto elegant-scrollbar scroll-smooth">
           <div className="relative aspect-video flex items-center justify-center bg-muted">
              <ImageCarousel 
                images={car.images && car.images.length > 0 ? car.images : [car.img]} 

@@ -126,6 +126,32 @@
   }
 }
 
+/* Кастомный скроллбар для модальных окон */
+.elegant-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.elegant-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.elegant-scrollbar::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--primary) 20%, transparent);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+.elegant-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in oklab, var(--primary) 40%, transparent);
+}
+
+/* Firefox */
+.elegant-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--primary) 20%, transparent) transparent;
+}
+
+
 /* Стеклянная панель */
 @utility glass {
   background: color-mix(in oklab, var(--card) 55%, transparent);
