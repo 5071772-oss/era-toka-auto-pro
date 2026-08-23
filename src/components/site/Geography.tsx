@@ -1,8 +1,8 @@
 
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading } from "./ui";
-import geoAsset from "@/assets/geo-grid.jpg.asset.json";
-import { deployedAssetUrl } from "@/lib/assets";
+const GEO_IMG = "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/era-toka-auto-pro/Era-Toka/new-arcfox-2.webp";
+
 
 const REGIONS = ["Китай", "Европа", "Америка", "Корея", "Япония", "ОАЭ"];
 const DESCRIPTION =
@@ -12,7 +12,7 @@ export function Geography() {
   return (
     <Section className="relative overflow-hidden">
       <img
-        src={deployedAssetUrl(geoAsset.url)}
+        src={GEO_IMG}
         alt="Схема международных маршрутов поставки автомобилей"
         width={1408}
         height={912}
