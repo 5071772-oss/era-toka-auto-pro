@@ -2,6 +2,7 @@ import { ArrowUpRight, Phone, Send } from "lucide-react";
 import { CATALOG_URL, EXPERT, MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_URL } from "@/lib/brand";
 import { btnGhost, btnPrimary, btnSmall, scrollToForm } from "./ui";
 const HERO_IMG = "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/era-toka-auto-pro/Era-Toka/0.webp";
+const VECTOR_CAR = "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/era-toka-auto-pro/Era-Toka/new-arcfox-2.webp";
 
 
 const BADGES = ["BEV", "HEV", "PHEV", "EREV", "Китай", "Европа", "Америка", "Корея"];
@@ -10,13 +11,18 @@ export function Hero() {
   return (
     <section id="hero" className="relative overflow-hidden pb-20 pt-32 sm:pb-28 sm:pt-40">
       <div className="pointer-events-none absolute inset-0 hairline-grid opacity-50" aria-hidden="true" />
-      <img
-        src={HERO_IMG}
-        alt="Электрический кроссовер с потоками энергии на тёмном фоне ночного города"
-        width={1600}
-        height={1104}
-        className="pointer-events-none absolute -right-24 top-10 hidden w-[70%] max-w-4xl select-none opacity-45 mix-blend-screen lg:block"
-      />
+      <div className="pointer-events-none absolute -right-24 top-10 hidden w-[70%] max-w-4xl lg:block">
+        <img
+          src={HERO_IMG}
+          alt="Электрический кроссовер"
+          className="w-full select-none opacity-45 mix-blend-screen"
+        />
+        <img
+          src={VECTOR_CAR}
+          alt="Векторное изображение автомобиля"
+          className="absolute inset-0 w-full select-none opacity-30 mix-blend-overlay"
+        />
+      </div>
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-background to-transparent"
         aria-hidden="true"
