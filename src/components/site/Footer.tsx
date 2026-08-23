@@ -88,11 +88,23 @@ export function Footer() {
           направлению.
         </p>
         <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
-          <Link to="/legal/privacy" className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
+          <Link to="/privacy-policy" className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
             Политика конфиденциальности
           </Link>
-          <Link to="/legal/terms" className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
-            Пользовательское соглашение
+          <Link to="/personal-data-consent" className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
+            Согласие на ПДн
+          </Link>
+          <Link to="/marketing-consent" className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
+            Согласие на рекламу
+          </Link>
+          <Link to="/cookie-policy" className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
+            Cookie
+          </Link>
+          <Link to="/ai-regulation" className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
+            Регламент ИИ
+          </Link>
+          <Link to="/personal-data-requests" className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
+            Обращения по ПДн
           </Link>
           <span className="text-[10px] uppercase tracking-widest text-muted-foreground/60">
             © 2026 ЭРА ТОКА | Николаев А.В. (ИНН 500101036007)
