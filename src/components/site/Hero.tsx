@@ -34,7 +34,7 @@ export function Hero() {
           Электромобили и гибриды <span className="neon-text">под ключ</span> в РФ
         </h1>
 
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-foreground/80">
+        <p className="mt-6 max-w-2xl text-lg leading-relaxed font-medium text-foreground">
           {EXPERT} поможет подобрать, проверить и доставить автомобиль под ваш бюджет, маршруты,
           климат и реальные задачи.
         </p>
