@@ -253,6 +253,12 @@ export function CatalogGrid() {
 
         {/* Search & Filters */}
         <div className="mt-12 space-y-6">
+          {isLoadingImages && (
+            <div className="flex items-center gap-2 text-primary/60 animate-pulse text-xs font-medium uppercase tracking-widest justify-center">
+              <Loader2 className="size-4 animate-spin" />
+              Загрузка актуальных медиа-данных...
+            </div>
+          )}
           <Reveal delay={50}>
             <div className="relative group">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
