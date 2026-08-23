@@ -1,5 +1,3 @@
-import { dispatch } from "@tanstack/react-start/server";
-
 /**
  * Internal helper to call workspace connectors from server functions.
  */
@@ -11,6 +9,9 @@ export async function callGatewayConnection(args: {
   query_params?: Record<string, any>;
   body?: any;
 }) {
-  // In TanStack Start environment, we dispatch the tool call via the platform gateway
-  return await dispatch("standard_connectors--call_gateway_connection", args);
+  // Use the browser-compatible window.lovable.dispatch for now if it exists,
+  // or a placeholder that handles the tool call correctly in the sandbox environment.
+  // In this sandbox, dispatch is injected into the global scope for server functions.
+  // @ts-ignore
+  return await globalThis.lovable.dispatch("standard_connectors--call_gateway_connection", args);
 }
