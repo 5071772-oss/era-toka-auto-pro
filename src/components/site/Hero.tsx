@@ -101,13 +101,13 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="absolute right-0 top-1/2 z-0 -translate-y-1/2 opacity-20 transition-opacity duration-1000 group-hover:opacity-30 sm:block hidden lg:right-[5%] xl:right-[8%]">
+      <div className="absolute right-0 top-1/2 z-0 -translate-y-1/2 opacity-60 sm:block hidden lg:right-[2%] xl:right-[5%] pointer-events-none">
         <img
           src={VECTOR_CAR}
           alt="Neon car vector"
-          className="w-[600px] xl:w-[800px] mix-blend-screen"
+          className="w-[700px] xl:w-[900px] mix-blend-screen"
           style={{ 
-            filter: "drop-shadow(0 0 20px var(--neon-soft))",
+            filter: "drop-shadow(0 0 30px var(--neon-soft))",
           }}
         />
       </div>
