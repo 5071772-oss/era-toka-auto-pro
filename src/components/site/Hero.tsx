@@ -14,9 +14,9 @@ export function Hero() {
         <img
           src={HERO_IMG}
           alt="Premium electric vehicle"
-          className="h-full w-full object-cover opacity-40 mix-blend-luminosity grayscale"
+          className="h-full w-full object-cover opacity-60"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/20 to-transparent" />
       </div>
       <div className="pointer-events-none absolute inset-0 hairline-grid opacity-30" aria-hidden="true" />
       <div
