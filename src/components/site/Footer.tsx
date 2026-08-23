@@ -88,7 +88,7 @@ export function Footer() {
           направлению.
         </p>
         <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
-          <Link to="/privacy-policy" className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
+          <Link to="/privacy-policy" className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors" title="Откроет страницу 'Политика обработки персональных данных'.">
             Политика конфиденциальности
           </Link>
           <Link to="/personal-data-consent" className="text-[10px] uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
