@@ -1,7 +1,7 @@
 import { ArrowUpRight, Phone, Send } from "lucide-react";
 import { CATALOG_URL, EXPERT, MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_URL } from "@/lib/brand";
 import { btnGhost, btnPrimary, btnSmall, scrollToForm } from "./ui";
-const HERO_IMG = "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/era-toka-auto-pro/Era-Toka/0.webp";
+const HERO_IMG = "https://project--dbec8924-ca7b-41f6-b87a-9cd9693ce1a1.lovable.app/__l5e/assets-v1/e1dc2e40-b83e-4913-9eb1-4ee5deaf4373/hero-ev.jpg";
 const VECTOR_CAR = "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/era-toka-auto-pro/Era-Toka/new-arcfox-2.webp";
 
 
@@ -10,7 +10,15 @@ const BADGES = ["BEV", "HEV", "PHEV", "EREV", "Китай", "Европа", "А�
 export function Hero() {
   return (
     <section id="hero" className="relative overflow-hidden pb-20 pt-32 sm:pb-28 sm:pt-40">
-      <div className="pointer-events-none absolute inset-0 hairline-grid opacity-50" aria-hidden="true" />
+      <div className="absolute inset-0 z-0">
+        <img
+          src={HERO_IMG}
+          alt="Premium electric vehicle"
+          className="h-full w-full object-cover opacity-40 mix-blend-luminosity grayscale"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
+      </div>
+      <div className="pointer-events-none absolute inset-0 hairline-grid opacity-30" aria-hidden="true" />
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-background to-transparent"
         aria-hidden="true"
