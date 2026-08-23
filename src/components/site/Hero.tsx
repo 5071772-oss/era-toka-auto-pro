@@ -10,13 +10,14 @@ const BADGES = ["BEV", "HEV", "PHEV", "EREV", "Китай", "Европа", "А�
 export function Hero() {
   return (
     <section id="hero" className="relative overflow-hidden pb-20 pt-32 sm:pb-28 sm:pt-40">
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <img
           src={HERO_IMG}
           alt="Premium electric vehicle"
-          className="h-full w-full object-cover opacity-60"
+          className="h-full w-full object-cover object-center opacity-40 transition-opacity duration-700 sm:opacity-50"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-background/20" />
+        <div className="absolute inset-0 bg-background/30 sm:bg-transparent" />
       </div>
       <div className="pointer-events-none absolute inset-0 hairline-grid opacity-30" aria-hidden="true" />
       <div
