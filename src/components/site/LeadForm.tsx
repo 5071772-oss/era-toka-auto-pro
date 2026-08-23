@@ -23,6 +23,7 @@ export function LeadForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [errors, setErrors] = useState<Errors>({});
   const [consent, setConsent] = useState(false);
+  const [marketingConsent, setMarketingConsent] = useState(false);
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
 
@@ -61,6 +62,13 @@ export function LeadForm() {
     setSending(true);
     const body = new URLSearchParams();
     data.forEach((value, key) => body.append(key, String(value)));
+    
+    // Add marketing consent status to the note if checked
+    if (marketingConsent) {
+      const currentNote = body.get(FIELD_NOTE) || "";
+      body.set(FIELD_NOTE, `${currentNote}\n[Согласие на маркетинг: Да]`.trim());
+    }
+
     try {
       await fetch(AMO_ACTION, {
         method: "POST",
@@ -219,6 +227,22 @@ export function LeadForm() {
                       Я даю согласие на обработку моих персональных данных на условиях{" "}
                       <Link to="/personal-data-consent" className="text-primary underline hover:text-primary/80 transition-colors">
                         Согласия на обработку персональных данных
+                      </Link>.
+                    </label>
+                  </div>
+
+                  <div className="flex items-start gap-3 py-2">
+                    <input
+                      id="marketing-checkbox"
+                      type="checkbox"
+                      checked={marketingConsent}
+                      onChange={(e) => setMarketingConsent(e.target.checked)}
+                      className="mt-1 size-4 rounded border-border bg-background/60 text-primary transition-colors focus:ring-2 focus:ring-primary/25"
+                    />
+                    <label htmlFor="marketing-checkbox" className="text-xs leading-relaxed text-muted-foreground cursor-pointer">
+                      Я согласен получать рекламные и информационные сообщения от Николаева Алексея Викторовича на условиях{" "}
+                      <Link to="/marketing-consent" className="text-primary underline hover:text-primary/80 transition-colors">
+                        Согласия на рекламу
                       </Link>.
                     </label>
                   </div>
