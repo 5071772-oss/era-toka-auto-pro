@@ -34,13 +34,13 @@ export function Hero() {
         </h1>
 
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-foreground/80">
-          {EXPERT} поможет подобрать, проверить and доставить автомобиль под ваш бюджет, маршруты,
-          климат and реальные задачи.
+          {EXPERT} поможет подобрать, проверить и доставить автомобиль под ваш бюджет, маршруты,
+          климат и реальные задачи.
         </p>
 
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-          Китай, Европа, Америка and Корея. Полный цикл сопровождения: от консультации and выбора модели
-          до логистики, таможни, документов and передачи автомобиля.
+          Китай, Европа, Америка и Корея. Полный цикл сопровождения: от консультации и выбора модели
+          до логистики, таможни, документов и передачи автомобиля.
         </p>
 
         <ul className="mt-8 flex flex-wrap gap-2">
@@ -96,7 +96,7 @@ export function Hero() {
             <div>
               <p className="text-lg font-semibold tracking-tight">{EXPERT}</p>
               <p className="mt-1 text-sm text-primary">
-                Эксперт по подбору and поставке электромобилей and гибридов
+                Эксперт по подбору и поставке электромобилей и гибридов
               </p>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                 Консультация по вашему сценарию: город, трасса, семья, зарядка, бюджет and ликвидность
