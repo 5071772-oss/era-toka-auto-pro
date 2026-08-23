@@ -2,7 +2,10 @@ import * as React from "react";
 import { Reveal } from "./Reveal";
 import { btnPrimary, btnSmall, prefillModel, SectionHeading } from "./ui";
 import { CARS, Car } from "@/lib/catalog-data";
-import { Search, X, Info } from "lucide-react";
+import { Search, X, Info, Loader2 } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
+import { getCatalogImages } from "@/lib/catalog.functions";
+import { ImageCarousel } from "./ImageCarousel";
 
 function CarCard({ car, onShowDetails }: { car: Car; onShowDetails: (car: Car) => void }) {
   const [error, setError] = React.useState(false);
@@ -97,15 +100,11 @@ function DetailModal({ car, onClose }: { car: Car | null; onClose: () => void })
         
         <div className="max-h-[85vh] overflow-y-auto">
           <div className="relative aspect-video flex items-center justify-center bg-muted">
-             <img 
-               src={car.img} 
+             <ImageCarousel 
+               images={car.images && car.images.length > 0 ? car.images : [car.img]} 
                alt={car.title} 
-               className="w-full h-full object-cover"
-               onError={(event) => {
-                 event.currentTarget.hidden = true;
-               }}
              />
-             <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+             <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none" />
           </div>
           
           <div className="p-6 sm:p-8">
@@ -174,19 +173,72 @@ export function CatalogGrid() {
   const [search, setSearch] = React.useState("");
   const [activeBrand, setActiveBrand] = React.useState<string | null>(null);
   const [selectedCar, setSelectedCar] = React.useState<Car | null>(null);
+  const [dynamicImages, setDynamicImages] = React.useState<Record<string, string[]>>({});
+  const [isLoadingImages, setIsLoadingImages] = React.useState(true);
+
+  const fetchImages = useServerFn(getCatalogImages);
+
+  React.useEffect(() => {
+    const loadImages = async () => {
+      try {
+        const rows = await fetchImages();
+        const imageMap: Record<string, string[]> = {};
+        
+        if (rows && Array.isArray(rows)) {
+          rows.forEach((row: any[]) => {
+            const brand = row[0];
+            const title = row[1];
+            const mainImg = row[2];
+            const carousel1 = row[3];
+            const carousel2 = row[4];
+            
+            if (brand && title) {
+              const key = `${brand}-${title}`.toLowerCase();
+              const imgs = [mainImg, carousel1, carousel2].filter(url => url && url.trim() !== "");
+              if (imgs.length > 0) {
+                imageMap[key] = imgs;
+              }
+            }
+          });
+        }
+        setDynamicImages(imageMap);
+      } catch (e) {
+        console.error("Failed to load dynamic images", e);
+      } finally {
+        setIsLoadingImages(false);
+      }
+    };
+
+    loadImages();
+  }, [fetchImages]);
+
+  const augmentedCars = React.useMemo(() => {
+    return CARS.map(car => {
+      const key = `${car.brand}-${car.title}`.toLowerCase();
+      const dynamicImgs = dynamicImages[key];
+      if (dynamicImgs) {
+        return {
+          ...car,
+          img: dynamicImgs[0] || car.img,
+          images: dynamicImgs
+        };
+      }
+      return car;
+    });
+  }, [dynamicImages]);
 
   const brands = React.useMemo(() => {
-    const set = new Set(CARS.map(c => c.brand));
+    const set = new Set(augmentedCars.map(c => c.brand));
     return Array.from(set).sort();
-  }, []);
+  }, [augmentedCars]);
 
   const filteredCars = React.useMemo(() => {
-    return CARS.filter(car => {
+    return augmentedCars.filter(car => {
       const matchesSearch = car.title.toLowerCase().includes(search.toLowerCase());
       const matchesBrand = activeBrand ? car.brand === activeBrand : true;
       return matchesSearch && matchesBrand;
     });
-  }, [search, activeBrand]);
+  }, [search, activeBrand, augmentedCars]);
 
   return (
     <section className="py-20 sm:py-28 relative">

@@ -6,10 +6,10 @@ const RANGE = "Лист1!A2:E200";
 
 export const getCatalogImages = createServerFn({ method: "GET" })
   .handler(async () => {
-    const { standard_connectors--call_gateway_connection } = await import("@/lib/connectors.server");
+    const { callGatewayConnection } = await import("@/lib/connectors.server");
     
     try {
-      const response = await standard_connectors--call_gateway_connection({
+      const response = await callGatewayConnection({
         connection_id: "std_01m0j3dd0gehn99mybeqpprh48",
         connector_id: "google_sheets",
         method: "GET",

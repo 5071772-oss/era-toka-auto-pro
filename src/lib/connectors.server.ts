@@ -2,9 +2,8 @@ import { dispatch } from "@tanstack/react-start/server";
 
 /**
  * Internal helper to call workspace connectors from server functions.
- * This is a shim for the standard_connectors tools.
  */
-export async function standard_connectors--call_gateway_connection(args: {
+export async function callGatewayConnection(args: {
   connection_id: string;
   connector_id: string;
   method: string;
