@@ -13,14 +13,9 @@ export function Hero() {
       <div className="pointer-events-none absolute inset-0 hairline-grid opacity-50" aria-hidden="true" />
       <div className="pointer-events-none absolute -right-24 top-10 hidden w-[70%] max-w-4xl lg:block">
         <img
-          src={HERO_IMG}
-          alt="Электрический кроссовер"
-          className="w-full select-none opacity-45 mix-blend-screen"
-        />
-        <img
           src={VECTOR_CAR}
           alt="Векторное изображение автомобиля"
-          className="absolute inset-0 w-full select-none opacity-100 mix-blend-screen"
+          className="w-full select-none opacity-100 mix-blend-screen"
         />
       </div>
       <div
