@@ -206,11 +206,11 @@ export function LeadForm() {
 
                   <p className="text-[10px] leading-relaxed text-muted-foreground/60">
                     Нажимая на кнопку, вы даете согласие на обработку персональных данных и принимаете{" "}
-                    <Link to="/legal/terms" className="underline hover:text-primary transition-colors">
+                    <Link to="/personal-data-consent" className="underline hover:text-primary transition-colors">
                       пользовательское соглашение
                     </Link>{" "}
                     и{" "}
-                    <Link to="/legal/privacy" className="underline hover:text-primary transition-colors">
+                    <Link to="/privacy-policy" className="underline hover:text-primary transition-colors">
                       политику конфиденциальности
                     </Link>.
                   </p>
