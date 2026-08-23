@@ -20,7 +20,7 @@ export function Hero() {
         <img
           src={VECTOR_CAR}
           alt="Векторное изображение автомобиля"
-          className="absolute inset-0 w-full select-none opacity-30 mix-blend-overlay"
+          className="absolute inset-0 w-full select-none opacity-100 mix-blend-screen"
         />
       </div>
       <div
