@@ -28,7 +28,7 @@ export function LegalLayout({ title, children }: LegalLayoutProps) {
         
         <Reveal delay={200}>
           <div className="mt-12 p-6 glass border border-primary/10 rounded-2xl bg-primary/5">
-            <p className="text-sm font-medium text-primary uppercase tracking-widest mb-2">Оператор сайта</p>
+            <p className="text-sm font-medium text-primary uppercase tracking-widest mb-2">ОПЕРАТОР ПЕРСОНАЛЬНЫХ ДАННЫХ</p>
             <div className="text-sm text-foreground/80 space-y-1">
               <p>Самозанятый Николаев Алексей Викторович</p>
               <p>ИНН: 500101036007</p>
