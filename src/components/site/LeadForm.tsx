@@ -22,6 +22,7 @@ type Errors = Partial<Record<"name" | "phone" | "email", string>>;
 export function LeadForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [errors, setErrors] = useState<Errors>({});
+  const [consent, setConsent] = useState(false);
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
 
@@ -48,6 +49,12 @@ export function LeadForm() {
     if (name.length < 2) next.name = "Укажите имя";
     if (phone.replace(/\D/g, "").length < 10) next.phone = "Укажите корректный телефон";
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) next.email = "Некорректный e-mail";
+    
+    if (!consent) {
+      alert("Необходимо дать согласие на обработку персональных данных");
+      return;
+    }
+    
     setErrors(next);
     if (Object.keys(next).length > 0) return;
 
@@ -199,13 +206,33 @@ export function LeadForm() {
                     />
                   </div>
 
-                  <button type="submit" disabled={sending} className={`${btnPrimary} w-full disabled:opacity-60`}>
+                  <div className="flex items-start gap-3 py-2">
+                    <input
+                      id="consent-checkbox"
+                      type="checkbox"
+                      required
+                      checked={consent}
+                      onChange={(e) => setConsent(e.target.checked)}
+                      className="mt-1 size-4 rounded border-border bg-background/60 text-primary transition-colors focus:ring-2 focus:ring-primary/25"
+                    />
+                    <label htmlFor="consent-checkbox" className="text-xs leading-relaxed text-muted-foreground cursor-pointer">
+                      Я даю согласие на обработку моих персональных данных на условиях{" "}
+                      <Link to="/personal-data-consent" className="text-primary underline hover:text-primary/80 transition-colors">
+                        Согласия на обработку персональных данных
+                      </Link>.
+                    </label>
+                  </div>
+
+                  <button 
+                    type="submit" 
+                    disabled={sending || !consent} 
+                    className={`${btnPrimary} w-full disabled:opacity-50 disabled:cursor-not-allowed`}
+                  >
                     {sending ? "Отправляем…" : "Получить консультацию"}
                   </button>
 
-
                   <p className="text-[10px] leading-relaxed text-muted-foreground/60">
-                    Нажимая на кнопку, вы даете согласие на обработку персональных данных и принимаете{" "}
+                    Нажимая кнопку «Продолжить», вы подтверждаете, что принимаете{" "}
                     <Link to="/personal-data-consent" className="underline hover:text-primary transition-colors">
                       пользовательское соглашение
                     </Link>{" "}
