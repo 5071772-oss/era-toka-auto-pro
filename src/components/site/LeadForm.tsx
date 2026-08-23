@@ -261,10 +261,9 @@ export function LeadForm() {
                       пользовательское соглашение
                     </Link>{" "}
                     и{" "}
-                    <Link to="/privacy-policy" className="underline hover:text-primary transition-colors">
+                    <Link to="/privacy-policy" className="underline hover:text-primary transition-colors" title="Откроет страницу 'Политика обработки персональных данных'.">
                       политику конфиденциальности
                     </Link>.
-                    Откроет страницу "Политика обработки персональных данных".
                   </p>
                 </form>
               </>
