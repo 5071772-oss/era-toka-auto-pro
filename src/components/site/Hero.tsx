@@ -11,11 +11,13 @@ export function Hero() {
   return (
     <section id="hero" className="relative overflow-hidden pb-20 pt-32 sm:pb-28 sm:pt-40">
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <img
-          src={HERO_IMG}
-          alt="Premium electric vehicle"
-          className="h-full w-full object-cover object-center opacity-40 transition-opacity duration-700 sm:opacity-50"
-        />
+        <div className="absolute inset-0 right-[-10%] sm:right-[-20%]">
+          <img
+            src={HERO_IMG}
+            alt="Premium electric vehicle"
+            className="h-full w-full object-cover object-right opacity-40 transition-opacity duration-700 sm:opacity-50 scale-[0.9] sm:scale-[0.85]"
+          />
+        </div>
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-background/20" />
         <div className="absolute inset-0 bg-background/30 sm:bg-transparent" />
       </div>
