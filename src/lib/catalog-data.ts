@@ -5,6 +5,7 @@ export interface Car {
   title: string;
   price: string;
   img: string;
+  images?: string[];
   specs: string;
 }
 
