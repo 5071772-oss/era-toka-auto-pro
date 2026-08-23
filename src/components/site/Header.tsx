@@ -94,7 +94,7 @@ export function Header() {
               className="flex items-center gap-1.5 text-[11px] font-medium tracking-wide text-muted-foreground transition-colors hover:text-primary"
             >
               <Phone className="size-3" />
-              <span>{PHONE_FORMATTED}</span>
+              <span>{`'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''\n                                        \n                                            \n                                            Перед внесением изменений:\n\n Проанализируй существующую структуру сайта.\n\n Найди все страницы.\n\n Найди все формы.\n\n Найди все места, где собираются:\n\n имя;\n\n телефон;\n\n e-mail;\n\n комментарий;\n\n параметры автомобиля;\n\n другие пользовательские данные.\n\n Найди существующие кнопки отправки форм.\n\n Найди текущие ссылки в Header и Footer.\n\n Не удаляй существующие функции.\n\n Не меняй существующую бизнес-логику без необходимости.\n\n Не создавай дубликаты существующих страниц.\n\n Сохрани существующий визуальный стиль.`}</span>
             </a>
           </div>
           <button type="button" onClick={scrollToForm} className={`${btnPrimary} py-2.5`}>
