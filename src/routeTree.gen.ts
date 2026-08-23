@@ -10,13 +10,22 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AiRegulationRouteImport } from './routes/ai-regulation'
 import { Route as CatalogRouteImport } from './routes/catalog'
-import { Route as LegalPrivacyRouteImport } from './routes/legal/privacy'
-import { Route as LegalTermsRouteImport } from './routes/legal/terms'
+import { Route as CookiePolicyRouteImport } from './routes/cookie-policy'
+import { Route as MarketingConsentRouteImport } from './routes/marketing-consent'
+import { Route as PersonalDataConsentRouteImport } from './routes/personal-data-consent'
+import { Route as PersonalDataRequestsRouteImport } from './routes/personal-data-requests'
+import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiRegulationRoute = AiRegulationRouteImport.update({
+  id: '/ai-regulation',
+  path: '/ai-regulation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CatalogRoute = CatalogRouteImport.update({
@@ -24,49 +33,105 @@ const CatalogRoute = CatalogRouteImport.update({
   path: '/catalog',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LegalPrivacyRoute = LegalPrivacyRouteImport.update({
-  id: '/legal/privacy',
-  path: '/legal/privacy',
+const CookiePolicyRoute = CookiePolicyRouteImport.update({
+  id: '/cookie-policy',
+  path: '/cookie-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LegalTermsRoute = LegalTermsRouteImport.update({
-  id: '/legal/terms',
-  path: '/legal/terms',
+const MarketingConsentRoute = MarketingConsentRouteImport.update({
+  id: '/marketing-consent',
+  path: '/marketing-consent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PersonalDataConsentRoute = PersonalDataConsentRouteImport.update({
+  id: '/personal-data-consent',
+  path: '/personal-data-consent',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PersonalDataRequestsRoute = PersonalDataRequestsRouteImport.update({
+  id: '/personal-data-requests',
+  path: '/personal-data-requests',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
+  id: '/privacy-policy',
+  path: '/privacy-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-regulation': typeof AiRegulationRoute
   '/catalog': typeof CatalogRoute
-  '/legal/privacy': typeof LegalPrivacyRoute
-  '/legal/terms': typeof LegalTermsRoute
+  '/cookie-policy': typeof CookiePolicyRoute
+  '/marketing-consent': typeof MarketingConsentRoute
+  '/personal-data-consent': typeof PersonalDataConsentRoute
+  '/personal-data-requests': typeof PersonalDataRequestsRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-regulation': typeof AiRegulationRoute
   '/catalog': typeof CatalogRoute
-  '/legal/privacy': typeof LegalPrivacyRoute
-  '/legal/terms': typeof LegalTermsRoute
+  '/cookie-policy': typeof CookiePolicyRoute
+  '/marketing-consent': typeof MarketingConsentRoute
+  '/personal-data-consent': typeof PersonalDataConsentRoute
+  '/personal-data-requests': typeof PersonalDataRequestsRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-regulation': typeof AiRegulationRoute
   '/catalog': typeof CatalogRoute
-  '/legal/privacy': typeof LegalPrivacyRoute
-  '/legal/terms': typeof LegalTermsRoute
+  '/cookie-policy': typeof CookiePolicyRoute
+  '/marketing-consent': typeof MarketingConsentRoute
+  '/personal-data-consent': typeof PersonalDataConsentRoute
+  '/personal-data-requests': typeof PersonalDataRequestsRoute
+  '/privacy-policy': typeof PrivacyPolicyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/catalog' | '/legal/privacy' | '/legal/terms'
+  fullPaths:
+    | '/'
+    | '/ai-regulation'
+    | '/catalog'
+    | '/cookie-policy'
+    | '/marketing-consent'
+    | '/personal-data-consent'
+    | '/personal-data-requests'
+    | '/privacy-policy'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/catalog' | '/legal/privacy' | '/legal/terms'
-  id: '__root__' | '/' | '/catalog' | '/legal/privacy' | '/legal/terms'
+  to:
+    | '/'
+    | '/ai-regulation'
+    | '/catalog'
+    | '/cookie-policy'
+    | '/marketing-consent'
+    | '/personal-data-consent'
+    | '/personal-data-requests'
+    | '/privacy-policy'
+  id:
+    | '__root__'
+    | '/'
+    | '/ai-regulation'
+    | '/catalog'
+    | '/cookie-policy'
+    | '/marketing-consent'
+    | '/personal-data-consent'
+    | '/personal-data-requests'
+    | '/privacy-policy'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiRegulationRoute: typeof AiRegulationRoute
   CatalogRoute: typeof CatalogRoute
-  LegalPrivacyRoute: typeof LegalPrivacyRoute
-  LegalTermsRoute: typeof LegalTermsRoute
+  CookiePolicyRoute: typeof CookiePolicyRoute
+  MarketingConsentRoute: typeof MarketingConsentRoute
+  PersonalDataConsentRoute: typeof PersonalDataConsentRoute
+  PersonalDataRequestsRoute: typeof PersonalDataRequestsRoute
+  PrivacyPolicyRoute: typeof PrivacyPolicyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -78,6 +143,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-regulation': {
+      id: '/ai-regulation'
+      path: '/ai-regulation'
+      fullPath: '/ai-regulation'
+      preLoaderRoute: typeof AiRegulationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/catalog': {
       id: '/catalog'
       path: '/catalog'
@@ -85,18 +157,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CatalogRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/legal/privacy': {
-      id: '/legal/privacy'
-      path: '/legal/privacy'
-      fullPath: '/legal/privacy'
-      preLoaderRoute: typeof LegalPrivacyRouteImport
+    '/cookie-policy': {
+      id: '/cookie-policy'
+      path: '/cookie-policy'
+      fullPath: '/cookie-policy'
+      preLoaderRoute: typeof CookiePolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/legal/terms': {
-      id: '/legal/terms'
-      path: '/legal/terms'
-      fullPath: '/legal/terms'
-      preLoaderRoute: typeof LegalTermsRouteImport
+    '/marketing-consent': {
+      id: '/marketing-consent'
+      path: '/marketing-consent'
+      fullPath: '/marketing-consent'
+      preLoaderRoute: typeof MarketingConsentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/personal-data-consent': {
+      id: '/personal-data-consent'
+      path: '/personal-data-consent'
+      fullPath: '/personal-data-consent'
+      preLoaderRoute: typeof PersonalDataConsentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/personal-data-requests': {
+      id: '/personal-data-requests'
+      path: '/personal-data-requests'
+      fullPath: '/personal-data-requests'
+      preLoaderRoute: typeof PersonalDataRequestsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy-policy': {
+      id: '/privacy-policy'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -104,9 +197,13 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiRegulationRoute: AiRegulationRoute,
   CatalogRoute: CatalogRoute,
-  LegalPrivacyRoute: LegalPrivacyRoute,
-  LegalTermsRoute: LegalTermsRoute,
+  CookiePolicyRoute: CookiePolicyRoute,
+  MarketingConsentRoute: MarketingConsentRoute,
+  PersonalDataConsentRoute: PersonalDataConsentRoute,
+  PersonalDataRequestsRoute: PersonalDataRequestsRoute,
+  PrivacyPolicyRoute: PrivacyPolicyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
