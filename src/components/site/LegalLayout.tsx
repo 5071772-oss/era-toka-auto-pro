@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { SectionHeading, Reveal } from './ui';
+import { SectionHeading } from './ui';
+import { Reveal } from './Reveal';
 
 interface LegalLayoutProps {
   title: string;
