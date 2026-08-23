@@ -9,7 +9,7 @@ const BADGES = ["BEV", "HEV", "PHEV", "EREV", "Китай", "Европа", "А�
 
 export function Hero() {
   return (
-    <section id="hero" className="relative overflow-hidden pb-20 pt-32 sm:pb-28 sm:pt-40">
+    <section id="hero" className="group relative overflow-hidden pb-20 pt-32 sm:pb-28 sm:pt-40">
       <div className="pointer-events-none absolute inset-0 hairline-grid opacity-50" aria-hidden="true" />
       <div
         className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-background to-transparent"
@@ -99,6 +99,17 @@ export function Hero() {
             Один эксперт — весь маршрут поставки под контролем.
           </p>
         </div>
+      </div>
+
+      <div className="absolute right-0 top-1/2 z-0 -translate-y-1/2 opacity-60 sm:block hidden lg:right-[2%] xl:right-[5%] pointer-events-none">
+        <img
+          src={VECTOR_CAR}
+          alt="Neon car vector"
+          className="w-[700px] xl:w-[900px] mix-blend-screen"
+          style={{ 
+            filter: "drop-shadow(0 0 30px var(--neon-soft))",
+          }}
+        />
       </div>
     </section>
   );
