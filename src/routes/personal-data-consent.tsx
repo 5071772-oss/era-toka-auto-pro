@@ -46,6 +46,9 @@ function PersonalDataConsentPage() {
           <p>
             Настоящее согласие действует с момента его предоставления до дня его отзыва мною в письменной форме или по электронной почте Оператора.
           </p>
+          <p className="mt-4 italic">
+            Полный текст согласия на обработку персональных данных доступен по ссылке: <a href="https://disk.yandex.ru/i/mImMXJcvUB_sPw" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">https://disk.yandex.ru/i/mImMXJcvUB_sPw</a>
+          </p>
         </section>
 
         <div className="mt-12 pt-8 border-t border-white/5 text-sm space-y-1">
