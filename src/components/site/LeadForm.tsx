@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { Send, Check } from "lucide-react";
 import { EXPERT, MESSENGER_MAX_URL, TELEGRAM_URL } from "@/lib/brand";
 import { Reveal } from "./Reveal";
@@ -203,8 +204,15 @@ export function LeadForm() {
                   </button>
 
 
-                  <p className="text-xs leading-relaxed text-muted-foreground">
-                    Нажимая кнопку «Продолжить», вы подтверждаете, что принимаете пользовательское соглашение.
+                  <p className="text-[10px] leading-relaxed text-muted-foreground/60">
+                    Нажимая на кнопку, вы даете согласие на обработку персональных данных и принимаете{" "}
+                    <Link to="/legal/terms" className="underline hover:text-primary transition-colors">
+                      пользовательское соглашение
+                    </Link>{" "}
+                    и{" "}
+                    <Link to="/legal/privacy" className="underline hover:text-primary transition-colors">
+                      политику конфиденциальности
+                    </Link>.
                   </p>
                 </form>
               </>
