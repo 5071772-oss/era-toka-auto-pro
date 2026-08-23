@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 const SPREADSHEET_ID = "1iXleBDWpKjaUkt6JByM_8xk8Ely2SBKeP5uAp8myvTk";
-const RANGE = "Лист1!A2:E200";
+const RANGE = "Лист1!A2:E300";
 
 export const getCatalogImages = createServerFn({ method: "GET" })
   .handler(async () => {
