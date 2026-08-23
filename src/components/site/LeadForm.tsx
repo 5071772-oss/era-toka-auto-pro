@@ -264,6 +264,7 @@ export function LeadForm() {
                     <Link to="/privacy-policy" className="underline hover:text-primary transition-colors">
                       политику конфиденциальности
                     </Link>.
+                    Откроет страницу "Политика обработки персональных данных".
                   </p>
                 </form>
               </>
