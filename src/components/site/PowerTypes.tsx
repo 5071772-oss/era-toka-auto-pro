@@ -1,5 +1,5 @@
-import energyAsset from "@/assets/energy-detail.jpg.asset.json";
-import { deployedAssetUrl } from "@/lib/assets";
+const POWER_IMG = "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/era-toka-auto-pro/Era-Toka/i.webp";
+
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnGhost, scrollToForm } from "./ui";
 
@@ -53,7 +53,7 @@ export function PowerTypes() {
 
         <Reveal delay={80}>
           <img
-            src={deployedAssetUrl(energyAsset.url)}
+            src={POWER_IMG}
             alt="Зарядный коннектор электромобиля с потоками энергии"
             width={1200}
             height={912}
