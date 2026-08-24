@@ -82,7 +82,10 @@ function PrivacyPolicyPage() {
         
         <section className="mt-12 pt-8 border-t border-white/10">
           <p className="text-foreground font-medium">
-            Полный текст политики обработки персональных данных находится по ссылке:{" "}
+            Полный текст политики обработки персональных данных находится по ссылке:{`'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
+                                        
+                                            
+                                            Создай аккордеон, чтоб здесь можно было прикрепить, э-э-э, политики обработки персональных данных.`}
             <a 
               href="https://disk.yandex.ru/i/lhREyTK3Ir6KFw" 
               target="_blank" 
