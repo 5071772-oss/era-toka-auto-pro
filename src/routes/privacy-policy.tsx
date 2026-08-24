@@ -45,21 +45,17 @@ function PrivacyPolicyPage() {
 
         <section>
           <h2 className="text-2xl font-bold text-foreground mb-4">2. Сведения об Операторе</h2>
-          <ul className="list-disc pl-5 space-y-2">
-            <li className="whitespace-pre-line">
-              Полное наименование: Самозанятый Николаев Алексей Викторович.
-              Краткое наименование: СМЗ Николаев А. В.
-              ИНН: 500101036007.
-              Адрес Оператора: 143909, Московская область, г. Балашиха, Московский б-р, д. 1/13, кв. 215.
-              Адрес сайта: https://auto-prestige-alchemy.relaxdev.ru/
-              Адрес электронной почты для обращений по вопросам обработки персональных данных: 5071772@gmail.com.
-              Оператор: Николаев Алексей Викторович.
-              Лицо, ответственное за организацию обработки персональных данных: Николаев Алексей Викторович, самостоятельно.
+          <ul className="list-none space-y-2">
+            <li className="whitespace-pre-line text-muted-foreground">
+              <span className="text-foreground font-medium block mb-2">Полное наименование:</span> Самозанятый Николаев Алексей Викторович.{'\n'}
+              <span className="text-foreground font-medium block mb-2">Краткое наименование:</span> СМЗ Николаев А. В.{'\n'}
+              <span className="text-foreground font-medium block mb-2">ИНН:</span> 500101036007.{'\n'}
+              <span className="text-foreground font-medium block mb-2">Адрес Оператора:</span> 143909, Московская область, г. Балашиха, Московский б-р, д. 1/13, кв. 215.{'\n'}
+              <span className="text-foreground font-medium block mb-2">Адрес сайта:</span> https://auto-prestige-alchemy.relaxdev.ru/{'\n'}
+              <span className="text-foreground font-medium block mb-2">Адрес электронной почты для обращений по вопросам обработки персональных данных:</span> 5071772@gmail.com.{'\n'}
+              <span className="text-foreground font-medium block mb-2">Оператор:</span> Николаев Алексей Викторович.{'\n'}
+              <span className="text-foreground font-medium block mb-2">Лицо, ответственное за организацию обработки персональных данных:</span> Николаев Алексей Викторович, самостоятельно.
             </li>
-            <li>{'\n'}</li>
-            <li>{'\n'}</li>
-            <li>{'\n'}</li>
-            <li>{'\n'}</li>
           </ul>
         </section>
 
