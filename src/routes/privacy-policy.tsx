@@ -85,7 +85,7 @@ function PrivacyPolicyPage() {
             Полный текст политики обработки персональных данных находится по ссылке:{`'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
                                         
                                             
-                                            Создай аккордеон, чтоб здесь можно было прикрепить, э-э-э, политики обработки персональных данных.`}
+                                            Реализуй блок Privacy policy в формате аккордеона, чтобы вопросы раскрывались по клику и занимали меньше места на мобильных.`}
             <a 
               href="https://disk.yandex.ru/i/lhREyTK3Ir6KFw" 
               target="_blank" 
