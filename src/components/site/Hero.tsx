@@ -38,7 +38,7 @@ export function Hero() {
 
         <p className="mt-6 max-w-2xl text-lg leading-relaxed font-medium text-foreground">
           {EXPERT} поможет подобрать, проверить и доставить автомобиль под ваш бюджет, маршруты,
-          климат и реальные задачи.
+          климат из реальные задачи.
         </p>
 
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
