@@ -101,7 +101,7 @@ function PrivacyPolicyPage() {
         </section>
 
         <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">4. Права субъекта персональных данных</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-4">4. Категории субъектов персональных данных</h2>
           <p>Пользователь имеет право:</p>
           <ul className="list-decimal pl-5 space-y-2">
             <li>Получать информацию, касающуюся обработки его персональных данных;</li>
