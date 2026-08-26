@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { LegalLayout } from '@/components/site/LegalLayout';
+import { LegalSection } from '@/components/site/LegalSection';
 import { Header } from '@/components/site/Header';
 import { Footer } from '@/components/site/Footer';
 
@@ -18,15 +19,13 @@ function CookiePolicyPage() {
     <>
       <Header />
       <LegalLayout title="Политика использования файлов cookie">
-        <section>
-          <h3 className="text-lg font-bold text-foreground mb-2">Что такое cookie?</h3>
+        <LegalSection title="Что такое cookie?" defaultOpen>
           <p>
             Cookie — это небольшие текстовые файлы, которые сохраняются на вашем устройстве при посещении веб-сайта. Они помогают сайту запоминать информацию о вас, например, выбранный язык или настройки фильтров в каталоге.
           </p>
-        </section>
+        </LegalSection>
 
-        <section>
-          <h3 className="text-lg font-bold text-foreground mb-4">Категории используемых cookie</h3>
+        <LegalSection title="Категории используемых cookie">
           <div className="space-y-6">
             <div>
               <h4 className="text-primary font-bold">1. Необходимые cookie</h4>
@@ -41,26 +40,23 @@ function CookiePolicyPage() {
               <p className="text-sm">Используются для сбора информации о том, как посетители взаимодействуют с сайтом, какие страницы наиболее популярны.</p>
             </div>
           </div>
-        </section>
+        </LegalSection>
 
-        <section>
-          <h3 className="text-lg font-bold text-foreground mb-2">Назначение аналитики и технические данные</h3>
+        <LegalSection title="Назначение аналитики и технические данные">
           <p>
             Мы обрабатываем технические данные (IP-адрес, тип браузера, время доступа) для улучшения производительности сайта и защиты от спама в формах обратной связи.
           </p>
-        </section>
+        </LegalSection>
 
-        <section>
-          <h3 className="text-lg font-bold text-foreground mb-2">Изменение настроек</h3>
+        <LegalSection title="Изменение настроек">
           <p>
             Вы можете отключить cookie в настройках своего браузера. Обратите внимание, что это может привести к частичной потере функциональности сайта.
           </p>
-        </section>
+        </LegalSection>
 
-        <section>
-          <h3 className="text-lg font-bold text-foreground mb-2">Используемые сервисы</h3>
+        <LegalSection title="Используемые сервисы">
           <p>На текущий момент сайт использует встроенные технические средства аналитики Lovable для мониторинга работоспособности интерфейса. Сторонние рекламные пиксели не подключены.</p>
-        </section>
+        </LegalSection>
       </LegalLayout>
       <Footer />
     </>
