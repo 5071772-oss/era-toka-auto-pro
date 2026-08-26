@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { LegalLayout } from '@/components/site/LegalLayout';
+import { LegalSection } from '@/components/site/LegalSection';
 import { Header } from '@/components/site/Header';
 import { Footer } from '@/components/site/Footer';
 
@@ -24,8 +25,7 @@ function PrivacyPolicyPage() {
           <p className="mt-4 text-muted-foreground">Дата редакции документа: 22 августа 2026 года</p>
         </div>
 
-        <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">1. Общие положения</h2>
+        <LegalSection title="1. Общие положения" defaultOpen>
           <p className="whitespace-pre-line">
             1.1. Настоящая Политика обработки персональных данных определяет порядок обработки и обеспечения безопасности персональных данных, осуществляемых Николаевым Алексеем Викторовичем, являющимся плательщиком налога на профессиональный доход, далее — Оператор.{'\u00a0'}{'\n'}{'\n'}{'\n'}
             1.2. Настоящая Политика разработана в соответствии с Конституцией Российской Федерации, Федеральным законом от 27 июля 2006 года № 152-ФЗ «О персональных данных», иными федеральными законами и нормативными правовыми актами Российской Федерации в области персональных данных.{'\u00a0'}{'\n'}{'\n'}{'\n'}
@@ -37,10 +37,9 @@ function PrivacyPolicyPage() {
 
             1.7. Настоящая Политика не заменяет собой согласие субъекта персональных данных в случаях, когда получение такого согласия требуется законодательством Российской Федерации.
           </p>
-        </section>
+        </LegalSection>
 
-        <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">2. Сведения об Операторе</h2>
+        <LegalSection title="2. Сведения об Операторе">
           <ul className="list-none space-y-2">
             <li className="whitespace-pre-line text-muted-foreground">
               <span className="text-foreground font-medium block mb-2">Полное наименование:</span> Самозанятый Николаев Алексей Викторович.{'\n'}
@@ -53,10 +52,9 @@ function PrivacyPolicyPage() {
               <span className="text-foreground font-medium block mb-2">Лицо, ответственное за организацию обработки персональных данных:</span> Николаев Алексей Викторович, самостоятельно.
             </li>
           </ul>
-        </section>
+        </LegalSection>
 
-        <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">3. Основные понятия</h2>
+        <LegalSection title="3. Основные понятия">
           <p className="whitespace-pre-line">{`3.1. Персональные данные — любая информация, относящаяся прямо или косвенно к определенному или определяемому физическому лицу.
 
 3.2. Субъект персональных данных — физическое лицо, к которому относятся персональные данные.
@@ -98,10 +96,9 @@ function PrivacyPolicyPage() {
               </tr>
             </tbody>
           </table>
-        </section>
+        </LegalSection>
 
-        <section>
-          <h2 className="text-2xl font-bold text-foreground mb-4">4. Категории субъектов персональных данных</h2>
+        <LegalSection title="4. Категории субъектов персональных данных">
           <p className="whitespace-pre-line">{`Оператор может обрабатывать персональные данные следующих категорий субъектов:
 
 4.1. Клиенты — физические лица, обратившиеся к Оператору за подбором, приобретением, организацией доставки автомобиля или консультационными услугами.
@@ -117,8 +114,8 @@ function PrivacyPolicyPage() {
             <li>Отозвать согласие на обработку персональных данных;</li>
             <li>Обжаловать действия или бездействие Оператора в уполномоченный орган.</li>
           </ul>
-        </section>
-        
+        </LegalSection>
+
         <section className="mt-12 pt-8 border-t border-white/10">
           <p className="text-foreground font-medium">
             Полный текст политики обработки персональных данных находится по ссылке:{'\u00a0'}
