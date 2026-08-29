@@ -116,19 +116,6 @@ function PrivacyPolicyPage() {
           </ul>
         </LegalSection>
 
-        <section className="mt-12 pt-8 border-t border-white/10">
-          <p className="text-foreground font-medium">
-            Полный текст политики обработки персональных данных находится по ссылке:{'\u00a0'}
-            <a 
-              href="https://disk.yandex.ru/i/lhREyTK3Ir6KFw" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-primary hover:underline underline-offset-4 decoration-primary/30 transition-all"
-            >
-              Скачать документ (Yandex Disk)
-            </a>
-          </p>
-        </section>
       </LegalLayout>
       <Footer />
     </>
