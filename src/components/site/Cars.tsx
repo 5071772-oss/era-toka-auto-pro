@@ -146,18 +146,16 @@ export function Cars() {
   React.useEffect(() => {
     let active = true;
     fetchFeatured().then((featured) => {
-      if (active && featured.length > 0) {
-        setCars(featured.map((car) => ({
-          name: car.title,
-          brand: car.brand,
-          price: car.price,
-          specs: car.specs.split("|").slice(0, 2).map((spec) => spec.trim()).filter(Boolean),
-          text: car.specs.split(" | Информация о покупке")[0],
-          img: car.img,
-        })));
-      }
-    }).catch((error) => console.error("[v0] Failed to load featured cars", error))
-      .finally(() => { active = false; });
+      if (!active || featured.length === 0) return;
+      setCars(featured.map((car) => ({
+        name: car.title,
+        brand: car.brand,
+        price: car.price,
+        specs: car.specs.split("|").slice(0, 2).map((spec) => spec.trim()).filter(Boolean),
+        text: car.specs.split(" | Информация о покупке")[0],
+        img: car.img,
+      })));
+    }).catch((error) => console.error("[v0] Failed to load featured cars", error));
     return () => { active = false; };
   }, [fetchFeatured]);
 
@@ -194,7 +192,7 @@ export function Cars() {
           to="/catalog"
           className={`${btnPrimary} min-w-[240px] px-10`}
         >
-          Смотреть все 130+ моделей
+          Смо��реть все 130+ моделей
           <ArrowUpRight className="ml-2 size-5" aria-hidden="true" />
         </Link>
       </Reveal>
