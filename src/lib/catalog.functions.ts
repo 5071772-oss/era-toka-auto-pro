@@ -4,6 +4,7 @@ import { CARS, type Car } from "@/lib/catalog-data";
 const SPREADSHEET_ID = "1ZEKRBH3_XYB_78WTP0fEowZ8VnGDirGGLDImqiTNYaQ";
 const RANGE = "Лист1!A1:Z300";
 const FEATURED_RANGE = "Главная!A1:Z7";
+const FEATURED_SHEET = "Главная";
 const CONNECTION_ID = "std_01kzc3e87pfqfvgr5c1jbch3k6";
 
 const splitPhotos = (value: string | undefined) =>
@@ -84,10 +85,10 @@ export const getFeaturedCatalog = createServerFn({ method: "GET" }).handler(asyn
   try {
     // The sheet is shared for viewing, so this server-side CSV export is reliable
     // in previews and production without exposing OAuth tokens to the browser.
-    const response = await fetch(`https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&sheet=${encodeURIComponent("Главная")}`, { cache: "no-store" });
+    const response = await fetch(`https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/export?format=csv&sheet=${encodeURIComponent(FEATURED_SHEET)}`, { cache: "no-store" });
     if (!response.ok) return CARS.slice(0, 6);
     const featured = normalizeRows(parseCsv(await response.text()).slice(0, 7));
-    return featured.length > 0 ? featured.slice(0, 6) : CARS.slice(0, 6);
+    return featured.slice(0, 6);
   } catch (error) {
     console.error("[v0] Featured catalog fetch failed", error instanceof Error ? error.message : "unknown error");
     return CARS.slice(0, 6);
