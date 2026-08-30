@@ -4,7 +4,7 @@ import { btnPrimary, btnSmall, prefillModel, SectionHeading } from "./ui";
 import { CARS, Car } from "@/lib/catalog-data";
 import { Search, X, Info, Loader2 } from "lucide-react";
 import { useServerFn } from "@tanstack/react-start";
-import { getCatalogImages } from "@/lib/catalog.functions";
+import { getCatalog } from "@/lib/catalog.functions";
 import { ImageCarousel } from "./ImageCarousel";
 
 function CarCard({ car, onShowDetails }: { car: Car; onShowDetails: (car: Car) => void }) {
@@ -173,59 +173,23 @@ export function CatalogGrid() {
   const [search, setSearch] = React.useState("");
   const [activeBrand, setActiveBrand] = React.useState<string | null>(null);
   const [selectedCar, setSelectedCar] = React.useState<Car | null>(null);
-  const [dynamicImages, setDynamicImages] = React.useState<Record<string, string[]>>({});
-  const [isLoadingImages, setIsLoadingImages] = React.useState(true);
-
-  const fetchImages = useServerFn(getCatalogImages);
+  const [cars, setCars] = React.useState<Car[]>(CARS);
+  const [isLoadingCatalog, setIsLoadingCatalog] = React.useState(true);
+  const fetchCatalog = useServerFn(getCatalog);
 
   React.useEffect(() => {
-    const loadImages = async () => {
-      try {
-        const rows = await fetchImages();
-        const imageMap: Record<string, string[]> = {};
-        
-        if (rows && Array.isArray(rows)) {
-          rows.forEach((row: any[]) => {
-            const brand = row[0];
-            const title = row[1];
-            const mainImg = row[2];
-            const carousel1 = row[3];
-            const carousel2 = row[4];
-            
-            if (brand && title) {
-              const key = `${brand}-${title}`.toLowerCase();
-              const imgs = [mainImg, carousel1, carousel2].filter(url => url && url.trim() !== "");
-              if (imgs.length > 0) {
-                imageMap[key] = imgs;
-              }
-            }
-          });
-        }
-        setDynamicImages(imageMap);
-      } catch (e) {
-        console.error("Failed to load dynamic images", e);
-      } finally {
-        setIsLoadingImages(false);
-      }
-    };
-
-    loadImages();
-  }, [fetchImages]);
-
-  const augmentedCars = React.useMemo(() => {
-    return CARS.map(car => {
-      const key = `${car.brand}-${car.title}`.toLowerCase();
-      const dynamicImgs = dynamicImages[key];
-      if (dynamicImgs) {
-        return {
-          ...car,
-          img: dynamicImgs[0] || car.img,
-          images: dynamicImgs
-        };
-      }
-      return car;
+    let active = true;
+    fetchCatalog().then((remoteCars) => {
+      if (active && remoteCars.length > 0) setCars(remoteCars);
+    }).catch((error) => {
+      console.error("[v0] Failed to load catalog", error);
+    }).finally(() => {
+      if (active) setIsLoadingCatalog(false);
     });
-  }, [dynamicImages]);
+    return () => { active = false; };
+  }, [fetchCatalog]);
+
+  const augmentedCars = cars;
 
   const brands = React.useMemo(() => {
     const set = new Set(augmentedCars.map(c => c.brand));
@@ -253,7 +217,7 @@ export function CatalogGrid() {
 
         {/* Search & Filters */}
         <div className="mt-12 space-y-6">
-          {isLoadingImages && (
+          {isLoadingCatalog && (
             <div className="flex items-center gap-2 text-primary/60 animate-pulse text-xs font-medium uppercase tracking-widest justify-center">
               <Loader2 className="size-4 animate-spin" />
               Загрузка актуальных медиа-данных...
