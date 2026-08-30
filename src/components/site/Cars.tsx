@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ArrowUpRight } from "lucide-react";
+import { useServerFn } from "@tanstack/react-start";
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnPrimary, btnSmall, prefillModel } from "./ui";
@@ -10,6 +11,7 @@ import l9Asset from "@/assets/l9-ultra.jpg.asset.json";
 import zeekrAsset from "@/assets/zeekr-001-fr.jpg.asset.json";
 import audiAsset from "@/assets/catalog/car-003.jpg.asset.json";
 import { deployedAssetUrl } from "@/lib/assets";
+import { getFeaturedCatalog } from "@/lib/catalog.functions";
 
 interface CarCardProps {
   name: string;
@@ -91,7 +93,7 @@ function CarCard({ name, brand, price, specs, text, img, index }: CarCardProps) 
   );
 }
 
-const CARS = [
+const FALLBACK_CARDS = [
   {
     name: "Audi Q4 e-tron 50 quattro",
     brand: "Audi",
@@ -143,6 +145,27 @@ const CARS = [
 ];
 
 export function Cars() {
+  const [cars, setCars] = React.useState(FALLBACK_CARDS);
+  const fetchFeatured = useServerFn(getFeaturedCatalog);
+
+  React.useEffect(() => {
+    let active = true;
+    fetchFeatured().then((featured) => {
+      if (active && featured.length > 0) {
+        setCars(featured.map((car) => ({
+          name: car.title,
+          brand: car.brand,
+          price: car.price,
+          specs: car.specs.split("|").slice(0, 2).map((spec) => spec.trim()).filter(Boolean),
+          text: car.specs.split(" | Информация о покупке")[0],
+          img: car.img,
+        })));
+      }
+    }).catch((error) => console.error("[v0] Failed to load featured cars", error))
+      .finally(() => { active = false; });
+    return () => { active = false; };
+  }, [fetchFeatured]);
+
   return (
     <Section id="avtomobili">
       <Reveal>
@@ -154,7 +177,7 @@ export function Cars() {
       </Reveal>
 
       <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {CARS.map((car, i) => (
+        {cars.map((car, i) => (
           <CarCard key={car.name} {...car} index={i} />
         ))}
       </div>

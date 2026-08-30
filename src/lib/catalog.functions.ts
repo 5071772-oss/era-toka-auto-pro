@@ -3,6 +3,7 @@ import { CARS, type Car } from "@/lib/catalog-data";
 
 const SPREADSHEET_ID = "1ZEKRBH3_XYB_78WTP0fEowZ8VnGDirGGLDImqiTNYaQ";
 const RANGE = "Лист1!A1:Z300";
+const FEATURED_RANGE = "Главное!A1:Z7";
 const CONNECTION_ID = "std_01kzc3e87pfqfvgr5c1jbch3k6";
 
 const splitPhotos = (value: string | undefined) =>
@@ -60,3 +61,22 @@ export const getCatalog = createServerFn({ method: "GET" }).handler(async () => 
 });
 
 export const getCatalogImages = getCatalog;
+
+export const getFeaturedCatalog = createServerFn({ method: "GET" }).handler(async () => {
+  const { callGatewayConnection } = await import("@/lib/connectors.server");
+  try {
+    const response = await callGatewayConnection({
+      connection_id: CONNECTION_ID,
+      connector_id: "google_sheets",
+      method: "GET",
+      path: `/v4/spreadsheets/${SPREADSHEET_ID}/values/${encodeURIComponent(FEATURED_RANGE)}`,
+    });
+    if (response.status !== 200) return CARS.slice(0, 6);
+    const parsed = JSON.parse(response.body) as { values?: string[][] };
+    const featured = normalizeRows((parsed.values ?? []).slice(0, 7));
+    return featured.length > 0 ? featured.slice(0, 6) : CARS.slice(0, 6);
+  } catch (error) {
+    console.error("[v0] Featured catalog fetch failed", error instanceof Error ? error.message : "unknown error");
+    return CARS.slice(0, 6);
+  }
+});
