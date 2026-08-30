@@ -62,6 +62,7 @@ export function Header() {
                 rel="noopener noreferrer"
                 className="flex size-8 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-primary"
                 title="Написать в Telegram"
+                aria-label="Написать в Telegram"
               >
                 <Send className="size-3.5" aria-hidden="true" />
               </a>
@@ -72,6 +73,7 @@ export function Header() {
                 rel="noopener noreferrer"
                 className="flex size-8 items-center justify-center rounded-sm text-muted-foreground transition-colors hover:bg-white/5 hover:text-primary"
                 title="Написать в Max"
+                aria-label="Написать в Max"
               >
                 <svg
                   width="14"
@@ -93,7 +95,7 @@ export function Header() {
               href={`tel:${PHONE}`}
               className="flex items-center gap-1.5 text-[11px] font-medium tracking-wide text-muted-foreground transition-colors hover:text-primary"
             >
-              <Phone className="size-3" />
+              <Phone className="size-3" aria-hidden="true" />
               <span>{PHONE_FORMATTED}</span>
             </a>
           </div>

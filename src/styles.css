@@ -124,6 +124,16 @@
     background-color: var(--neon);
     color: var(--primary-foreground);
   }
+
+  :where(a, button, input, textarea, select):focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
 /* Кастомный скроллбар для модальных окон */
