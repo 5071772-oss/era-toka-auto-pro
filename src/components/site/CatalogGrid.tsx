@@ -2,9 +2,7 @@ import * as React from "react";
 import { Reveal } from "./Reveal";
 import { btnPrimary, btnSmall, prefillModel, SectionHeading } from "./ui";
 import { CARS, Car } from "@/lib/catalog-data";
-import { Search, X, Info, Loader2 } from "lucide-react";
-import { useServerFn } from "@tanstack/react-start";
-import { getCatalog } from "@/lib/catalog.functions";
+import { Search, X, Info } from "lucide-react";
 import { ImageCarousel } from "./ImageCarousel";
 
 function CarCard({ car, onShowDetails }: { car: Car; onShowDetails: (car: Car) => void }) {
@@ -173,21 +171,7 @@ export function CatalogGrid() {
   const [search, setSearch] = React.useState("");
   const [activeBrand, setActiveBrand] = React.useState<string | null>(null);
   const [selectedCar, setSelectedCar] = React.useState<Car | null>(null);
-  const [cars, setCars] = React.useState<Car[]>(CARS);
-  const [isLoadingCatalog, setIsLoadingCatalog] = React.useState(true);
-  const fetchCatalog = useServerFn(getCatalog);
-
-  React.useEffect(() => {
-    let active = true;
-    fetchCatalog().then((remoteCars) => {
-      if (active && remoteCars.length > 0) setCars(remoteCars);
-    }).catch((error) => {
-      console.error("[v0] Failed to load catalog", error);
-    }).finally(() => {
-      if (active) setIsLoadingCatalog(false);
-    });
-    return () => { active = false; };
-  }, [fetchCatalog]);
+  const cars = CARS;
 
   const augmentedCars = cars;
 
@@ -217,12 +201,6 @@ export function CatalogGrid() {
 
         {/* Search & Filters */}
         <div className="mt-12 space-y-6">
-          {isLoadingCatalog && (
-            <div className="flex items-center gap-2 text-primary/60 animate-pulse text-xs font-medium uppercase tracking-widest justify-center">
-              <Loader2 className="size-4 animate-spin" />
-              Загрузка актуальных медиа-данных...
-            </div>
-          )}
           <Reveal delay={50}>
             <div className="relative group">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
