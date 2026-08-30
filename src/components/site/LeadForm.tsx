@@ -15,7 +15,8 @@ const FIELD_NOTE = "fields[note_2]";
 
 const inputClass =
   "w-full rounded-md border border-border bg-background/60 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus:border-primary/70 focus:outline-none focus:ring-2 focus:ring-primary/25";
-const labelClass = "mb-2 block text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground";
+const labelClass =
+  "mb-2 block text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground";
 
 type Errors = Partial<Record<"name" | "phone" | "email", string>>;
 
@@ -25,6 +26,7 @@ export function LeadForm() {
   const [consent, setConsent] = useState(false);
   const [marketingConsent, setMarketingConsent] = useState(false);
   const [sent, setSent] = useState(false);
+  const consentVersion = "22.08.2026";
   const [sending, setSending] = useState(false);
 
   const [note, setNote] = useState("");
@@ -50,24 +52,28 @@ export function LeadForm() {
     if (name.length < 2) next.name = "Укажите имя";
     if (phone.replace(/\D/g, "").length < 10) next.phone = "Укажите корректный телефон";
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) next.email = "Некорректный e-mail";
-    
+
     if (!consent) {
       alert("Необходимо дать согласие на обработку персональных данных");
       return;
     }
-    
+
     setErrors(next);
     if (Object.keys(next).length > 0) return;
 
     setSending(true);
     const body = new URLSearchParams();
     data.forEach((value, key) => body.append(key, String(value)));
-    
-    // Add marketing consent status to the note if checked
-    if (marketingConsent) {
-      const currentNote = body.get(FIELD_NOTE) || "";
-      body.set(FIELD_NOTE, `${currentNote}\n[Согласие на маркетинг: Да]`.trim());
-    }
+
+    const currentNote = body.get(FIELD_NOTE) || "";
+    const consentDetails = [
+      `[Согласие на обработку ПДн: Да]`,
+      `[Версия согласия: ${consentVersion}]`,
+      `[Дата и время согласия: ${new Date().toISOString()}]`,
+      `[Форма: Заявка на консультацию]`,
+      marketingConsent ? "[Согласие на маркетинг: Да]" : "[Согласие на маркетинг: Нет]",
+    ].join("\n");
+    body.set(FIELD_NOTE, `${currentNote}\n${consentDetails}`.trim());
 
     try {
       await fetch(AMO_ACTION, {
@@ -84,7 +90,6 @@ export function LeadForm() {
     }
   };
 
-
   return (
     <Section id="zayavka">
       <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr]">
@@ -100,7 +105,12 @@ export function LeadForm() {
                 <Send className="size-4" aria-hidden="true" />
                 Написать в Telegram
               </a>
-              <a href={MESSENGER_MAX_URL} target="_blank" rel="noopener noreferrer" className={btnGhost}>
+              <a
+                href={MESSENGER_MAX_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={btnGhost}
+              >
                 <svg
                   width="16"
                   height="16"
@@ -143,7 +153,6 @@ export function LeadForm() {
                   onSubmit={handleSubmit}
                   className="space-y-5"
                 >
-
                   <input type="hidden" name="form_id" value={AMO_FORM_ID} />
                   <input type="hidden" name="hash" value={AMO_HASH} />
                   <input type="hidden" name="user_origin" value="" />
@@ -163,7 +172,9 @@ export function LeadForm() {
                       className={`${inputClass} ${errors.name ? "border-destructive" : ""}`}
                     />
                     {errors.name ? (
-                      <p id="lead-name-error" className="mt-2 text-xs text-destructive">{errors.name}</p>
+                      <p id="lead-name-error" className="mt-2 text-xs text-destructive">
+                        {errors.name}
+                      </p>
                     ) : null}
                   </div>
 
@@ -182,7 +193,9 @@ export function LeadForm() {
                       className={`${inputClass} ${errors.phone ? "border-destructive" : ""}`}
                     />
                     {errors.phone ? (
-                      <p id="lead-phone-error" className="mt-2 text-xs text-destructive">{errors.phone}</p>
+                      <p id="lead-phone-error" className="mt-2 text-xs text-destructive">
+                        {errors.phone}
+                      </p>
                     ) : null}
                   </div>
 
@@ -201,7 +214,9 @@ export function LeadForm() {
                       className={`${inputClass} ${errors.email ? "border-destructive" : ""}`}
                     />
                     {errors.email ? (
-                      <p id="lead-email-error" className="mt-2 text-xs text-destructive">{errors.email}</p>
+                      <p id="lead-email-error" className="mt-2 text-xs text-destructive">
+                        {errors.email}
+                      </p>
                     ) : null}
                   </div>
 
@@ -229,11 +244,18 @@ export function LeadForm() {
                       onChange={(e) => setConsent(e.target.checked)}
                       className="mt-1 size-4 rounded border-border bg-background/60 text-primary transition-colors focus:ring-2 focus:ring-primary/25"
                     />
-                    <label htmlFor="consent-checkbox" className="text-xs leading-relaxed text-muted-foreground cursor-pointer">
+                    <label
+                      htmlFor="consent-checkbox"
+                      className="text-xs leading-relaxed text-muted-foreground cursor-pointer"
+                    >
                       Я даю согласие на обработку моих персональных данных на условиях{" "}
-                      <Link to="/personal-data-consent" className="text-primary underline hover:text-primary/80 transition-colors">
+                      <Link
+                        to="/personal-data-consent"
+                        className="text-primary underline hover:text-primary/80 transition-colors"
+                      >
                         Согласия на обработку персональных данных
-                      </Link>.
+                      </Link>
+                      .
                     </label>
                   </div>
 
@@ -245,31 +267,47 @@ export function LeadForm() {
                       onChange={(e) => setMarketingConsent(e.target.checked)}
                       className="mt-1 size-4 rounded border-border bg-background/60 text-primary transition-colors focus:ring-2 focus:ring-primary/25"
                     />
-                    <label htmlFor="marketing-checkbox" className="text-xs leading-relaxed text-muted-foreground cursor-pointer">
-                      Я согласен получать рекламные и информационные сообщения от Николаева Алексея Викторовича на условиях{" "}
-                      <Link to="/marketing-consent" className="text-primary underline hover:text-primary/80 transition-colors">
+                    <label
+                      htmlFor="marketing-checkbox"
+                      className="text-xs leading-relaxed text-muted-foreground cursor-pointer"
+                    >
+                      Я согласен получать рекламные и информационные сообщения от Николаева Алексея
+                      Викторовича на условиях{" "}
+                      <Link
+                        to="/marketing-consent"
+                        className="text-primary underline hover:text-primary/80 transition-colors"
+                      >
                         Согласия на рекламу
-                      </Link>.
+                      </Link>
+                      .
                     </label>
                   </div>
 
-                  <button 
-                    type="submit" 
-                    disabled={sending || !consent} 
+                  <button
+                    type="submit"
+                    disabled={sending || !consent}
                     className={`${btnPrimary} w-full disabled:opacity-50 disabled:cursor-not-allowed`}
                   >
                     {sending ? "Отправляем…" : "Получить консультацию"}
                   </button>
 
                   <p className="text-[10px] leading-relaxed text-muted-foreground/60">
-                    Нажимая кнопку «Получить консультацию», вы подтверждаете, что принимаете{" "}
-                    <Link to="/personal-data-consent" className="underline hover:text-primary transition-colors">
-                      пользовательское соглашение
+                    Нажимая кнопку «Получить консультацию», вы подтверждаете предоставление согласия
+                    на обработку персональных данных на условиях{" "}
+                    <Link
+                      to="/personal-data-consent"
+                      className="underline hover:text-primary transition-colors"
+                    >
+                      Согласия на обработку персональных данных
                     </Link>{" "}
-                    и{" "}
-                    <Link to="/privacy-policy" className="underline hover:text-primary transition-colors">
-                      политику конфиденциальности
-                    </Link>.
+                    и ознакомление с{" "}
+                    <Link
+                      to="/privacy-policy"
+                      className="underline hover:text-primary transition-colors"
+                    >
+                      Политикой обработки персональных данных
+                    </Link>
+                    .
                   </p>
                 </form>
               </>
