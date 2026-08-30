@@ -135,7 +135,7 @@ export function Cars() {
           to="/catalog"
           className={`${btnPrimary} min-w-[240px] px-10`}
         >
-          Смо��реть все 130+ моделей
+          Смотреть все 130+ моделей
           <ArrowUpRight className="ml-2 size-5" aria-hidden="true" />
         </Link>
       </Reveal>

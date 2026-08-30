@@ -1,6 +1,6 @@
 import { ArrowUpRight, Phone, Send } from "lucide-react";
-import { CATALOG_URL, EXPERT, MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_URL } from "@/lib/brand";
-import { btnGhost, btnPrimary, btnSmall, scrollToForm } from "./ui";
+import { EXPERT, MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_URL } from "@/lib/brand";
+import { btnGhost, btnPrimary, scrollToForm } from "./ui";
 const HERO_IMG = "https://project--dbec8924-ca7b-41f6-b87a-9cd9693ce1a1.lovable.app/__l5e/assets-v1/e1dc2e40-b83e-4913-9eb1-4ee5deaf4373/hero-ev.jpg";
 const VECTOR_CAR = "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/era-toka-auto-pro/Era-Toka/new-arcfox-2.webp";
 
@@ -14,7 +14,9 @@ export function Hero() {
         <div className="absolute inset-0 right-[-10%] sm:right-[-20%]">
           <img
             src={HERO_IMG}
-            alt="Premium electric vehicle"
+            alt="Премиальный электромобиль"
+            fetchPriority="high"
+            decoding="async"
             className="h-full w-full object-cover object-right opacity-40 transition-opacity duration-700 sm:opacity-50 scale-[0.9] sm:scale-[0.85]"
           />
         </div>
