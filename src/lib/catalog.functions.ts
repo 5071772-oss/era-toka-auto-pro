@@ -3,7 +3,7 @@ import { CARS, type Car } from "@/lib/catalog-data";
 
 const SPREADSHEET_ID = "1ZEKRBH3_XYB_78WTP0fEowZ8VnGDirGGLDImqiTNYaQ";
 const RANGE = "Лист1!A1:Z300";
-const FEATURED_RANGE = "Главное!A1:Z7";
+const FEATURED_RANGE = "Главная!A1:Z7";
 const CONNECTION_ID = "std_01kzc3e87pfqfvgr5c1jbch3k6";
 
 const splitPhotos = (value: string | undefined) =>
@@ -25,10 +25,10 @@ function normalizeRows(values: string[][]): Car[] {
     const mainPhoto = readCell(row, headers, "main photo", "главное фото", "основное фото");
     const photos = [
       mainPhoto,
-      ...splitPhotos(readCell(row, headers, "additional photos", "дополнительные фото")),
-      readCell(row, headers, "одиночное фото 1", "single photo 1"),
-      readCell(row, headers, "одиночное фото 2", "single photo 2"),
-      readCell(row, headers, "одиночное фото 3", "single photo 3"),
+      ...splitPhotos(readCell(row, headers, "additional photos", "дополнительные фото", "additional 1", "дополнительное фото 1")),
+      readCell(row, headers, "одиночное фото 1", "single photo 1", "additional 1"),
+      readCell(row, headers, "одиночное фото 2", "single photo 2", "additional 2"),
+      readCell(row, headers, "одиночное фото 3", "single photo 3", "additional 3"),
     ].filter((url, index, all) => url && all.indexOf(url) === index);
     const specs = readCell(row, headers, "specifications", "характеристики");
     return [{
