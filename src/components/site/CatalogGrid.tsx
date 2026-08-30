@@ -81,7 +81,7 @@ function CarCard({ car, onShowDetails }: { car: Car; onShowDetails: (car: Car) =
   );
 }
 
-function DetailModal({ car, onClose }: { car: Car | null; onClose: () => void }) {
+export function DetailModal({ car, onClose }: { car: Car | null; onClose: () => void }) {
   if (!car) return null;
 
   return (

@@ -12,6 +12,8 @@ import zeekrAsset from "@/assets/zeekr-001-fr.jpg.asset.json";
 import audiAsset from "@/assets/catalog/car-003.jpg.asset.json";
 import { deployedAssetUrl } from "@/lib/assets";
 import { getFeaturedCatalog } from "@/lib/catalog.functions";
+import type { Car } from "@/lib/catalog-data";
+import { DetailModal } from "./CatalogGrid";
 
 interface CarCardProps {
   name: string;
@@ -21,15 +23,16 @@ interface CarCardProps {
   text: string;
   img: string;
   index: number;
+  onShowDetails: () => void;
 }
 
-function CarCard({ name, brand, price, specs, text, img, index }: CarCardProps) {
+function CarCard({ name, brand, price, img, index, onShowDetails }: CarCardProps) {
   const [error, setError] = React.useState(false);
 
   return (
     <Reveal delay={index * 60} className="h-full">
       <article className="glass group flex h-full flex-col overflow-hidden rounded-xl">
-        <div className="aspect-[16/10] w-full overflow-hidden bg-white/5 flex items-center justify-center">
+        <button type="button" className="aspect-[16/10] w-full overflow-hidden bg-white/5 flex items-center justify-center cursor-pointer" onClick={onShowDetails} aria-label={`Открыть детали: ${name}`}>
           {error ? (
             <div className="flex flex-col items-center gap-2 p-4 text-center">
               <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
@@ -46,27 +49,18 @@ function CarCard({ name, brand, price, specs, text, img, index }: CarCardProps) 
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
           )}
-        </div>
+        </button>
         <div className="flex flex-1 flex-col p-7">
           <div className="flex flex-wrap items-center gap-2">
             <span className="px-2 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider">
               {brand}
             </span>
-            {specs.map((spec) => (
-              <span
-                key={spec}
-                className="rounded-full border border-white/10 px-3 py-1 text-[10px] uppercase tracking-[0.14em] text-muted-foreground"
-              >
-                {spec}
-              </span>
-            ))}
           </div>
           <h3 className="mt-5 text-xl font-semibold tracking-tight leading-tight">{name}</h3>
           <div className="mt-3">
             <p className="text-xs uppercase tracking-wider text-muted-foreground">Цена в Китае</p>
             <p className="mt-1 text-lg font-bold text-primary">{price}</p>
           </div>
-          <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground">{text}</p>
           <p className="mt-5 text-[10px] leading-relaxed text-muted-foreground">
             *Цена за авто. Доставка и сборы рассчитываются отдельно.
           </p>
@@ -146,6 +140,7 @@ const FALLBACK_CARDS = [
 
 export function Cars() {
   const [cars, setCars] = React.useState(FALLBACK_CARDS);
+  const [selectedCar, setSelectedCar] = React.useState<Car | null>(null);
   const fetchFeatured = useServerFn(getFeaturedCatalog);
 
   React.useEffect(() => {
@@ -178,7 +173,19 @@ export function Cars() {
 
       <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {cars.map((car, i) => (
-          <CarCard key={car.name} {...car} index={i} />
+          <CarCard
+            key={car.name}
+            {...car}
+            index={i}
+            onShowDetails={() => setSelectedCar({
+              title: car.name,
+              brand: car.brand,
+              price: car.price,
+              specs: `${car.specs.join(". ")}. | ${car.text}`,
+              img: car.img,
+              images: [car.img],
+            })}
+          />
         ))}
       </div>
 
@@ -191,6 +198,7 @@ export function Cars() {
           <ArrowUpRight className="ml-2 size-5" aria-hidden="true" />
         </Link>
       </Reveal>
+      <DetailModal car={selectedCar} onClose={() => setSelectedCar(null)} />
     </Section>
   );
 }
