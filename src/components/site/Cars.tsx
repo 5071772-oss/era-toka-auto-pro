@@ -13,6 +13,7 @@ interface CarCardProps {
   specs: string[];
   text: string;
   img: string;
+  images: string[];
   index: number;
   onShowDetails: () => void;
 }
@@ -100,6 +101,7 @@ export function Cars() {
       specs: car.specs.split("|")[0].split(". ").slice(0, 2).filter(Boolean),
       text: car.specs,
       img: car.img,
+      images: car.images ?? [car.img],
     }));
 
   return (
@@ -124,7 +126,7 @@ export function Cars() {
               price: car.price,
               specs: `${car.specs.join(". ")}. | ${car.text}`,
               img: car.img,
-              images: [car.img],
+              images: car.images,
             })}
           />
         ))}
