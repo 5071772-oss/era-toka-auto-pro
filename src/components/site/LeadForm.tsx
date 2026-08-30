@@ -158,10 +158,12 @@ export function LeadForm() {
                       type="text"
                       autoComplete="name"
                       placeholder="Как к вам обращаться"
+                      aria-invalid={Boolean(errors.name)}
+                      aria-describedby={errors.name ? "lead-name-error" : undefined}
                       className={`${inputClass} ${errors.name ? "border-destructive" : ""}`}
                     />
                     {errors.name ? (
-                      <p className="mt-2 text-xs text-destructive">{errors.name}</p>
+                      <p id="lead-name-error" className="mt-2 text-xs text-destructive">{errors.name}</p>
                     ) : null}
                   </div>
 
@@ -175,10 +177,12 @@ export function LeadForm() {
                       type="tel"
                       autoComplete="tel"
                       placeholder="+7 (900) 000-00-00"
+                      aria-invalid={Boolean(errors.phone)}
+                      aria-describedby={errors.phone ? "lead-phone-error" : undefined}
                       className={`${inputClass} ${errors.phone ? "border-destructive" : ""}`}
                     />
                     {errors.phone ? (
-                      <p className="mt-2 text-xs text-destructive">{errors.phone}</p>
+                      <p id="lead-phone-error" className="mt-2 text-xs text-destructive">{errors.phone}</p>
                     ) : null}
                   </div>
 
@@ -192,10 +196,12 @@ export function LeadForm() {
                       type="email"
                       autoComplete="email"
                       placeholder="you@example.com"
+                      aria-invalid={Boolean(errors.email)}
+                      aria-describedby={errors.email ? "lead-email-error" : undefined}
                       className={`${inputClass} ${errors.email ? "border-destructive" : ""}`}
                     />
                     {errors.email ? (
-                      <p className="mt-2 text-xs text-destructive">{errors.email}</p>
+                      <p id="lead-email-error" className="mt-2 text-xs text-destructive">{errors.email}</p>
                     ) : null}
                   </div>
 
@@ -256,7 +262,7 @@ export function LeadForm() {
                   </button>
 
                   <p className="text-[10px] leading-relaxed text-muted-foreground/60">
-                    Нажимая кнопку «Продолжить», вы подтверждаете, что принимаете{" "}
+                    Нажимая кнопку «Получить консультацию», вы подтверждаете, что принимаете{" "}
                     <Link to="/personal-data-consent" className="underline hover:text-primary transition-colors">
                       пользовательское соглашение
                     </Link>{" "}
