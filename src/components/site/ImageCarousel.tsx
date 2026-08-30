@@ -11,6 +11,11 @@ export function ImageCarousel({ images, alt }: ImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [direction, setDirection] = React.useState(0);
 
+  React.useEffect(() => {
+    setCurrentIndex(0);
+    setDirection(0);
+  }, [images]);
+
   if (!images || images.length === 0) return null;
   if (images.length === 1) {
     return (
@@ -51,7 +56,7 @@ export function ImageCarousel({ images, alt }: ImageCarouselProps) {
   };
 
   return (
-    <div className="relative w-full h-full overflow-hidden bg-muted group">
+    <div className="relative z-20 w-full h-full overflow-hidden bg-muted group touch-pan-y">
       <AnimatePresence initial={false} custom={direction}>
         <motion.img
           key={currentIndex}
@@ -85,13 +90,19 @@ export function ImageCarousel({ images, alt }: ImageCarouselProps) {
 
       {/* Navigation arrows */}
       <button
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/40 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/60 backdrop-blur-md border border-white/10"
+        type="button"
+        aria-label="Предыдущая фотография"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-30 pointer-events-auto p-2 rounded-full bg-black/40 text-white opacity-80 group-hover:opacity-100 transition-opacity hover:bg-black/60 backdrop-blur-md border border-white/10"
+        onPointerDown={(event) => event.stopPropagation()}
         onClick={() => paginate(-1)}
       >
         <ChevronLeft className="size-6" />
       </button>
       <button
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/40 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/60 backdrop-blur-md border border-white/10"
+        type="button"
+        aria-label="Следующая фотография"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-30 pointer-events-auto p-2 rounded-full bg-black/40 text-white opacity-80 group-hover:opacity-100 transition-opacity hover:bg-black/60 backdrop-blur-md border border-white/10"
+        onPointerDown={(event) => event.stopPropagation()}
         onClick={() => paginate(1)}
       >
         <ChevronRight className="size-6" />
@@ -102,6 +113,8 @@ export function ImageCarousel({ images, alt }: ImageCarouselProps) {
         {images.map((_, i) => (
           <button
             key={i}
+            type="button"
+            aria-label={`Открыть фотографию ${i + 1}`}
             onClick={() => {
               setDirection(i > currentIndex ? 1 : -1);
               setCurrentIndex(i);
