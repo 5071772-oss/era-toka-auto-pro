@@ -4,13 +4,6 @@ import { useServerFn } from "@tanstack/react-start";
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnPrimary, btnSmall, prefillModel } from "./ui";
-import avatrAsset from "@/assets/avatr-07.jpg.asset.json";
-import xiaomiAsset from "@/assets/xiaomi-su7-ultra.jpg.asset.json";
-import aitoAsset from "@/assets/aito-m9.jpg.asset.json";
-import l9Asset from "@/assets/l9-ultra.jpg.asset.json";
-import zeekrAsset from "@/assets/zeekr-001-fr.jpg.asset.json";
-import audiAsset from "@/assets/catalog/car-003.jpg.asset.json";
-import { deployedAssetUrl } from "@/lib/assets";
 import { getFeaturedCatalog } from "@/lib/catalog.functions";
 import type { Car } from "@/lib/catalog-data";
 import { DetailModal } from "./CatalogGrid";
@@ -25,6 +18,8 @@ interface CarCardProps {
   index: number;
   onShowDetails: () => void;
 }
+
+type HomeCar = Omit<CarCardProps, "index" | "onShowDetails">;
 
 function CarCard({ name, brand, price, img, index, onShowDetails }: CarCardProps) {
   const [error, setError] = React.useState(false);
@@ -87,59 +82,8 @@ function CarCard({ name, brand, price, img, index, onShowDetails }: CarCardProps
   );
 }
 
-const FALLBACK_CARDS = [
-  {
-    name: "Huawei M9 (6мест) гибрид Ultra + все допы (R22 / 52kwh)",
-    brand: "Huawei",
-    price: "От 680 000 ¥",
-    specs: ["Гибрид", "6 мест"],
-    text: "Размеры 5230 x 1999 x 1800. Полный привод — 490 л.с. Батарея 52 kwh.",
-    img: deployedAssetUrl(aitoAsset.url),
-  },
-  {
-    name: "Lixiang L9 Ultra (2025)",
-    brand: "Lixiang",
-    price: "От 475 000 ¥",
-    specs: ["Гибрид", "450 л.с."],
-    text: "Размеры 5218 x 1998 x 1800. Полный привод — 450 л.с. Батарея 52 kwh.",
-    img: deployedAssetUrl(l9Asset.url),
-  },
-  {
-    name: "Xiaomi SU7 Ultra",
-    brand: "Xiaomi",
-    price: "От 815 000 ¥",
-    specs: ["Электро", "1548 л.с."],
-    text: "Размеры 4997 x 1963 x 1440. Полный привод — 1548 л.с. Максимальная скорость 350 км/ч.",
-    img: "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/era-toka-auto-pro/9-12.webp",
-  },
-  {
-    name: "Xiaomi YU7 max (без допов)",
-    brand: "Xiaomi",
-    price: "От 355 000 ¥",
-    specs: ["Электро", "681 л.с."],
-    text: "Батарея 101 kwh. Полный привод — 681 л.с. Дальность хода до 760 км.",
-    img: deployedAssetUrl(xiaomiAsset.url),
-  },
-  {
-    name: "Denza Z9GT и Z9 (ГИБРИД) в топе + допы",
-    brand: "Denza",
-    price: "От 470 000 ¥",
-    specs: ["Гибрид", "870 л.с."],
-    text: "Гибрид с батареей 38 kwh и тремя электромоторами. Разгон до 100 км/ч за 3.2 сек.",
-    img: deployedAssetUrl(avatrAsset.url),
-  },
-  {
-    name: "Lotus Eletre 900",
-    brand: "Lotus",
-    price: "От 930 000 ¥",
-    specs: ["Электро", "926 л.с."],
-    text: "Батарея 112 kwh. Полный привод — 926 л.с. Разгон до 100 км/ч за 2.9 сек.",
-    img: deployedAssetUrl(zeekrAsset.url),
-  },
-];
-
 export function Cars() {
-  const [cars, setCars] = React.useState(FALLBACK_CARDS);
+  const [cars, setCars] = React.useState<HomeCar[]>([]);
   const [selectedCar, setSelectedCar] = React.useState<Car | null>(null);
   const fetchFeatured = useServerFn(getFeaturedCatalog);
 
