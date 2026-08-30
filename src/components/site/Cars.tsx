@@ -1,11 +1,9 @@
 import * as React from "react";
 import { ArrowUpRight } from "lucide-react";
-import { useServerFn } from "@tanstack/react-start";
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnPrimary, btnSmall, prefillModel } from "./ui";
-import { getFeaturedCatalog } from "@/lib/catalog.functions";
-import type { Car } from "@/lib/catalog-data";
+import { CARS, type Car } from "@/lib/catalog-data";
 import { DetailModal } from "./CatalogGrid";
 
 interface CarCardProps {
@@ -83,25 +81,26 @@ function CarCard({ name, brand, price, img, index, onShowDetails }: CarCardProps
 }
 
 export function Cars() {
-  const [cars, setCars] = React.useState<HomeCar[]>([]);
   const [selectedCar, setSelectedCar] = React.useState<Car | null>(null);
-  const fetchFeatured = useServerFn(getFeaturedCatalog);
-
-  React.useEffect(() => {
-    let active = true;
-    fetchFeatured().then((featured) => {
-      if (!active || featured.length === 0) return;
-      setCars(featured.map((car) => ({
-        name: car.title,
-        brand: car.brand,
-        price: car.price,
-        specs: car.specs.split("|").slice(0, 2).map((spec) => spec.trim()).filter(Boolean),
-        text: car.specs.split(" | Информация о покупке")[0],
-        img: car.img,
-      })));
-    }).catch((error) => console.error("[v0] Failed to load featured cars", error));
-    return () => { active = false; };
-  }, [fetchFeatured]);
+  const homeCarTitles = [
+    "Huawei M9 (6мест) гибрид Ultra + все допы (R22 / 52kwh)",
+    "Lixiang L9 Ultra (2025)",
+    "Xiaomi SU7 Ultra",
+    "Xiaomi YU7 max (без допов)",
+    "Denza Z9GT и Z9 (ГИБРИД) в топе + допы",
+    "Lotus Eletre 900",
+  ];
+  const cars: HomeCar[] = homeCarTitles
+    .map((title) => CARS.find((car) => car.title === title))
+    .filter((car): car is Car => Boolean(car))
+    .map((car) => ({
+      name: car.title,
+      brand: car.brand,
+      price: car.price,
+      specs: car.specs.split("|")[0].split(". ").slice(0, 2).filter(Boolean),
+      text: car.specs,
+      img: car.img,
+    }));
 
   return (
     <Section id="avtomobili">
