@@ -82,14 +82,25 @@ function CarCard({ name, brand, price, img, index, onShowDetails }: CarCardProps
 
 export function Cars() {
   const [selectedCar, setSelectedCar] = React.useState<Car | null>(null);
-  const cars: HomeCar[] = CARS.slice(0, 6).map((car) => ({
-    name: car.title,
-    brand: car.brand,
-    price: car.price,
-    specs: car.specs.split("|")[0].split(". ").slice(0, 2).filter(Boolean),
-    text: car.specs,
-    img: car.img,
-  }));
+  const homeCarTitles = [
+    "Huawei M9 (6мест) гибрид Ultra + все допы (R22 / 52kwh)",
+    "Lixiang L9 Ultra (2025)",
+    "Xiaomi SU7 Ultra",
+    "Xiaomi YU7 max (без допов)",
+    "Denza Z9GT и Z9 (ГИБРИД) в топе + допы",
+    "Lotus Eletre 900",
+  ];
+  const cars: HomeCar[] = homeCarTitles
+    .map((title) => CARS.find((car) => car.title === title))
+    .filter((car): car is Car => Boolean(car))
+    .map((car) => ({
+      name: car.title,
+      brand: car.brand,
+      price: car.price,
+      specs: car.specs.split("|")[0].split(". ").slice(0, 2).filter(Boolean),
+      text: car.specs,
+      img: car.img,
+    }));
 
   return (
     <Section id="avtomobili">
