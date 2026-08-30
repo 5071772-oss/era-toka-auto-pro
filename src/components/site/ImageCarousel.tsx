@@ -11,6 +11,11 @@ export function ImageCarousel({ images, alt }: ImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [direction, setDirection] = React.useState(0);
 
+  React.useEffect(() => {
+    setCurrentIndex(0);
+    setDirection(0);
+  }, [images]);
+
   if (!images || images.length === 0) return null;
   if (images.length === 1) {
     return (
@@ -85,13 +90,17 @@ export function ImageCarousel({ images, alt }: ImageCarouselProps) {
 
       {/* Navigation arrows */}
       <button
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/40 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/60 backdrop-blur-md border border-white/10"
+        type="button"
+        aria-label="Предыдущая фотография"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/40 text-white opacity-80 group-hover:opacity-100 transition-opacity hover:bg-black/60 backdrop-blur-md border border-white/10"
         onClick={() => paginate(-1)}
       >
         <ChevronLeft className="size-6" />
       </button>
       <button
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/40 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/60 backdrop-blur-md border border-white/10"
+        type="button"
+        aria-label="Следующая фотография"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/40 text-white opacity-80 group-hover:opacity-100 transition-opacity hover:bg-black/60 backdrop-blur-md border border-white/10"
         onClick={() => paginate(1)}
       >
         <ChevronRight className="size-6" />
