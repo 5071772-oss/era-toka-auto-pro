@@ -51,15 +51,6 @@ function PersonalDataConsentPage() {
               <span className="text-foreground font-medium block mb-1">Сайт:</span>
               <span className="text-muted-foreground">
                 <a
-                  href="https://era-toka-auto-pro.lovable.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary hover:underline"
-                >
-                  https://era-toka-auto-pro.lovable.app/
-                </a>
-                <span className="text-muted-foreground">, </span>
-                <a
                   href="https://era-toka.ru"
                   target="_blank"
                   rel="noopener noreferrer"
