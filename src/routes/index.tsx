@@ -14,12 +14,18 @@ import { FinalCta } from "@/components/site/FinalCta";
 import { Footer } from "@/components/site/Footer";
 import { EXPERT, PHONE_FORMATTED, TELEGRAM_URL } from "@/lib/brand";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
+import { getCatalogList } from "@/lib/chatium-catalog";
+import { pickHomeCars } from "@/lib/home-cars";
 
 const TITLE = "ЭРА ТОКА — электромобили и гибриды под ключ в РФ";
 const DESCRIPTION =
   "Подбор, проверка, покупка и поставка электромобилей и гибридов из Китая, Европы, Америки и Кореи. Полный цикл: логистика, таможня, документы.";
 
 export const Route = createFileRoute("/")({
+  loader: async () => {
+    const { cars } = await getCatalogList();
+    return { cars: pickHomeCars(cars) };
+  },
   head: () => ({
     meta: [
       { title: TITLE },
@@ -71,6 +77,8 @@ function StructuredData() {
 }
 
 function Index() {
+  const { cars } = Route.useLoaderData();
+
   return (
     <div className="min-h-screen bg-background">
       <ScrollProgress />
@@ -78,7 +86,7 @@ function Index() {
       <main>
         <Hero />
         <Advantages />
-        <Cars />
+        <Cars catalog={cars} />
         <PowerTypes />
         <Process />
         <Geography />

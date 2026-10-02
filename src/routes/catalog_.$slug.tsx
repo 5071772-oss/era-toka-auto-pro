@@ -7,26 +7,25 @@ import { ScrollProgress } from "@/components/site/ScrollProgress";
 import { ImageCarousel } from "@/components/site/ImageCarousel";
 import { Reveal } from "@/components/site/Reveal";
 import { btnPrimary, prefillModel } from "@/components/site/ui";
-import { carBySlug, carSlug, carsByBrand } from "@/lib/car-slug";
-import { parseSpecs } from "@/lib/car-specs";
-import { imageFor, srcSetFor } from "@/lib/car-image";
+import { getCarDetail, getCatalogList, type CarListItem } from "@/lib/chatium-catalog";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
 import { TELEGRAM_URL, EXPERT } from "@/lib/brand";
 
 export const Route = createFileRoute("/catalog_/$slug")({
-  loader: ({ params }) => {
-    const car = carBySlug(params.slug);
+  loader: async ({ params }) => {
+    const [{ car }, { cars }] = await Promise.all([getCarDetail(params.slug), getCatalogList()]);
     if (!car) throw notFound();
-    return { car };
+    const others = cars.filter((item) => item.brand === car.brand && item.slug !== car.slug).slice(0, 8);
+    return { car, others };
   },
-  head: ({ params }) => {
-    const car = carBySlug(params.slug);
+  head: ({ loaderData }) => {
+    const car = loaderData?.car;
     if (!car) return {};
-    const specs = parseSpecs(car.specs);
-    const url = absoluteUrl(`/catalog/${params.slug}`);
+    const url = absoluteUrl(`/catalog/${car.slug}`);
     const title = `${car.title} — купить под ключ из Китая | ЭРА ТОКА`;
-    const description = `${car.title}: ${specs.summary}. Цена в Китае ${car.price.replace(/^От\s*/, "от ")} — доставка, таможня и документы под ключ.`;
-    const image = `${SITE_URL}${car.img}`;
+    const description = `${car.title}: ${car.summary}. Цена в Китае ${car.price.replace(/^От\s*/, "от ")} — доставка, таможня и документы под ключ.`;
+    const firstPhoto = car.photos[0];
+    const image = firstPhoto ? (firstPhoto.full.startsWith("http") ? firstPhoto.full : `${SITE_URL}${firstPhoto.full}`) : undefined;
     return {
       meta: [
         { title },
@@ -35,9 +34,8 @@ export const Route = createFileRoute("/catalog_/$slug")({
         { property: "og:description", content: description },
         { property: "og:type", content: "product" },
         { property: "og:url", content: url },
-        { property: "og:image", content: image },
+        ...(image ? [{ property: "og:image", content: image }, { name: "twitter:image", content: image }] : []),
         { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:image", content: image },
       ],
       links: [{ rel: "canonical", href: url }],
     };
@@ -46,27 +44,23 @@ export const Route = createFileRoute("/catalog_/$slug")({
 });
 
 function CarPage() {
-  const { car } = Route.useLoaderData();
-  const specs = parseSpecs(car.specs);
-  const gallery = car.images && car.images.length > 0 ? car.images : [car.img];
-  const sameBrand = carsByBrand(car.brand)
-    .filter((other) => other.title !== car.title)
-    .slice(0, 8);
-  const priceYuan = /([\d\s]{3,})/.exec(car.price)?.[1]?.replace(/\s/g, "") ?? null;
+  const { car, others } = Route.useLoaderData();
+  const gallery = car.photos.map((photo) => photo.full);
+  const priceYuan = car.priceYuan;
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: car.title,
     brand: { "@type": "Brand", name: car.brand },
-    description: `${car.title}: ${specs.summary}.`,
-    image: `${SITE_URL}${car.img}`,
+    description: car.description ?? `${car.title}: ${car.summary}.`,
+    ...(gallery[0] ? { image: gallery[0] } : {}),
     offers: {
       "@type": "Offer",
       priceCurrency: "CNY",
       ...(priceYuan ? { price: priceYuan } : {}),
       availability: "https://schema.org/PreOrder",
-      url: absoluteUrl(`/catalog/${carSlug(car)}`),
+      url: absoluteUrl(`/catalog/${car.slug}`),
       seller: { "@type": "Organization", name: "ЭРА ТОКА" },
     },
   };
@@ -77,11 +71,11 @@ function CarPage() {
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Главная", item: SITE_URL },
       { "@type": "ListItem", position: 2, name: "Каталог", item: absoluteUrl("/catalog") },
-      { "@type": "ListItem", position: 3, name: car.title, item: absoluteUrl(`/catalog/${carSlug(car)}`) },
+      { "@type": "ListItem", position: 3, name: car.title, item: absoluteUrl(`/catalog/${car.slug}`) },
     ],
   };
 
-  const mainImage = imageFor(car.img);
+  const mainPhoto = car.photos[0];
 
   return (
     <div className="min-h-screen bg-background">
@@ -111,18 +105,20 @@ function CarPage() {
                 <div className="relative aspect-video overflow-hidden rounded-2xl border border-border bg-muted">
                   {gallery.length > 1 ? (
                     <ImageCarousel images={gallery} alt={car.title} priority />
-                  ) : (
+                  ) : mainPhoto ? (
                     <img
-                      src={car.img}
-                      srcSet={srcSetFor(mainImage)}
+                      src={mainPhoto.full}
+                      srcSet={`${mainPhoto.card2x} 560w, ${mainPhoto.full} 1200w`}
                       sizes="(max-width: 1024px) 100vw, 640px"
                       alt={car.title}
-                      width={mainImage?.fullWidth ?? 1200}
-                      height={800}
                       fetchPriority="high"
                       decoding="async"
                       className="h-full w-full object-cover"
                     />
+                  ) : (
+                    <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                      Фотография готовится
+                    </div>
                   )}
                 </div>
               </div>
@@ -134,7 +130,11 @@ function CarPage() {
                 <h1 className="mt-4 text-balance text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
                   {car.title}
                 </h1>
-                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{specs.summary}</p>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{car.summary}</p>
+
+                {car.description ? (
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{car.description}</p>
+                ) : null}
 
                 <div className="mt-6 rounded-2xl border border-border bg-white/5 p-5">
                   <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground">Цена в Китае</p>
@@ -177,9 +177,9 @@ function CarPage() {
                 <dl className="mt-6 divide-y divide-border/60 overflow-hidden rounded-2xl border border-border bg-white/5">
                   <div className="flex items-baseline justify-between gap-4 px-5 py-3 text-sm">
                     <dt className="text-muted-foreground">Тип</dt>
-                    <dd className="text-right font-medium">{specs.vehicleType}</dd>
+                    <dd className="text-right font-medium">{car.vehicleTypeLabel}</dd>
                   </div>
-                  {specs.rows.map((row) => (
+                  {car.specRows.map((row) => (
                     <div key={row.label} className="flex items-baseline justify-between gap-4 px-5 py-3 text-sm">
                       <dt className="text-muted-foreground">{row.label}</dt>
                       <dd className="text-right font-medium">{row.value}</dd>
@@ -187,9 +187,15 @@ function CarPage() {
                   ))}
                 </dl>
 
-                {specs.reviewUrl ? (
+                {car.extraSpecs ? (
+                  <p className="mt-5 whitespace-pre-line text-sm leading-relaxed text-muted-foreground">
+                    {car.extraSpecs}
+                  </p>
+                ) : null}
+
+                {car.reviewUrl ? (
                   <a
-                    href={specs.reviewUrl}
+                    href={car.reviewUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
@@ -201,51 +207,58 @@ function CarPage() {
               </div>
 
               <div className="space-y-8">
-                {specs.blocks.map((block) => (
-                  <div key={block.title}>
-                    <h2 className="text-xl font-semibold tracking-tight">{block.title}</h2>
+                {car.purchaseTerms ? (
+                  <div>
+                    <h2 className="text-xl font-semibold tracking-tight">Условия покупки</h2>
                     <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-muted-foreground">
-                      {block.text}
+                      {car.purchaseTerms}
                     </p>
                   </div>
-                ))}
+                ) : null}
+                {car.deliveryTerms ? (
+                  <div>
+                    <h2 className="text-xl font-semibold tracking-tight">Сроки поставки</h2>
+                    <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-muted-foreground">
+                      {car.deliveryTerms}
+                    </p>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
         </section>
 
-        {sameBrand.length > 0 ? (
+        {others.length > 0 ? (
           <section className="border-t border-border/60 py-14">
             <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
               <h2 className="text-xl font-semibold tracking-tight">Другие модели {car.brand}</h2>
               <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                {sameBrand.map((other) => {
-                  const otherImage = imageFor(other.img);
-                  return (
-                    <Link
-                      key={other.title}
-                      to="/catalog/$slug"
-                      params={{ slug: carSlug(other) }}
-                      className="group overflow-hidden rounded-xl border border-border bg-white/5 transition-colors hover:border-primary/40"
-                    >
-                      <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+                {others.map((other: CarListItem) => (
+                  <Link
+                    key={other.slug}
+                    to="/catalog/$slug"
+                    params={{ slug: other.slug }}
+                    className="group overflow-hidden rounded-xl border border-border bg-white/5 transition-colors hover:border-primary/40"
+                  >
+                    <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+                      {other.photo ? (
                         <img
-                          src={other.img}
-                          srcSet={srcSetFor(otherImage)}
+                          src={other.photo.card2x}
+                          srcSet={`${other.photo.card} 280w, ${other.photo.card2x} 560w`}
                           sizes="(max-width: 640px) 100vw, 280px"
                           alt={other.title}
                           loading="lazy"
                           decoding="async"
                           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
-                      </div>
-                      <div className="p-4">
-                        <p className="text-sm font-medium leading-tight">{other.title}</p>
-                        <p className="mt-1 text-sm font-bold text-primary">{other.price}</p>
-                      </div>
-                    </Link>
-                  );
-                })}
+                      ) : null}
+                    </div>
+                    <div className="p-4">
+                      <p className="text-sm font-medium leading-tight">{other.title}</p>
+                      <p className="mt-1 text-sm font-bold text-primary">{other.price}</p>
+                    </div>
+                  </Link>
+                ))}
               </div>
               <Link
                 to="/catalog"

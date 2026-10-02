@@ -1,24 +1,21 @@
 import * as React from "react";
 import { ArrowUpRight } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnPrimary, btnSmall, prefillModel } from "./ui";
-import { CARS, type Car } from "@/lib/catalog-data";
-import { DetailModal } from "./CatalogGrid";
+import { CARS } from "@/lib/catalog-data";
+import { carSlug } from "@/lib/car-slug";
+import type { CarListItem } from "@/lib/chatium-catalog";
+import { HOME_CAR_TITLES } from "@/lib/home-cars";
 
 interface CarCardProps {
   name: string;
   brand: string;
   price: string;
-  specs: string[];
-  text: string;
   img: string;
-  images: string[];
   index: number;
   onShowDetails: () => void;
 }
-
-type HomeCar = Omit<CarCardProps, "index" | "onShowDetails">;
 
 function CarCard({ name, brand, price, img, index, onShowDetails }: CarCardProps) {
   const [error, setError] = React.useState(false);
@@ -81,16 +78,8 @@ function CarCard({ name, brand, price, img, index, onShowDetails }: CarCardProps
   );
 }
 
-export function Cars() {
-  const [selectedCar, setSelectedCar] = React.useState<Car | null>(null);
-  const homeCarTitles = [
-    "Huawei M9 (6мест) гибрид Ultra + все допы (R22 / 52kwh)",
-    "Lixiang L9 Ultra (2025)",
-    "Xiaomi SU7 Ultra",
-    "Xiaomi YU7 max (без допов)",
-    "Denza Z9GT и Z9 (ГИБРИД) в топе + допы",
-    "Lotus Eletre 900",
-  ];
+export function Cars({ catalog }: { catalog: CarListItem[] }) {
+  const navigate = useNavigate();
   const homeCarMedia: Record<string, string[]> = {
     "Huawei M9 (6мест) гибрид Ultra + все допы (R22 / 52kwh)": [
       "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-1200.webp",
@@ -129,21 +118,22 @@ export function Cars() {
       "/images/cars/lotus-eletre-900-i-1200.webp",
     ],
   };
-  const cars: HomeCar[] = homeCarTitles
-    .map((title) => CARS.find((car) => car.title === title))
-    .filter((car): car is Car => Boolean(car))
-    .map((car) => {
-      const images = homeCarMedia[car.title] ?? car.images ?? [car.img];
+  const cars = HOME_CAR_TITLES
+    .map((title) => {
+      const local = CARS.find((car) => car.title === title);
+      if (!local) return null;
+      const slug = carSlug(local);
+      const fromCatalog = catalog.find((item) => item.slug === slug);
+      const images = homeCarMedia[title] ?? local.images ?? [local.img];
       return {
-        name: car.title,
-        brand: car.brand,
-        price: car.price,
-        specs: (car.specs.split("|")[0] ?? "").split(". ").slice(0, 2).filter(Boolean),
-        text: car.specs,
-        img: images[0] ?? car.img,
-        images,
+        slug,
+        name: fromCatalog?.title ?? local.title,
+        brand: fromCatalog?.brand ?? local.brand,
+        price: fromCatalog?.price ?? local.price,
+        img: images[0] ?? local.img,
       };
-    });
+    })
+    .filter((car): car is { slug: string; name: string; brand: string; price: string; img: string } => car !== null);
 
   return (
     <Section id="avtomobili">
@@ -161,14 +151,7 @@ export function Cars() {
             key={car.name}
             {...car}
             index={i}
-            onShowDetails={() => setSelectedCar({
-              title: car.name,
-              brand: car.brand,
-              price: car.price,
-              specs: `${car.specs.join(". ")}. | ${car.text}`,
-              img: car.img,
-              images: car.images,
-            })}
+            onShowDetails={() => navigate({ to: "/catalog/$slug", params: { slug: car.slug } })}
           />
         ))}
       </div>
@@ -182,7 +165,6 @@ export function Cars() {
           <ArrowUpRight className="ml-2 size-5" aria-hidden="true" />
         </Link>
       </Reveal>
-      <DetailModal car={selectedCar} onClose={() => setSelectedCar(null)} />
     </Section>
   );
 }

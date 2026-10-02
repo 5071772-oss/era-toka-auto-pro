@@ -2,50 +2,57 @@ import * as React from "react";
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 import { btnPrimary, btnSmall, prefillModel, SectionHeading } from "./ui";
-import { CARS, Car } from "@/lib/catalog-data";
-import { carSlug } from "@/lib/car-slug";
-import { parseSpecs, priceInYuan } from "@/lib/car-specs";
-import { imageFor, srcSetFor } from "@/lib/car-image";
+import type { CarListItem } from "@/lib/chatium-catalog";
 import { pluralModels } from "@/lib/site";
 import { Search, X, Info } from "lucide-react";
-import { ImageCarousel } from "./ImageCarousel";
 
 /** Сколько карточек показываем сразу и сколько добавляем по кнопке. */
 const PAGE_SIZE = 24;
 
-function CarCard({ car, onShowDetails }: { car: Car; onShowDetails: (car: Car) => void }) {
-  const [error, setError] = React.useState(false);
-  const image = imageFor(car.img);
-  const summary = React.useMemo(() => parseSpecs(car.specs).summary, [car.specs]);
+function CarPhoto({ car, sizes, eager = false }: { car: CarListItem; sizes: string; eager?: boolean }) {
+  const photo = car.photo;
+  if (!photo) {
+    return (
+      <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-4 text-center">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+          <span className="text-xl font-bold text-primary">{car.title[0]}</span>
+        </div>
+        <p className="text-sm font-medium text-muted-foreground">{car.title}</p>
+      </div>
+    );
+  }
+  return (
+    <img
+      src={photo.card2x}
+      srcSet={`${photo.card} 280w, ${photo.card2x} 560w`}
+      sizes={sizes}
+      alt={car.title}
+      loading={eager ? "eager" : "lazy"}
+      decoding="async"
+      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+    />
+  );
+}
 
+function CarCard({
+  car,
+  eager,
+  onShowDetails,
+}: {
+  car: CarListItem;
+  eager: boolean;
+  onShowDetails: (car: CarListItem) => void;
+}) {
   return (
     <div className="group glass overflow-hidden rounded-2xl border border-border transition-all hover:border-primary/40 hover:shadow-[0_0_32px_rgba(180,255,0,0.05)]">
       <div className="relative aspect-[16/10] overflow-hidden bg-muted">
         <Link
           to="/catalog/$slug"
-          params={{ slug: carSlug(car) }}
+          params={{ slug: car.slug }}
           className="block h-full w-full"
           aria-label={`${car.title} — характеристики, цена и сроки поставки`}
         >
-          {error ? (
-            <div className="flex h-full w-full flex-col items-center justify-center gap-2 p-4 text-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                <span className="text-xl font-bold text-primary">{car.title[0]}</span>
-              </div>
-              <p className="text-sm font-medium text-muted-foreground">{car.title}</p>
-            </div>
-          ) : (
-            <img
-              src={car.img}
-              srcSet={srcSetFor(image)}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px"
-              alt={car.title}
-              loading="lazy"
-              decoding="async"
-              onError={() => setError(true)}
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-          )}
+          <CarPhoto car={car} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 380px" eager={eager} />
         </Link>
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-60" />
         <button
@@ -60,7 +67,7 @@ function CarCard({ car, onShowDetails }: { car: Car; onShowDetails: (car: Car) =
       <div className="p-6">
         <div className="flex items-start justify-between gap-2">
           <h3 className="text-xl font-semibold tracking-tight leading-tight">
-            <Link to="/catalog/$slug" params={{ slug: carSlug(car) }} className="transition-colors hover:text-primary">
+            <Link to="/catalog/$slug" params={{ slug: car.slug }} className="transition-colors hover:text-primary">
               {car.title}
             </Link>
           </h3>
@@ -68,7 +75,7 @@ function CarCard({ car, onShowDetails }: { car: Car; onShowDetails: (car: Car) =
             {car.brand}
           </span>
         </div>
-        <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{summary}</p>
+        <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{car.summary}</p>
         <div className="mt-4 flex items-center justify-between gap-4">
           <div>
             <p className="text-xs uppercase tracking-wider text-muted-foreground">Цена в Китае</p>
@@ -105,7 +112,7 @@ function CarCard({ car, onShowDetails }: { car: Car; onShowDetails: (car: Car) =
   );
 }
 
-export function DetailModal({ car, onClose }: { car: Car | null; onClose: () => void }) {
+export function DetailModal({ car, onClose }: { car: CarListItem | null; onClose: () => void }) {
   if (!car) return null;
 
   return (
@@ -125,10 +132,7 @@ export function DetailModal({ car, onClose }: { car: Car | null; onClose: () => 
 
         <div className="max-h-[85vh] overflow-y-auto elegant-scrollbar scroll-smooth">
           <div className="relative aspect-video flex items-center justify-center bg-muted">
-            <ImageCarousel
-              images={car.images && car.images.length > 0 ? car.images : [car.img]}
-              alt={car.title}
-            />
+            {car.photo ? <img src={car.photo.full} alt={car.title} className="h-full w-full object-cover" /> : null}
             <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none" />
           </div>
 
@@ -142,38 +146,12 @@ export function DetailModal({ car, onClose }: { car: Car | null; onClose: () => 
 
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2">{car.title}</h2>
             <p className="text-2xl font-bold text-primary mb-1">{car.price}</p>
-            <p className="text-xs text-muted-foreground mb-8">
+            <p className="text-xs text-muted-foreground mb-6">
               *Цена за авто. Доставка и сборы рассчитываются отдельно.
             </p>
+            <p className="text-sm leading-relaxed text-muted-foreground">{car.summary}</p>
 
-            <div className="space-y-6">
-              <div>
-                <h4 className="text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-4">
-                  Характеристики
-                </h4>
-                <div className="grid gap-3 text-sm leading-relaxed text-foreground/90 bg-white/5 rounded-xl p-5 border border-white/5">
-                  {parseSpecs(car.specs).rows.map((row) => (
-                    <div key={row.label} className="flex items-start gap-3">
-                      <div className="mt-1.5 size-1.5 rounded-full bg-primary shrink-0" />
-                      <span>
-                        {row.label}: {row.value}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <Link
-                to="/catalog/$slug"
-                params={{ slug: carSlug(car) }}
-                onClick={onClose}
-                className="inline-flex text-sm font-medium text-primary hover:underline"
-              >
-                Открыть полную страницу модели
-              </Link>
-            </div>
-
-            <div className="mt-10 flex flex-col sm:flex-row gap-4">
+            <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <button
                 onClick={() => {
                   prefillModel(`${car.title} (Узнать стоимость)`);
@@ -183,15 +161,14 @@ export function DetailModal({ car, onClose }: { car: Car | null; onClose: () => 
               >
                 Узнать стоимость
               </button>
-              <button
-                onClick={() => {
-                  prefillModel(`${car.title} (Подобрать аналог)`);
-                  onClose();
-                }}
-                className="flex-1 py-4 px-8 rounded-full border border-primary/20 text-primary hover:bg-primary/5 transition-colors text-sm font-bold uppercase tracking-wider"
+              <Link
+                to="/catalog/$slug"
+                params={{ slug: car.slug }}
+                onClick={onClose}
+                className="flex-1 py-4 px-8 rounded-full border border-primary/20 text-primary text-center hover:bg-primary/5 transition-colors text-sm font-bold uppercase tracking-wider"
               >
-                Подобрать аналог
-              </button>
+                Вся информация
+              </Link>
             </div>
           </div>
         </div>
@@ -203,31 +180,17 @@ export function DetailModal({ car, onClose }: { car: Car | null; onClose: () => 
 type SortMode = "default" | "price-asc" | "price-desc";
 type TypeMode = "all" | "electric" | "hybrid";
 
-export function CatalogGrid() {
+export function CatalogGrid({ cars }: { cars: CarListItem[] }) {
   const [search, setSearch] = React.useState("");
   const [activeBrand, setActiveBrand] = React.useState<string | null>(null);
   const [activeType, setActiveType] = React.useState<TypeMode>("all");
   const [sort, setSort] = React.useState<SortMode>("default");
   const [visible, setVisible] = React.useState(PAGE_SIZE);
-  const [selectedCar, setSelectedCar] = React.useState<Car | null>(null);
-  const cars = CARS;
+  const [selectedCar, setSelectedCar] = React.useState<CarListItem | null>(null);
 
   const brands = React.useMemo(() => {
-    const set = new Set(cars.map((c) => c.brand));
+    const set = new Set(cars.map((car) => car.brand));
     return Array.from(set).sort();
-  }, [cars]);
-
-  // Разбор характеристик считаем один раз на весь список, а не при каждой отрисовке
-  const infoByTitle = React.useMemo(() => {
-    const map = new Map<string, { hybrid: boolean; price: number | null }>();
-    for (const car of cars) {
-      const parsed = parseSpecs(car.specs);
-      map.set(car.title, {
-        hybrid: parsed.vehicleType !== "Электромобиль",
-        price: priceInYuan(car.price),
-      });
-    }
-    return map;
   }, [cars]);
 
   const filteredCars = React.useMemo(() => {
@@ -236,18 +199,16 @@ export function CatalogGrid() {
       const matchesSearch =
         !query || car.title.toLowerCase().includes(query) || car.brand.toLowerCase().includes(query);
       const matchesBrand = activeBrand ? car.brand === activeBrand : true;
-      const info = infoByTitle.get(car.title);
-      const matchesType =
-        activeType === "all" ? true : activeType === "hybrid" ? Boolean(info?.hybrid) : !info?.hybrid;
+      const matchesType = activeType === "all" ? true : activeType === "hybrid" ? car.hybrid : !car.hybrid;
       return matchesSearch && matchesBrand && matchesType;
     });
     if (sort === "default") return result;
     return [...result].sort((a, b) => {
-      const priceA = infoByTitle.get(a.title)?.price ?? 0;
-      const priceB = infoByTitle.get(b.title)?.price ?? 0;
+      const priceA = a.priceYuan ?? 0;
+      const priceB = b.priceYuan ?? 0;
       return sort === "price-asc" ? priceA - priceB : priceB - priceA;
     });
-  }, [cars, search, activeBrand, activeType, sort, infoByTitle]);
+  }, [cars, search, activeBrand, activeType, sort]);
 
   // При смене фильтров возвращаемся к первой порции карточек
   React.useEffect(() => {
@@ -336,7 +297,7 @@ export function CatalogGrid() {
               >
                 Все марки
               </button>
-              {brands.map(brand => (
+              {brands.map((brand) => (
                 <button
                   key={brand}
                   onClick={() => setActiveBrand(brand)}
@@ -357,19 +318,15 @@ export function CatalogGrid() {
         {/* Grid */}
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {shownCars.map((car, i) => (
-            <Reveal key={car.title} delay={(i % 12) * 30}>
-              <CarCard car={car} onShowDetails={setSelectedCar} />
+            <Reveal key={car.slug} delay={(i % 12) * 30}>
+              <CarCard car={car} eager={i < 3} onShowDetails={setSelectedCar} />
             </Reveal>
           ))}
         </div>
 
         {filteredCars.length > shownCars.length && (
           <div className="mt-12 text-center">
-            <button
-              type="button"
-              onClick={() => setVisible((count) => count + PAGE_SIZE)}
-              className={btnPrimary}
-            >
+            <button type="button" onClick={() => setVisible((count) => count + PAGE_SIZE)} className={btnPrimary}>
               Показать ещё {Math.min(PAGE_SIZE, filteredCars.length - shownCars.length)} из{" "}
               {filteredCars.length - shownCars.length}
             </button>
@@ -378,16 +335,19 @@ export function CatalogGrid() {
 
         {filteredCars.length === 0 && (
           <div className="mt-20 text-center py-20 glass rounded-3xl border-dashed border-2 border-border/50">
-             <p className="text-xl text-muted-foreground">По вашему запросу ничего не найдено</p>
-             <button
-               onClick={() => { setSearch(""); setActiveBrand(null); setActiveType("all"); }}
-               className="mt-4 text-primary hover:underline"
-             >
-               Сбросить фильтры
-             </button>
+            <p className="text-xl text-muted-foreground">По вашему запросу ничего не найдено</p>
+            <button
+              onClick={() => {
+                setSearch("");
+                setActiveBrand(null);
+                setActiveType("all");
+              }}
+              className="mt-4 text-primary hover:underline"
+            >
+              Сбросить фильтры
+            </button>
           </div>
         )}
-
       </div>
 
       {/* Detail Modal */}
