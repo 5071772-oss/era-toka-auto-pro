@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { METRIKA_COUNTER_ID, SITE_URL } from "../lib/site";
+import { initAnalytics } from "../lib/analytics";
 
 function NotFoundComponent() {
   return (
@@ -140,6 +141,9 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  // клики по телефону и мессенджерам считаем одним обработчиком на весь документ
+  useEffect(() => initAnalytics(), []);
 
   return (
     <QueryClientProvider client={queryClient}>
