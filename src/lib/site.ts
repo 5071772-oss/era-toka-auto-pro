@@ -2,11 +2,13 @@
 export const SITE_URL = "https://era-toka.ru";
 
 /**
- * Номер счётчика Яндекс.Метрики.
- * Пока пустая строка — счётчик не подключается. Впишите номер счётчика,
- * и он появится на всех страницах (код в src/routes/__root.tsx).
+ * Номер счётчика Яндекс.Метрики. Пустая строка — счётчик не подключается.
+ *
+ * Счётчик «ЭРА ТОКА — era-toka.ru» (113340132) принимает данные только
+ * с адресов era-toka.ru. Цели заводятся в интерфейсе Метрики с теми же
+ * идентификаторами, что перечислены в src/lib/analytics.ts.
  */
-export const METRIKA_COUNTER_ID = "";
+export const METRIKA_COUNTER_ID = "113340132";
 
 export function absoluteUrl(pathname: string): string {
   return `${SITE_URL}${pathname.startsWith("/") ? pathname : `/${pathname}`}`;

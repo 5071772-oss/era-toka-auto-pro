@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { Send, Check } from "lucide-react";
 import { EXPERT, MESSENGER_MAX_URL, TELEGRAM_URL } from "@/lib/brand";
 import { Reveal } from "./Reveal";
+import { GOALS, reachGoal } from "@/lib/analytics";
 import { Section, SectionHeading, btnGhost, btnPrimary } from "./ui";
 
 const AMO_ACTION = "https://forms.amocrm.ru/queue/add";
@@ -82,6 +83,7 @@ export function LeadForm() {
         headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
         body: body.toString(),
       });
+      reachGoal(GOALS.formSent);
       setSent(true);
     } catch {
       setErrors({ name: "Не удалось отправить. Напишите в Telegram." });
