@@ -3,10 +3,8 @@ import { ArrowUpRight } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnPrimary, btnSmall, prefillModel } from "./ui";
-import { CARS } from "@/lib/catalog-data";
-import { carSlug } from "@/lib/car-slug";
 import type { CarListItem } from "@/lib/chatium-catalog";
-import { HOME_CAR_TITLES } from "@/lib/home-cars";
+import { HOME_CARS } from "@/lib/home-cars";
 
 interface CarCardProps {
   name: string;
@@ -81,59 +79,54 @@ function CarCard({ name, brand, price, img, index, onShowDetails }: CarCardProps
 export function Cars({ catalog }: { catalog: CarListItem[] }) {
   const navigate = useNavigate();
   const homeCarMedia: Record<string, string[]> = {
-    "Huawei M9 (6мест) гибрид Ultra + все допы (R22 / 52kwh)": [
+    "huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-52kwh": [
       "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-1200.webp",
       "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-2-1200.webp",
       "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-7888-1200.webp",
       "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-3-1200.webp",
     ],
-    "Lixiang L9 Ultra (2025)": [
+    "lixiang-l9-ultra-2025": [
       "/images/cars/lixiang-l9-ultra-2025-li-auto-l6-1-1200.webp",
       "/images/cars/lixiang-l9-ultra-2025-li-auto-l6-2-1200.webp",
       "/images/cars/lixiang-l9-ultra-2025-li-auto-l9-19-1200.webp",
       "/images/cars/lixiang-l9-ultra-2025-kartinki24-ru-various-ca-1200.webp",
     ],
-    "Xiaomi SU7 Ultra": [
+    "xiaomi-su7-ultra": [
       "/images/cars/9-12-1200.webp",
       "/images/cars/xiaomi-su7-ultra-f41087207afb4934abf1faeae0cea-1200.webp",
       "/images/cars/wvfrtffgyu-1200.webp",
       "/images/cars/xiaomi-su7-ultra-123-1200.webp",
     ],
-    "Xiaomi YU7 max (без допов)": [
+    "xiaomi-yu7-max-bez-dopov": [
       "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-1200.webp",
       "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-3-1200.webp",
       "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-1-1200.webp",
       "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-2-1200.webp",
     ],
-    "Denza Z9GT и Z9 (ГИБРИД) в топе + допы": [
+    "denza-z9gt-i-z9-gibrid-v-tope-dopy": [
       "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-hdf45a0cc14-1200.webp",
       "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-3afae8ac0b-1200.webp",
       "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-09b6c89723c-1200.webp",
       "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-67611178-1200.webp",
     ],
-    "Lotus Eletre 900": [
+    "lotus-eletre-900": [
       "/images/cars/lotus-eletre-900-i-1-1200.webp",
       "/images/cars/lotus-eletre-900-1780526528-1667-high-1200.webp",
       "/images/cars/lotus-eletre-900-0-0-1200.webp",
       "/images/cars/lotus-eletre-900-i-1200.webp",
     ],
   };
-  const cars = HOME_CAR_TITLES
-    .map((title) => {
-      const local = CARS.find((car) => car.title === title);
-      if (!local) return null;
-      const slug = carSlug(local);
-      const fromCatalog = catalog.find((item) => item.slug === slug);
-      const images = homeCarMedia[title] ?? local.images ?? [local.img];
-      return {
-        slug,
-        name: fromCatalog?.title ?? local.title,
-        brand: fromCatalog?.brand ?? local.brand,
-        price: fromCatalog?.price ?? local.price,
-        img: images[0] ?? local.img,
-      };
-    })
-    .filter((car): car is { slug: string; name: string; brand: string; price: string; img: string } => car !== null);
+  const cars = HOME_CARS.map(({ slug, title }) => {
+    const fromCatalog = catalog.find((item) => item.slug === slug);
+    const images = homeCarMedia[slug] ?? [];
+    return {
+      slug,
+      name: fromCatalog?.title ?? title,
+      brand: fromCatalog?.brand ?? "",
+      price: fromCatalog?.price ?? "",
+      img: images[0] ?? "",
+    };
+  }).filter((car) => car.img !== "");
 
   return (
     <Section id="avtomobili">

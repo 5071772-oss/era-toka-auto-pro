@@ -13,7 +13,7 @@ import { TELEGRAM_URL, EXPERT } from "@/lib/brand";
 
 export const Route = createFileRoute("/catalog_/$slug")({
   loader: async ({ params }) => {
-    const [{ car }, { cars }] = await Promise.all([getCarDetail(params.slug), getCatalogList()]);
+    const [{ car }, { cars }] = await Promise.all([getCarDetail({ data: params.slug }), getCatalogList()]);
     if (!car) throw notFound();
     const others = cars.filter((item) => item.brand === car.brand && item.slug !== car.slug).slice(0, 8);
     return { car, others };
