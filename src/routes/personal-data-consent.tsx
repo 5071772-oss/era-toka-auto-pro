@@ -195,7 +195,7 @@ function PersonalDataConsentPage() {
               сервисы. В настоящее время Оператор использует или планирует использовать:
             </p>
             <div className="flex flex-wrap gap-2">
-              {["amoCRM", "Telegram", "MAX", "VK", "Lovable"].map((service) => (
+              {["Chatium", "Битрикс24", "Telegram", "MAX", "VK", "Lovable"].map((service) => (
                 <span
                   key={service}
                   className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-sm text-primary"
@@ -262,7 +262,7 @@ function PersonalDataConsentPage() {
               <p>г. Балашиха, Московский б-р, д. 1/13, кв. 215</p>
             </div>
             <p className="italic text-xs pt-2">
-              После получения отзыва Оператор прекращает обработку персон��льных данных. Отзыв
+              После получения отзыва Оператор прекращает обработку персональных данных. Отзыв
               согласия не влияет на законность обработки, осуществленной до его отзыва.
             </p>
           </div>
