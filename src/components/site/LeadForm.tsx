@@ -2,17 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Send, Check } from "lucide-react";
 import { EXPERT, MESSENGER_MAX_URL, TELEGRAM_URL } from "@/lib/brand";
+import { submitLead, type LeadPayload } from "@/lib/chatium-leads";
 import { Reveal } from "./Reveal";
 import { GOALS, reachGoal } from "@/lib/analytics";
 import { Section, SectionHeading, btnGhost, btnPrimary } from "./ui";
 
-const AMO_ACTION = "https://forms.amocrm.ru/queue/add";
-const AMO_FORM_ID = "1738426";
-const AMO_HASH = "d240b72cfd16ae50e8044e0f6730c9aa";
-const FIELD_NAME = "fields[name_1]";
-const FIELD_PHONE = "fields[985603_1][1442081]";
-const FIELD_EMAIL = "fields[985605_1][1442093]";
-const FIELD_NOTE = "fields[note_2]";
+const FORM_NAME = "Заявка на консультацию";
+/** Версия согласия: меняется вместе с текстом согласия на сайте. */
+const CONSENT_VERSION = "02.10.2026";
 
 const inputClass =
   "w-full rounded-md border border-border bg-background/60 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground transition-colors focus:border-primary/70 focus:outline-none focus:ring-2 focus:ring-primary/25";
@@ -21,21 +18,45 @@ const labelClass =
 
 type Errors = Partial<Record<"name" | "phone" | "email", string>>;
 
+/**
+ * UTM-метки из адреса страницы: по ним в кабинете заявок видно,
+ * из какой кампании пришёл клиент.
+ */
+function utmFromLocation(): Pick<
+  LeadPayload,
+  "utmSource" | "utmMedium" | "utmCampaign" | "utmContent" | "utmTerm"
+> {
+  if (typeof window === "undefined") return {};
+  const params = new URLSearchParams(window.location.search);
+  const value = (key: string): string | undefined => {
+    const raw = params.get(key)?.trim();
+    return raw ? raw.slice(0, 300) : undefined;
+  };
+  return {
+    utmSource: value("utm_source"),
+    utmMedium: value("utm_medium"),
+    utmCampaign: value("utm_campaign"),
+    utmContent: value("utm_content"),
+    utmTerm: value("utm_term"),
+  };
+}
+
 export function LeadForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [errors, setErrors] = useState<Errors>({});
   const [consent, setConsent] = useState(false);
   const [marketingConsent, setMarketingConsent] = useState(false);
   const [sent, setSent] = useState(false);
-  const consentVersion = "22.08.2026";
   const [sending, setSending] = useState(false);
-
   const [note, setNote] = useState("");
+  const [model, setModel] = useState("");
 
   useEffect(() => {
     const onPrefill = (e: Event) => {
-      const model = (e as CustomEvent<string>).detail;
-      if (model) setNote(`Интересует: ${model}`);
+      const value = (e as CustomEvent<string>).detail;
+      if (!value) return;
+      setModel(value);
+      setNote((current) => (current.trim() ? current : `Интересует: ${value}`));
     };
     window.addEventListener("era-toka:prefill", onPrefill);
     return () => window.removeEventListener("era-toka:prefill", onPrefill);
@@ -45,9 +66,12 @@ export function LeadForm() {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
-    const name = String(data.get(FIELD_NAME) ?? "").trim();
-    const phone = String(data.get(FIELD_PHONE) ?? "").trim();
-    const email = String(data.get(FIELD_EMAIL) ?? "").trim();
+    const name = String(data.get("name") ?? "").trim();
+    const phone = String(data.get("phone") ?? "").trim();
+    const email = String(data.get("email") ?? "").trim();
+    const message = String(data.get("message") ?? "").trim();
+    // Скрытое поле-ловушка: человек его не видит и не заполняет
+    const company = String(data.get("company") ?? "").trim();
 
     const next: Errors = {};
     if (name.length < 2) next.name = "Укажите имя";
@@ -63,33 +87,36 @@ export function LeadForm() {
     if (Object.keys(next).length > 0) return;
 
     setSending(true);
-    const body = new URLSearchParams();
-    data.forEach((value, key) => body.append(key, String(value)));
+    setErrors({});
 
-    const currentNote = body.get(FIELD_NOTE) || "";
-    const consentDetails = [
-      `[Согласие на обработку ПДн: Да]`,
-      `[Версия согласия: ${consentVersion}]`,
-      `[Дата и время согласия: ${new Date().toISOString()}]`,
-      `[Форма: Заявка на консультацию]`,
-      marketingConsent ? "[Согласие на маркетинг: Да]" : "[Согласие на маркетинг: Нет]",
-    ].join("\n");
-    body.set(FIELD_NOTE, `${currentNote}\n${consentDetails}`.trim());
+    const result = await submitLead({
+      data: {
+        name,
+        phone,
+        email: email || undefined,
+        message: message || undefined,
+        model: model || undefined,
+        company: company || undefined,
+        pageUrl: typeof window === "undefined" ? undefined : window.location.href,
+        referrer:
+          typeof document === "undefined" || !document.referrer ? undefined : document.referrer,
+        formName: FORM_NAME,
+        consentVersion: CONSENT_VERSION,
+        consentAt: new Date().toISOString(),
+        marketingConsent,
+        ...utmFromLocation(),
+      },
+    });
 
-    try {
-      await fetch(AMO_ACTION, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8" },
-        body: body.toString(),
-      });
-      reachGoal(GOALS.formSent);
-      setSent(true);
-    } catch {
-      setErrors({ name: "Не удалось отправить. Напишите в Telegram." });
-    } finally {
-      setSending(false);
+    setSending(false);
+
+    if (!result.ok) {
+      setErrors({ name: `Не удалось отправить заявку. Напишите в Telegram — ответим быстрее.` });
+      return;
     }
+
+    reachGoal(GOALS.formSent);
+    setSent(true);
   };
 
   return (
@@ -147,17 +174,11 @@ export function LeadForm() {
               </div>
             ) : (
               <>
-                <form
-                  ref={formRef}
-                  action={AMO_ACTION}
-                  method="POST"
-                  noValidate
-                  onSubmit={handleSubmit}
-                  className="space-y-5"
-                >
-                  <input type="hidden" name="form_id" value={AMO_FORM_ID} />
-                  <input type="hidden" name="hash" value={AMO_HASH} />
-                  <input type="hidden" name="user_origin" value="" />
+                <form ref={formRef} noValidate onSubmit={handleSubmit} className="space-y-5">
+                  <div className="hidden" aria-hidden="true">
+                    <label htmlFor="lead-company">Компания</label>
+                    <input id="lead-company" name="company" type="text" tabIndex={-1} autoComplete="off" />
+                  </div>
 
                   <div>
                     <label className={labelClass} htmlFor="lead-name">
@@ -165,7 +186,7 @@ export function LeadForm() {
                     </label>
                     <input
                       id="lead-name"
-                      name={FIELD_NAME}
+                      name="name"
                       type="text"
                       autoComplete="name"
                       placeholder="Как к вам обращаться"
@@ -186,7 +207,7 @@ export function LeadForm() {
                     </label>
                     <input
                       id="lead-phone"
-                      name={FIELD_PHONE}
+                      name="phone"
                       type="tel"
                       autoComplete="tel"
                       placeholder="+7 (900) 000-00-00"
@@ -207,7 +228,7 @@ export function LeadForm() {
                     </label>
                     <input
                       id="lead-email"
-                      name={FIELD_EMAIL}
+                      name="email"
                       type="email"
                       autoComplete="email"
                       placeholder="you@example.com"
@@ -228,7 +249,7 @@ export function LeadForm() {
                     </label>
                     <textarea
                       id="lead-note"
-                      name={FIELD_NOTE}
+                      name="message"
                       rows={3}
                       value={note}
                       onChange={(e) => setNote(e.target.value)}
