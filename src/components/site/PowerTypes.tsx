@@ -1,4 +1,4 @@
-const POWER_IMG = "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/era-toka-auto-pro/Era-Toka/i.webp";
+const POWER_IMG = "/images/cars/i-1200.webp";
 
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading, btnGhost, scrollToForm } from "./ui";

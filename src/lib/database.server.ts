@@ -3,12 +3,13 @@ import { Pool } from "pg";
 let pool: Pool | undefined;
 
 function getPool(): Pool {
-  if (!process.env.DATABASE_URL) {
+  const connectionString = process.env["DATABASE_URL"];
+  if (!connectionString) {
     throw new Error("DATABASE_URL is not configured");
   }
 
   pool ??= new Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString,
     max: 5,
     idleTimeoutMillis: 30_000,
     connectionTimeoutMillis: 10_000,

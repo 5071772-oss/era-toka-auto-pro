@@ -2,7 +2,8 @@ import { Accordion, type QaItem } from "./Accordion";
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading } from "./ui";
 
-const ITEMS: QaItem[] = [
+/** Список вопросов — используется ещё и для разметки FAQPage на главной */
+export const FAQ_ITEMS: QaItem[] = [
   {
     q: "Сколько занимает поставка автомобиля в РФ?",
     a: "Зависит от модели, страны отправления, логистического маршрута и оформления. Срок рассчитывается индивидуально и уточняется на этапе консультации.",
@@ -65,7 +66,7 @@ export function Faq() {
       </Reveal>
       <Reveal delay={80}>
         <div className="mt-12">
-          <Accordion items={ITEMS} />
+          <Accordion items={FAQ_ITEMS} />
         </div>
       </Reveal>
     </Section>
