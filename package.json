@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "migrate:catalog": "tsx scripts/migrate-catalog.ts",
-    "sitemap": "tsx scripts/generate-sitemap.mts"
+    "sitemap": "tsx scripts/generate-sitemap.mts",
+    "postbuild": "node scripts/precompress.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
