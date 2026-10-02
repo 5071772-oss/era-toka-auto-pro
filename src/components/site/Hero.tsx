@@ -1,8 +1,8 @@
 import { ArrowUpRight, Phone, Send } from "lucide-react";
 import { EXPERT, MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_URL } from "@/lib/brand";
 import { btnGhost, btnPrimary, scrollToForm } from "./ui";
-const HERO_IMG = "https://project--dbec8924-ca7b-41f6-b87a-9cd9693ce1a1.lovable.app/__l5e/assets-v1/e1dc2e40-b83e-4913-9eb1-4ee5deaf4373/hero-ev.jpg";
-const VECTOR_CAR = "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/era-toka-auto-pro/Era-Toka/new-arcfox-2.webp";
+const HERO_IMG = "/images/cars/hero-ev-2-1200.webp";
+const VECTOR_CAR = "/images/cars/new-arcfox-2-1200.webp";
 
 
 const BADGES = ["BEV", "HEV", "PHEV", "EREV", "Китай", "Европа", "Америка", "Корея"];

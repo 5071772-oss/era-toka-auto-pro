@@ -17,6 +17,7 @@ import { Route as MarketingConsentRouteImport } from './routes/marketing-consent
 import { Route as PersonalDataConsentRouteImport } from './routes/personal-data-consent'
 import { Route as PersonalDataRequestsRouteImport } from './routes/personal-data-requests'
 import { Route as PrivacyPolicyRouteImport } from './routes/privacy-policy'
+import { Route as CatalogSlugRouteImport } from './routes/catalog_.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -58,6 +59,11 @@ const PrivacyPolicyRoute = PrivacyPolicyRouteImport.update({
   path: '/privacy-policy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CatalogSlugRoute = CatalogSlugRouteImport.update({
+  id: '/catalog_/$slug',
+  path: '/catalog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/personal-data-consent': typeof PersonalDataConsentRoute
   '/personal-data-requests': typeof PersonalDataRequestsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/catalog/$slug': typeof CatalogSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/personal-data-consent': typeof PersonalDataConsentRoute
   '/personal-data-requests': typeof PersonalDataRequestsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/catalog/$slug': typeof CatalogSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/personal-data-consent': typeof PersonalDataConsentRoute
   '/personal-data-requests': typeof PersonalDataRequestsRoute
   '/privacy-policy': typeof PrivacyPolicyRoute
+  '/catalog_/$slug': typeof CatalogSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
     | '/personal-data-consent'
     | '/personal-data-requests'
     | '/privacy-policy'
+    | '/catalog/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/personal-data-consent'
     | '/personal-data-requests'
     | '/privacy-policy'
+    | '/catalog/$slug'
   id:
     | '__root__'
     | '/'
@@ -121,6 +132,7 @@ export interface FileRouteTypes {
     | '/personal-data-consent'
     | '/personal-data-requests'
     | '/privacy-policy'
+    | '/catalog_/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -132,6 +144,7 @@ export interface RootRouteChildren {
   PersonalDataConsentRoute: typeof PersonalDataConsentRoute
   PersonalDataRequestsRoute: typeof PersonalDataRequestsRoute
   PrivacyPolicyRoute: typeof PrivacyPolicyRoute
+  CatalogSlugRoute: typeof CatalogSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -192,6 +205,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyPolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/catalog_/$slug': {
+      id: '/catalog_/$slug'
+      path: '/catalog/$slug'
+      fullPath: '/catalog/$slug'
+      preLoaderRoute: typeof CatalogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -204,6 +224,7 @@ const rootRouteChildren: RootRouteChildren = {
   PersonalDataConsentRoute: PersonalDataConsentRoute,
   PersonalDataRequestsRoute: PersonalDataRequestsRoute,
   PrivacyPolicyRoute: PrivacyPolicyRoute,
+  CatalogSlugRoute: CatalogSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

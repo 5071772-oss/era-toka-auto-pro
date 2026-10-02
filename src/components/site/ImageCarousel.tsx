@@ -1,13 +1,16 @@
 import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { imageFor, srcSetFor } from "@/lib/car-image";
 
 interface ImageCarouselProps {
   images: string[];
   alt: string;
+  /** Первый кадр виден сразу — грузим его без задержки, остальные лениво */
+  priority?: boolean;
 }
 
-export function ImageCarousel({ images, alt }: ImageCarouselProps) {
+export function ImageCarousel({ images, alt, priority = false }: ImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [direction, setDirection] = React.useState(0);
 
@@ -18,10 +21,15 @@ export function ImageCarousel({ images, alt }: ImageCarouselProps) {
 
   if (!images || images.length === 0) return null;
   if (images.length === 1) {
+    const single = images[0] ?? "";
     return (
       <img
-        src={images[0]}
+        src={single}
+        srcSet={srcSetFor(imageFor(single))}
+        sizes="(max-width: 1024px) 100vw, 800px"
         alt={alt}
+        loading={priority ? "eager" : "lazy"}
+        decoding="async"
         className="w-full h-full object-cover"
         onError={(e) => (e.currentTarget.style.display = 'none')}
       />
@@ -83,6 +91,10 @@ export function ImageCarousel({ images, alt }: ImageCarouselProps) {
           }}
           className="absolute w-full h-full object-cover cursor-grab active:cursor-grabbing"
           alt={`${alt} - view ${currentIndex + 1}`}
+          srcSet={srcSetFor(imageFor(images[currentIndex] ?? ""))}
+          sizes="(max-width: 1024px) 100vw, 800px"
+          loading={priority && currentIndex === 0 ? "eager" : "lazy"}
+          decoding="async"
         />
       </AnimatePresence>
 

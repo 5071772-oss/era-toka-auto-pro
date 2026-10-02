@@ -1,267 +1,322 @@
-import { deployedAssetUrl } from "./assets";
+// Список изображений каталога и их размеров. Файл сгенерирован — правьте данные
+// каталога в catalog-data.ts, а картинки кладите в public/images/cars.
+//
+// Раньше изображения импортировались из Lovable-ассетов (./*.asset.json). От импорта
+// пришлось отказаться: сборщик добавлял <link rel="preload" as="image"> на каждый
+// импортированный файл — в каталоге это давало 131 предзагрузку в <head>, и страница
+// ждала загрузки всех фото вместо того, чтобы показаться.
 
-import car001 from "@/assets/catalog/car-001.jpg.asset.json";
-import car002 from "@/assets/catalog/car-002.jpg.asset.json";
-import car003 from "@/assets/catalog/car-003.jpg.asset.json";
-import car004 from "@/assets/catalog/car-004.png.asset.json";
-import car005 from "@/assets/catalog/car-005.png.asset.json";
-import car006 from "@/assets/catalog/car-006.jpg.asset.json";
-import car007 from "@/assets/catalog/car-007.jpg.asset.json";
-import car008 from "@/assets/catalog/car-008.jpg.asset.json";
-import car009 from "@/assets/catalog/car-009.jpg.asset.json";
-import car010 from "@/assets/catalog/car-010.jpg.asset.json";
-import car011 from "@/assets/catalog/car-011.png.asset.json";
-import car012 from "@/assets/catalog/car-012.jpg.asset.json";
-import car013 from "@/assets/catalog/car-013.jpg.asset.json";
-import car014 from "@/assets/catalog/car-014.jpg.asset.json";
-import car015 from "@/assets/catalog/car-015.jpg.asset.json";
-import car016 from "@/assets/catalog/car-016.jpg.asset.json";
-import car017 from "@/assets/catalog/car-017.jpg.asset.json";
-import car018 from "@/assets/catalog/car-018.jpg.asset.json";
-import car019 from "@/assets/catalog/car-019.jpg.asset.json";
-import car020 from "@/assets/catalog/car-020.jpg.asset.json";
-import car021 from "@/assets/catalog/car-021.png.asset.json";
-import car022 from "@/assets/catalog/car-022.jpg.asset.json";
-import car023 from "@/assets/catalog/car-023.png.asset.json";
-import car024 from "@/assets/catalog/car-024.jpg.asset.json";
-import car025 from "@/assets/catalog/car-025.png.asset.json";
-import car026 from "@/assets/catalog/car-026.jpg.asset.json";
-import car027 from "@/assets/catalog/car-027.jpg.asset.json";
-import car028 from "@/assets/catalog/car-028.jpg.asset.json";
-import car029 from "@/assets/catalog/car-029.jpg.asset.json";
-import car030 from "@/assets/catalog/car-030.jpg.asset.json";
-import car031 from "@/assets/catalog/car-031.png.asset.json";
-import car032 from "@/assets/catalog/car-032.jpg.asset.json";
-import car033 from "@/assets/catalog/car-033.jpg.asset.json";
-import car034 from "@/assets/catalog/car-034.jpg.asset.json";
-import car035 from "@/assets/catalog/car-035.png.asset.json";
-import car036 from "@/assets/catalog/car-036.png.asset.json";
-import car037 from "@/assets/catalog/car-037.png.asset.json";
-import car038 from "@/assets/catalog/car-038.png.asset.json";
-import car039 from "@/assets/catalog/car-039.jpg.asset.json";
-import car040 from "@/assets/catalog/car-040.jpg.asset.json";
-import car041 from "@/assets/catalog/car-041.png.asset.json";
-import car042 from "@/assets/catalog/car-042.png.asset.json";
-import car043 from "@/assets/catalog/car-043.jpg.asset.json";
-import car044 from "@/assets/catalog/car-044.png.asset.json";
-import car045 from "@/assets/catalog/car-045.png.asset.json";
-import car046 from "@/assets/catalog/car-046.jpg.asset.json";
-import car047 from "@/assets/catalog/car-047.jpg.asset.json";
-import car048 from "@/assets/catalog/car-048.png.asset.json";
-import car049 from "@/assets/catalog/car-049.jpg.asset.json";
-import car050 from "@/assets/catalog/car-050.jpg.asset.json";
-import car051 from "@/assets/catalog/car-051.jpg.asset.json";
-import car052 from "@/assets/catalog/car-052.jpg.asset.json";
-import car053 from "@/assets/catalog/car-053.png.asset.json";
-import car054 from "@/assets/catalog/car-054.jpg.asset.json";
-import car055 from "@/assets/catalog/car-055.jpg.asset.json";
-import car056 from "@/assets/catalog/car-056.jpg.asset.json";
-import car057 from "@/assets/catalog/car-057.jpg.asset.json";
-import car058 from "@/assets/catalog/car-058.jpg.asset.json";
-import car059 from "@/assets/catalog/car-059.jpg.asset.json";
-import car060 from "@/assets/catalog/car-060.png.asset.json";
-import car061 from "@/assets/catalog/car-061.jpg.asset.json";
-import car062 from "@/assets/catalog/car-062.jpg.asset.json";
-import car063 from "@/assets/catalog/car-063.jpg.asset.json";
-import car064 from "@/assets/catalog/car-064.png.asset.json";
-import car065 from "@/assets/catalog/car-065.jpg.asset.json";
-import car066 from "@/assets/catalog/car-066.jpg.asset.json";
-import car067 from "@/assets/catalog/car-067.jpg.asset.json";
-import car068 from "@/assets/catalog/car-068.jpg.asset.json";
-import car069 from "@/assets/catalog/car-069.jpg.asset.json";
-import car070 from "@/assets/catalog/car-070.jpg.asset.json";
-import car071 from "@/assets/catalog/car-071.png.asset.json";
-import car072 from "@/assets/catalog/car-072.png.asset.json";
-import car073 from "@/assets/catalog/car-073.jpg.asset.json";
-import car074 from "@/assets/catalog/car-074.jpg.asset.json";
-import car075 from "@/assets/catalog/car-075.png.asset.json";
-import car076 from "@/assets/catalog/car-076.jpg.asset.json";
-import car077 from "@/assets/catalog/car-077.jpg.asset.json";
-import car078 from "@/assets/catalog/car-078.jpg.asset.json";
-import car079 from "@/assets/catalog/car-079.jpg.asset.json";
-import car080 from "@/assets/catalog/car-080.jpg.asset.json";
-import car081 from "@/assets/catalog/car-081.jpg.asset.json";
-import car082 from "@/assets/catalog/car-082.png.asset.json";
-import car083 from "@/assets/catalog/car-083.jpg.asset.json";
-import car084 from "@/assets/catalog/car-084.jpg.asset.json";
-import car085 from "@/assets/catalog/car-085.png.asset.json";
-import car086 from "@/assets/catalog/car-086.jpg.asset.json";
-import car087 from "@/assets/catalog/car-087.jpg.asset.json";
-import car088 from "@/assets/catalog/car-088.jpg.asset.json";
-import car089 from "@/assets/catalog/car-089.jpg.asset.json";
-import car090 from "@/assets/catalog/car-090.jpg.asset.json";
-import car091 from "@/assets/catalog/car-091.png.asset.json";
-import car092 from "@/assets/catalog/car-092.png.asset.json";
-import car093 from "@/assets/catalog/car-093.png.asset.json";
-import car094 from "@/assets/catalog/car-094.jpg.asset.json";
-import car095 from "@/assets/catalog/car-095.jpg.asset.json";
-import car096 from "@/assets/catalog/car-096.jpg.asset.json";
-import car097 from "@/assets/catalog/car-097.jpg.asset.json";
-import car098 from "@/assets/catalog/car-098.jpg.asset.json";
-import car099 from "@/assets/catalog/car-099.jpg.asset.json";
-import car100 from "@/assets/catalog/car-100.png.asset.json";
-import car101 from "@/assets/catalog/car-101.jpg.asset.json";
-import car102 from "@/assets/catalog/car-102.jpg.asset.json";
-import car103 from "@/assets/catalog/car-103.jpg.asset.json";
-import car104 from "@/assets/catalog/car-104.png.asset.json";
-import car105 from "@/assets/catalog/car-105.png.asset.json";
-import car106 from "@/assets/catalog/car-106.png.asset.json";
-import car107 from "@/assets/catalog/car-107.jpg.asset.json";
-import car108 from "@/assets/catalog/car-108.png.asset.json";
-import car109 from "@/assets/catalog/car-109.jpg.asset.json";
-import car110 from "@/assets/catalog/car-110.jpg.asset.json";
-import car111 from "@/assets/catalog/car-111.png.asset.json";
-import car112 from "@/assets/catalog/car-112.png.asset.json";
-import car113 from "@/assets/catalog/car-113.jpg.asset.json";
-import car114 from "@/assets/catalog/car-114.jpg.asset.json";
-import car115 from "@/assets/catalog/car-115.jpg.asset.json";
-import car116 from "@/assets/catalog/car-116.jpg.asset.json";
-import car117 from "@/assets/catalog/car-117.jpg.asset.json";
-import car118 from "@/assets/catalog/car-118.jpg.asset.json";
-import car119 from "@/assets/catalog/car-119.jpg.asset.json";
-import car120 from "@/assets/catalog/car-120.png.asset.json";
-import car121 from "@/assets/catalog/car-121.jpg.asset.json";
-import car122 from "@/assets/catalog/car-122.jpg.asset.json";
-import car123 from "@/assets/catalog/car-123.png.asset.json";
-import car124 from "@/assets/catalog/car-124.jpg.asset.json";
-import car125 from "@/assets/catalog/car-125.png.asset.json";
-import car126 from "@/assets/catalog/car-126.png.asset.json";
-import car127 from "@/assets/catalog/car-127.jpg.asset.json";
-import car128 from "@/assets/catalog/car-128.png.asset.json";
-import car129 from "@/assets/catalog/car-129.jpg.asset.json";
-import car130 from "@/assets/catalog/car-130.png.asset.json";
-import car131 from "@/assets/catalog/car-131.jpg.asset.json";
+export interface CatalogImageVariant {
+  src: string;
+  w: number;
+}
 
+export interface CatalogImage {
+  /** Самый крупный вариант — для окна деталей и ссылок */
+  full: string;
+  fullWidth: number;
+  /** Все размеры по возрастанию ширины — для srcset */
+  variants: CatalogImageVariant[];
+}
+
+/**
+ * Пути изображений в порядке исходных ассетов каталога.
+ * Именно на этот порядок ссылается catalog-data.ts (CATALOG_IMAGE_URLS[n]),
+ * поэтому массив объявлен кортежем: обращение по индексу даёт конкретный путь.
+ */
 export const CATALOG_IMAGE_URLS = [
-  deployedAssetUrl(car001.url),
-  deployedAssetUrl(car002.url),
-  deployedAssetUrl(car003.url),
-  deployedAssetUrl(car004.url),
-  deployedAssetUrl(car005.url),
-  deployedAssetUrl(car006.url),
-  deployedAssetUrl(car007.url),
-  deployedAssetUrl(car008.url),
-  deployedAssetUrl(car009.url),
-  deployedAssetUrl(car010.url),
-  deployedAssetUrl(car011.url),
-  deployedAssetUrl(car012.url),
-  deployedAssetUrl(car013.url),
-  deployedAssetUrl(car014.url),
-  deployedAssetUrl(car015.url),
-  deployedAssetUrl(car016.url),
-  deployedAssetUrl(car017.url),
-  deployedAssetUrl(car018.url),
-  deployedAssetUrl(car019.url),
-  deployedAssetUrl(car020.url),
-  deployedAssetUrl(car021.url),
-  deployedAssetUrl(car022.url),
-  deployedAssetUrl(car023.url),
-  deployedAssetUrl(car024.url),
-  deployedAssetUrl(car025.url),
-  deployedAssetUrl(car026.url),
-  deployedAssetUrl(car027.url),
-  deployedAssetUrl(car028.url),
-  deployedAssetUrl(car029.url),
-  deployedAssetUrl(car030.url),
-  deployedAssetUrl(car031.url),
-  deployedAssetUrl(car032.url),
-  deployedAssetUrl(car033.url),
-  deployedAssetUrl(car034.url),
-  deployedAssetUrl(car035.url),
-  deployedAssetUrl(car036.url),
-  deployedAssetUrl(car037.url),
-  deployedAssetUrl(car038.url),
-  deployedAssetUrl(car039.url),
-  deployedAssetUrl(car040.url),
-  deployedAssetUrl(car041.url),
-  deployedAssetUrl(car042.url),
-  deployedAssetUrl(car043.url),
-  deployedAssetUrl(car044.url),
-  deployedAssetUrl(car045.url),
-  deployedAssetUrl(car046.url),
-  deployedAssetUrl(car047.url),
-  deployedAssetUrl(car048.url),
-  deployedAssetUrl(car049.url),
-  deployedAssetUrl(car050.url),
-  deployedAssetUrl(car051.url),
-  deployedAssetUrl(car052.url),
-  deployedAssetUrl(car053.url),
-  deployedAssetUrl(car054.url),
-  deployedAssetUrl(car055.url),
-  deployedAssetUrl(car056.url),
-  deployedAssetUrl(car057.url),
-  deployedAssetUrl(car058.url),
-  deployedAssetUrl(car059.url),
-  deployedAssetUrl(car060.url),
-  deployedAssetUrl(car061.url),
-  deployedAssetUrl(car062.url),
-  deployedAssetUrl(car063.url),
-  deployedAssetUrl(car064.url),
-  deployedAssetUrl(car065.url),
-  deployedAssetUrl(car066.url),
-  deployedAssetUrl(car067.url),
-  deployedAssetUrl(car068.url),
-  deployedAssetUrl(car069.url),
-  deployedAssetUrl(car070.url),
-  deployedAssetUrl(car071.url),
-  deployedAssetUrl(car072.url),
-  deployedAssetUrl(car073.url),
-  deployedAssetUrl(car074.url),
-  deployedAssetUrl(car075.url),
-  deployedAssetUrl(car076.url),
-  deployedAssetUrl(car077.url),
-  deployedAssetUrl(car078.url),
-  deployedAssetUrl(car079.url),
-  deployedAssetUrl(car080.url),
-  deployedAssetUrl(car081.url),
-  deployedAssetUrl(car082.url),
-  deployedAssetUrl(car083.url),
-  deployedAssetUrl(car084.url),
-  deployedAssetUrl(car085.url),
-  deployedAssetUrl(car086.url),
-  deployedAssetUrl(car087.url),
-  deployedAssetUrl(car088.url),
-  deployedAssetUrl(car089.url),
-  deployedAssetUrl(car090.url),
-  deployedAssetUrl(car091.url),
-  deployedAssetUrl(car092.url),
-  deployedAssetUrl(car093.url),
-  deployedAssetUrl(car094.url),
-  deployedAssetUrl(car095.url),
-  deployedAssetUrl(car096.url),
-  deployedAssetUrl(car097.url),
-  deployedAssetUrl(car098.url),
-  deployedAssetUrl(car099.url),
-  deployedAssetUrl(car100.url),
-  deployedAssetUrl(car101.url),
-  deployedAssetUrl(car102.url),
-  deployedAssetUrl(car103.url),
-  deployedAssetUrl(car104.url),
-  deployedAssetUrl(car105.url),
-  deployedAssetUrl(car106.url),
-  deployedAssetUrl(car107.url),
-  deployedAssetUrl(car108.url),
-  deployedAssetUrl(car109.url),
-  deployedAssetUrl(car110.url),
-  deployedAssetUrl(car111.url),
-  deployedAssetUrl(car112.url),
-  deployedAssetUrl(car113.url),
-  deployedAssetUrl(car114.url),
-  deployedAssetUrl(car115.url),
-  deployedAssetUrl(car116.url),
-  deployedAssetUrl(car117.url),
-  deployedAssetUrl(car118.url),
-  deployedAssetUrl(car119.url),
-  deployedAssetUrl(car120.url),
-  deployedAssetUrl(car121.url),
-  deployedAssetUrl(car122.url),
-  deployedAssetUrl(car123.url),
-  deployedAssetUrl(car124.url),
-  deployedAssetUrl(car125.url),
-  deployedAssetUrl(car126.url),
-  deployedAssetUrl(car127.url),
-  deployedAssetUrl(car128.url),
-  deployedAssetUrl(car129.url),
-  deployedAssetUrl(car130.url),
-  deployedAssetUrl(car131.url),
+  "/images/cars/car-001-400.webp",
+  "/images/cars/car-002-400.webp",
+  "/images/cars/car-003-400.webp",
+  "/images/cars/car-004-400.webp",
+  "/images/cars/car-005-400.webp",
+  "/images/cars/car-006-400.webp",
+  "/images/cars/car-007-400.webp",
+  "/images/cars/car-008-400.webp",
+  "/images/cars/car-009-400.webp",
+  "/images/cars/car-010-400.webp",
+  "/images/cars/car-011-400.webp",
+  "/images/cars/car-012-400.webp",
+  "/images/cars/car-013-400.webp",
+  "/images/cars/car-014-400.webp",
+  "/images/cars/car-015-400.webp",
+  "/images/cars/car-016-400.webp",
+  "/images/cars/car-017-400.webp",
+  "/images/cars/car-018-400.webp",
+  "/images/cars/car-019-400.webp",
+  "/images/cars/car-020-400.webp",
+  "/images/cars/car-021-400.webp",
+  "/images/cars/car-022-400.webp",
+  "/images/cars/car-023-400.webp",
+  "/images/cars/car-024-400.webp",
+  "/images/cars/car-025-400.webp",
+  "/images/cars/car-026-400.webp",
+  "/images/cars/car-027-400.webp",
+  "/images/cars/car-028-400.webp",
+  "/images/cars/car-029-400.webp",
+  "/images/cars/car-030-400.webp",
+  "/images/cars/car-031-400.webp",
+  "/images/cars/car-032-400.webp",
+  "/images/cars/car-033-400.webp",
+  "/images/cars/car-034-400.webp",
+  "/images/cars/car-035-400.webp",
+  "/images/cars/car-036-400.webp",
+  "/images/cars/car-037-400.webp",
+  "/images/cars/car-038-400.webp",
+  "/images/cars/car-039-400.webp",
+  "/images/cars/car-040-400.webp",
+  "/images/cars/car-041-400.webp",
+  "/images/cars/car-042-400.webp",
+  "/images/cars/car-043-400.webp",
+  "/images/cars/car-044-400.webp",
+  "/images/cars/car-045-400.webp",
+  "/images/cars/car-046-400.webp",
+  "/images/cars/car-047-400.webp",
+  "/images/cars/car-048-400.webp",
+  "/images/cars/car-049-400.webp",
+  "/images/cars/car-050-400.webp",
+  "/images/cars/car-051-400.webp",
+  "/images/cars/car-052-400.webp",
+  "/images/cars/car-053-400.webp",
+  "/images/cars/car-054-400.webp",
+  "/images/cars/car-055-400.webp",
+  "/images/cars/car-056-400.webp",
+  "/images/cars/car-057-400.webp",
+  "/images/cars/car-058-400.webp",
+  "/images/cars/car-059-400.webp",
+  "/images/cars/car-060-400.webp",
+  "/images/cars/car-061-400.webp",
+  "/images/cars/car-062-400.webp",
+  "/images/cars/car-063-400.webp",
+  "/images/cars/car-064-400.webp",
+  "/images/cars/car-065-400.webp",
+  "/images/cars/car-066-400.webp",
+  "/images/cars/car-067-400.webp",
+  "/images/cars/car-068-400.webp",
+  "/images/cars/car-069-400.webp",
+  "/images/cars/car-070-400.webp",
+  "/images/cars/car-071-400.webp",
+  "/images/cars/car-072-400.webp",
+  "/images/cars/car-073-400.webp",
+  "/images/cars/car-074-400.webp",
+  "/images/cars/car-075-400.webp",
+  "/images/cars/car-076-400.webp",
+  "/images/cars/car-077-400.webp",
+  "/images/cars/car-078-400.webp",
+  "/images/cars/car-079-400.webp",
+  "/images/cars/car-080-400.webp",
+  "/images/cars/car-081-400.webp",
+  "/images/cars/car-082-400.webp",
+  "/images/cars/car-083-400.webp",
+  "/images/cars/car-084-400.webp",
+  "/images/cars/car-085-400.webp",
+  "/images/cars/car-086-400.webp",
+  "/images/cars/car-087-400.webp",
+  "/images/cars/car-088-400.webp",
+  "/images/cars/car-089-400.webp",
+  "/images/cars/car-090-400.webp",
+  "/images/cars/car-091-400.webp",
+  "/images/cars/car-092-400.webp",
+  "/images/cars/car-093-400.webp",
+  "/images/cars/car-094-400.webp",
+  "/images/cars/car-095-400.webp",
+  "/images/cars/car-096-400.webp",
+  "/images/cars/car-097-400.webp",
+  "/images/cars/car-098-400.webp",
+  "/images/cars/car-099-400.webp",
+  "/images/cars/car-100-400.webp",
+  "/images/cars/car-101-400.webp",
+  "/images/cars/car-102-400.webp",
+  "/images/cars/car-103-400.webp",
+  "/images/cars/car-104-400.webp",
+  "/images/cars/car-105-400.webp",
+  "/images/cars/car-106-400.webp",
+  "/images/cars/car-107-400.webp",
+  "/images/cars/car-108-400.webp",
+  "/images/cars/car-109-400.webp",
+  "/images/cars/car-110-400.webp",
+  "/images/cars/car-111-400.webp",
+  "/images/cars/car-112-400.webp",
+  "/images/cars/car-113-400.webp",
+  "/images/cars/car-114-400.webp",
+  "/images/cars/car-115-400.webp",
+  "/images/cars/car-116-400.webp",
+  "/images/cars/car-117-400.webp",
+  "/images/cars/car-118-400.webp",
+  "/images/cars/car-119-400.webp",
+  "/images/cars/car-120-400.webp",
+  "/images/cars/car-121-400.webp",
+  "/images/cars/car-122-400.webp",
+  "/images/cars/car-123-400.webp",
+  "/images/cars/car-124-400.webp",
+  "/images/cars/car-125-400.webp",
+  "/images/cars/car-126-400.webp",
+  "/images/cars/car-127-400.webp",
+  "/images/cars/car-128-400.webp",
+  "/images/cars/car-129-400.webp",
+  "/images/cars/car-130-400.webp",
+  "/images/cars/car-131-400.webp",
 ] as const;
+
+/** Любая картинка сайта по её полному пути — для карточек, галерей и блоков */
+export const CAR_IMAGES: Record<string, CatalogImage> = {
+  "/images/cars/car-001-400.webp": { full: "/images/cars/car-001-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-001-280.webp", w: 280 }, { src: "/images/cars/car-001-400.webp", w: 400 }] },
+  "/images/cars/car-002-400.webp": { full: "/images/cars/car-002-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-002-280.webp", w: 280 }, { src: "/images/cars/car-002-400.webp", w: 400 }] },
+  "/images/cars/car-003-400.webp": { full: "/images/cars/car-003-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-003-280.webp", w: 280 }, { src: "/images/cars/car-003-400.webp", w: 400 }] },
+  "/images/cars/car-004-400.webp": { full: "/images/cars/car-004-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-004-280.webp", w: 280 }, { src: "/images/cars/car-004-400.webp", w: 400 }] },
+  "/images/cars/car-005-400.webp": { full: "/images/cars/car-005-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-005-280.webp", w: 280 }, { src: "/images/cars/car-005-400.webp", w: 400 }] },
+  "/images/cars/car-006-400.webp": { full: "/images/cars/car-006-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-006-280.webp", w: 280 }, { src: "/images/cars/car-006-400.webp", w: 400 }] },
+  "/images/cars/car-007-400.webp": { full: "/images/cars/car-007-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-007-280.webp", w: 280 }, { src: "/images/cars/car-007-400.webp", w: 400 }] },
+  "/images/cars/car-008-400.webp": { full: "/images/cars/car-008-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-008-280.webp", w: 280 }, { src: "/images/cars/car-008-400.webp", w: 400 }] },
+  "/images/cars/car-009-400.webp": { full: "/images/cars/car-009-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-009-280.webp", w: 280 }, { src: "/images/cars/car-009-400.webp", w: 400 }] },
+  "/images/cars/car-010-400.webp": { full: "/images/cars/car-010-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-010-280.webp", w: 280 }, { src: "/images/cars/car-010-400.webp", w: 400 }] },
+  "/images/cars/car-011-400.webp": { full: "/images/cars/car-011-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-011-280.webp", w: 280 }, { src: "/images/cars/car-011-400.webp", w: 400 }] },
+  "/images/cars/car-012-400.webp": { full: "/images/cars/car-012-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-012-280.webp", w: 280 }, { src: "/images/cars/car-012-400.webp", w: 400 }] },
+  "/images/cars/car-013-400.webp": { full: "/images/cars/car-013-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-013-280.webp", w: 280 }, { src: "/images/cars/car-013-400.webp", w: 400 }] },
+  "/images/cars/car-014-400.webp": { full: "/images/cars/car-014-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-014-280.webp", w: 280 }, { src: "/images/cars/car-014-400.webp", w: 400 }] },
+  "/images/cars/car-015-400.webp": { full: "/images/cars/car-015-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-015-280.webp", w: 280 }, { src: "/images/cars/car-015-400.webp", w: 400 }] },
+  "/images/cars/car-016-400.webp": { full: "/images/cars/car-016-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-016-280.webp", w: 280 }, { src: "/images/cars/car-016-400.webp", w: 400 }] },
+  "/images/cars/car-017-400.webp": { full: "/images/cars/car-017-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-017-280.webp", w: 280 }, { src: "/images/cars/car-017-400.webp", w: 400 }] },
+  "/images/cars/car-018-400.webp": { full: "/images/cars/car-018-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-018-280.webp", w: 280 }, { src: "/images/cars/car-018-400.webp", w: 400 }] },
+  "/images/cars/car-019-400.webp": { full: "/images/cars/car-019-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-019-280.webp", w: 280 }, { src: "/images/cars/car-019-400.webp", w: 400 }] },
+  "/images/cars/car-020-400.webp": { full: "/images/cars/car-020-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-020-280.webp", w: 280 }, { src: "/images/cars/car-020-400.webp", w: 400 }] },
+  "/images/cars/car-021-400.webp": { full: "/images/cars/car-021-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-021-280.webp", w: 280 }, { src: "/images/cars/car-021-400.webp", w: 400 }] },
+  "/images/cars/car-022-400.webp": { full: "/images/cars/car-022-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-022-280.webp", w: 280 }, { src: "/images/cars/car-022-400.webp", w: 400 }] },
+  "/images/cars/car-023-400.webp": { full: "/images/cars/car-023-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-023-280.webp", w: 280 }, { src: "/images/cars/car-023-400.webp", w: 400 }] },
+  "/images/cars/car-024-400.webp": { full: "/images/cars/car-024-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-024-280.webp", w: 280 }, { src: "/images/cars/car-024-400.webp", w: 400 }] },
+  "/images/cars/car-025-400.webp": { full: "/images/cars/car-025-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-025-280.webp", w: 280 }, { src: "/images/cars/car-025-400.webp", w: 400 }] },
+  "/images/cars/car-026-400.webp": { full: "/images/cars/car-026-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-026-280.webp", w: 280 }, { src: "/images/cars/car-026-400.webp", w: 400 }] },
+  "/images/cars/car-027-400.webp": { full: "/images/cars/car-027-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-027-280.webp", w: 280 }, { src: "/images/cars/car-027-400.webp", w: 400 }] },
+  "/images/cars/car-028-400.webp": { full: "/images/cars/car-028-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-028-280.webp", w: 280 }, { src: "/images/cars/car-028-400.webp", w: 400 }] },
+  "/images/cars/car-029-400.webp": { full: "/images/cars/car-029-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-029-280.webp", w: 280 }, { src: "/images/cars/car-029-400.webp", w: 400 }] },
+  "/images/cars/car-030-400.webp": { full: "/images/cars/car-030-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-030-280.webp", w: 280 }, { src: "/images/cars/car-030-400.webp", w: 400 }] },
+  "/images/cars/car-031-400.webp": { full: "/images/cars/car-031-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-031-280.webp", w: 280 }, { src: "/images/cars/car-031-400.webp", w: 400 }] },
+  "/images/cars/car-032-400.webp": { full: "/images/cars/car-032-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-032-280.webp", w: 280 }, { src: "/images/cars/car-032-400.webp", w: 400 }] },
+  "/images/cars/car-033-400.webp": { full: "/images/cars/car-033-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-033-280.webp", w: 280 }, { src: "/images/cars/car-033-400.webp", w: 400 }] },
+  "/images/cars/car-034-400.webp": { full: "/images/cars/car-034-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-034-280.webp", w: 280 }, { src: "/images/cars/car-034-400.webp", w: 400 }] },
+  "/images/cars/car-035-400.webp": { full: "/images/cars/car-035-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-035-280.webp", w: 280 }, { src: "/images/cars/car-035-400.webp", w: 400 }] },
+  "/images/cars/car-036-400.webp": { full: "/images/cars/car-036-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-036-280.webp", w: 280 }, { src: "/images/cars/car-036-400.webp", w: 400 }] },
+  "/images/cars/car-037-400.webp": { full: "/images/cars/car-037-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-037-280.webp", w: 280 }, { src: "/images/cars/car-037-400.webp", w: 400 }] },
+  "/images/cars/car-038-400.webp": { full: "/images/cars/car-038-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-038-280.webp", w: 280 }, { src: "/images/cars/car-038-400.webp", w: 400 }] },
+  "/images/cars/car-039-400.webp": { full: "/images/cars/car-039-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-039-280.webp", w: 280 }, { src: "/images/cars/car-039-400.webp", w: 400 }] },
+  "/images/cars/car-040-400.webp": { full: "/images/cars/car-040-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-040-280.webp", w: 280 }, { src: "/images/cars/car-040-400.webp", w: 400 }] },
+  "/images/cars/car-041-400.webp": { full: "/images/cars/car-041-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-041-280.webp", w: 280 }, { src: "/images/cars/car-041-400.webp", w: 400 }] },
+  "/images/cars/car-042-400.webp": { full: "/images/cars/car-042-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-042-280.webp", w: 280 }, { src: "/images/cars/car-042-400.webp", w: 400 }] },
+  "/images/cars/car-043-400.webp": { full: "/images/cars/car-043-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-043-280.webp", w: 280 }, { src: "/images/cars/car-043-400.webp", w: 400 }] },
+  "/images/cars/car-044-400.webp": { full: "/images/cars/car-044-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-044-280.webp", w: 280 }, { src: "/images/cars/car-044-400.webp", w: 400 }] },
+  "/images/cars/car-045-400.webp": { full: "/images/cars/car-045-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-045-280.webp", w: 280 }, { src: "/images/cars/car-045-400.webp", w: 400 }] },
+  "/images/cars/car-046-400.webp": { full: "/images/cars/car-046-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-046-280.webp", w: 280 }, { src: "/images/cars/car-046-400.webp", w: 400 }] },
+  "/images/cars/car-047-400.webp": { full: "/images/cars/car-047-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-047-280.webp", w: 280 }, { src: "/images/cars/car-047-400.webp", w: 400 }] },
+  "/images/cars/car-048-400.webp": { full: "/images/cars/car-048-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-048-280.webp", w: 280 }, { src: "/images/cars/car-048-400.webp", w: 400 }] },
+  "/images/cars/car-049-400.webp": { full: "/images/cars/car-049-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-049-280.webp", w: 280 }, { src: "/images/cars/car-049-400.webp", w: 400 }] },
+  "/images/cars/car-050-400.webp": { full: "/images/cars/car-050-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-050-280.webp", w: 280 }, { src: "/images/cars/car-050-400.webp", w: 400 }] },
+  "/images/cars/car-051-400.webp": { full: "/images/cars/car-051-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-051-280.webp", w: 280 }, { src: "/images/cars/car-051-400.webp", w: 400 }] },
+  "/images/cars/car-052-400.webp": { full: "/images/cars/car-052-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-052-280.webp", w: 280 }, { src: "/images/cars/car-052-400.webp", w: 400 }] },
+  "/images/cars/car-053-400.webp": { full: "/images/cars/car-053-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-053-280.webp", w: 280 }, { src: "/images/cars/car-053-400.webp", w: 400 }] },
+  "/images/cars/car-054-400.webp": { full: "/images/cars/car-054-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-054-280.webp", w: 280 }, { src: "/images/cars/car-054-400.webp", w: 400 }] },
+  "/images/cars/car-055-400.webp": { full: "/images/cars/car-055-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-055-280.webp", w: 280 }, { src: "/images/cars/car-055-400.webp", w: 400 }] },
+  "/images/cars/car-056-400.webp": { full: "/images/cars/car-056-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-056-280.webp", w: 280 }, { src: "/images/cars/car-056-400.webp", w: 400 }] },
+  "/images/cars/car-057-400.webp": { full: "/images/cars/car-057-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-057-280.webp", w: 280 }, { src: "/images/cars/car-057-400.webp", w: 400 }] },
+  "/images/cars/car-058-400.webp": { full: "/images/cars/car-058-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-058-280.webp", w: 280 }, { src: "/images/cars/car-058-400.webp", w: 400 }] },
+  "/images/cars/car-059-400.webp": { full: "/images/cars/car-059-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-059-280.webp", w: 280 }, { src: "/images/cars/car-059-400.webp", w: 400 }] },
+  "/images/cars/car-060-400.webp": { full: "/images/cars/car-060-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-060-280.webp", w: 280 }, { src: "/images/cars/car-060-400.webp", w: 400 }] },
+  "/images/cars/car-061-400.webp": { full: "/images/cars/car-061-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-061-280.webp", w: 280 }, { src: "/images/cars/car-061-400.webp", w: 400 }] },
+  "/images/cars/car-062-400.webp": { full: "/images/cars/car-062-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-062-280.webp", w: 280 }, { src: "/images/cars/car-062-400.webp", w: 400 }] },
+  "/images/cars/car-063-400.webp": { full: "/images/cars/car-063-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-063-280.webp", w: 280 }, { src: "/images/cars/car-063-400.webp", w: 400 }] },
+  "/images/cars/car-064-400.webp": { full: "/images/cars/car-064-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-064-280.webp", w: 280 }, { src: "/images/cars/car-064-400.webp", w: 400 }] },
+  "/images/cars/car-065-400.webp": { full: "/images/cars/car-065-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-065-280.webp", w: 280 }, { src: "/images/cars/car-065-400.webp", w: 400 }] },
+  "/images/cars/car-066-400.webp": { full: "/images/cars/car-066-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-066-280.webp", w: 280 }, { src: "/images/cars/car-066-400.webp", w: 400 }] },
+  "/images/cars/car-067-400.webp": { full: "/images/cars/car-067-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-067-280.webp", w: 280 }, { src: "/images/cars/car-067-400.webp", w: 400 }] },
+  "/images/cars/car-068-400.webp": { full: "/images/cars/car-068-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-068-280.webp", w: 280 }, { src: "/images/cars/car-068-400.webp", w: 400 }] },
+  "/images/cars/car-069-400.webp": { full: "/images/cars/car-069-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-069-280.webp", w: 280 }, { src: "/images/cars/car-069-400.webp", w: 400 }] },
+  "/images/cars/car-070-400.webp": { full: "/images/cars/car-070-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-070-280.webp", w: 280 }, { src: "/images/cars/car-070-400.webp", w: 400 }] },
+  "/images/cars/car-071-400.webp": { full: "/images/cars/car-071-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-071-280.webp", w: 280 }, { src: "/images/cars/car-071-400.webp", w: 400 }] },
+  "/images/cars/car-072-400.webp": { full: "/images/cars/car-072-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-072-280.webp", w: 280 }, { src: "/images/cars/car-072-400.webp", w: 400 }] },
+  "/images/cars/car-073-400.webp": { full: "/images/cars/car-073-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-073-280.webp", w: 280 }, { src: "/images/cars/car-073-400.webp", w: 400 }] },
+  "/images/cars/car-074-400.webp": { full: "/images/cars/car-074-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-074-280.webp", w: 280 }, { src: "/images/cars/car-074-400.webp", w: 400 }] },
+  "/images/cars/car-075-400.webp": { full: "/images/cars/car-075-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-075-280.webp", w: 280 }, { src: "/images/cars/car-075-400.webp", w: 400 }] },
+  "/images/cars/car-076-400.webp": { full: "/images/cars/car-076-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-076-280.webp", w: 280 }, { src: "/images/cars/car-076-400.webp", w: 400 }] },
+  "/images/cars/car-077-400.webp": { full: "/images/cars/car-077-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-077-280.webp", w: 280 }, { src: "/images/cars/car-077-400.webp", w: 400 }] },
+  "/images/cars/car-078-400.webp": { full: "/images/cars/car-078-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-078-280.webp", w: 280 }, { src: "/images/cars/car-078-400.webp", w: 400 }] },
+  "/images/cars/car-079-400.webp": { full: "/images/cars/car-079-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-079-280.webp", w: 280 }, { src: "/images/cars/car-079-400.webp", w: 400 }] },
+  "/images/cars/car-080-400.webp": { full: "/images/cars/car-080-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-080-280.webp", w: 280 }, { src: "/images/cars/car-080-400.webp", w: 400 }] },
+  "/images/cars/car-081-400.webp": { full: "/images/cars/car-081-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-081-280.webp", w: 280 }, { src: "/images/cars/car-081-400.webp", w: 400 }] },
+  "/images/cars/car-082-400.webp": { full: "/images/cars/car-082-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-082-280.webp", w: 280 }, { src: "/images/cars/car-082-400.webp", w: 400 }] },
+  "/images/cars/car-083-400.webp": { full: "/images/cars/car-083-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-083-280.webp", w: 280 }, { src: "/images/cars/car-083-400.webp", w: 400 }] },
+  "/images/cars/car-084-400.webp": { full: "/images/cars/car-084-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-084-280.webp", w: 280 }, { src: "/images/cars/car-084-400.webp", w: 400 }] },
+  "/images/cars/car-085-400.webp": { full: "/images/cars/car-085-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-085-280.webp", w: 280 }, { src: "/images/cars/car-085-400.webp", w: 400 }] },
+  "/images/cars/car-086-400.webp": { full: "/images/cars/car-086-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-086-280.webp", w: 280 }, { src: "/images/cars/car-086-400.webp", w: 400 }] },
+  "/images/cars/car-087-400.webp": { full: "/images/cars/car-087-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-087-280.webp", w: 280 }, { src: "/images/cars/car-087-400.webp", w: 400 }] },
+  "/images/cars/car-088-400.webp": { full: "/images/cars/car-088-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-088-280.webp", w: 280 }, { src: "/images/cars/car-088-400.webp", w: 400 }] },
+  "/images/cars/car-089-400.webp": { full: "/images/cars/car-089-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-089-280.webp", w: 280 }, { src: "/images/cars/car-089-400.webp", w: 400 }] },
+  "/images/cars/car-090-400.webp": { full: "/images/cars/car-090-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-090-280.webp", w: 280 }, { src: "/images/cars/car-090-400.webp", w: 400 }] },
+  "/images/cars/car-091-400.webp": { full: "/images/cars/car-091-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-091-280.webp", w: 280 }, { src: "/images/cars/car-091-400.webp", w: 400 }] },
+  "/images/cars/car-092-400.webp": { full: "/images/cars/car-092-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-092-280.webp", w: 280 }, { src: "/images/cars/car-092-400.webp", w: 400 }] },
+  "/images/cars/car-093-400.webp": { full: "/images/cars/car-093-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-093-280.webp", w: 280 }, { src: "/images/cars/car-093-400.webp", w: 400 }] },
+  "/images/cars/car-094-400.webp": { full: "/images/cars/car-094-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-094-280.webp", w: 280 }, { src: "/images/cars/car-094-400.webp", w: 400 }] },
+  "/images/cars/car-095-400.webp": { full: "/images/cars/car-095-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-095-280.webp", w: 280 }, { src: "/images/cars/car-095-400.webp", w: 400 }] },
+  "/images/cars/car-096-400.webp": { full: "/images/cars/car-096-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-096-280.webp", w: 280 }, { src: "/images/cars/car-096-400.webp", w: 400 }] },
+  "/images/cars/car-097-400.webp": { full: "/images/cars/car-097-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-097-280.webp", w: 280 }, { src: "/images/cars/car-097-400.webp", w: 400 }] },
+  "/images/cars/car-098-400.webp": { full: "/images/cars/car-098-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-098-280.webp", w: 280 }, { src: "/images/cars/car-098-400.webp", w: 400 }] },
+  "/images/cars/car-099-400.webp": { full: "/images/cars/car-099-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-099-280.webp", w: 280 }, { src: "/images/cars/car-099-400.webp", w: 400 }] },
+  "/images/cars/car-100-400.webp": { full: "/images/cars/car-100-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-100-280.webp", w: 280 }, { src: "/images/cars/car-100-400.webp", w: 400 }] },
+  "/images/cars/car-101-400.webp": { full: "/images/cars/car-101-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-101-280.webp", w: 280 }, { src: "/images/cars/car-101-400.webp", w: 400 }] },
+  "/images/cars/car-102-400.webp": { full: "/images/cars/car-102-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-102-280.webp", w: 280 }, { src: "/images/cars/car-102-400.webp", w: 400 }] },
+  "/images/cars/car-103-400.webp": { full: "/images/cars/car-103-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-103-280.webp", w: 280 }, { src: "/images/cars/car-103-400.webp", w: 400 }] },
+  "/images/cars/car-104-400.webp": { full: "/images/cars/car-104-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-104-280.webp", w: 280 }, { src: "/images/cars/car-104-400.webp", w: 400 }] },
+  "/images/cars/car-105-400.webp": { full: "/images/cars/car-105-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-105-280.webp", w: 280 }, { src: "/images/cars/car-105-400.webp", w: 400 }] },
+  "/images/cars/car-106-400.webp": { full: "/images/cars/car-106-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-106-280.webp", w: 280 }, { src: "/images/cars/car-106-400.webp", w: 400 }] },
+  "/images/cars/car-107-400.webp": { full: "/images/cars/car-107-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-107-280.webp", w: 280 }, { src: "/images/cars/car-107-400.webp", w: 400 }] },
+  "/images/cars/car-108-400.webp": { full: "/images/cars/car-108-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-108-280.webp", w: 280 }, { src: "/images/cars/car-108-400.webp", w: 400 }] },
+  "/images/cars/car-109-400.webp": { full: "/images/cars/car-109-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-109-280.webp", w: 280 }, { src: "/images/cars/car-109-400.webp", w: 400 }] },
+  "/images/cars/car-110-400.webp": { full: "/images/cars/car-110-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-110-280.webp", w: 280 }, { src: "/images/cars/car-110-400.webp", w: 400 }] },
+  "/images/cars/car-111-400.webp": { full: "/images/cars/car-111-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-111-280.webp", w: 280 }, { src: "/images/cars/car-111-400.webp", w: 400 }] },
+  "/images/cars/car-112-400.webp": { full: "/images/cars/car-112-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-112-280.webp", w: 280 }, { src: "/images/cars/car-112-400.webp", w: 400 }] },
+  "/images/cars/car-113-400.webp": { full: "/images/cars/car-113-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-113-280.webp", w: 280 }, { src: "/images/cars/car-113-400.webp", w: 400 }] },
+  "/images/cars/car-114-400.webp": { full: "/images/cars/car-114-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-114-280.webp", w: 280 }, { src: "/images/cars/car-114-400.webp", w: 400 }] },
+  "/images/cars/car-115-400.webp": { full: "/images/cars/car-115-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-115-280.webp", w: 280 }, { src: "/images/cars/car-115-400.webp", w: 400 }] },
+  "/images/cars/car-116-400.webp": { full: "/images/cars/car-116-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-116-280.webp", w: 280 }, { src: "/images/cars/car-116-400.webp", w: 400 }] },
+  "/images/cars/car-117-400.webp": { full: "/images/cars/car-117-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-117-280.webp", w: 280 }, { src: "/images/cars/car-117-400.webp", w: 400 }] },
+  "/images/cars/car-118-400.webp": { full: "/images/cars/car-118-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-118-280.webp", w: 280 }, { src: "/images/cars/car-118-400.webp", w: 400 }] },
+  "/images/cars/car-119-400.webp": { full: "/images/cars/car-119-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-119-280.webp", w: 280 }, { src: "/images/cars/car-119-400.webp", w: 400 }] },
+  "/images/cars/car-120-400.webp": { full: "/images/cars/car-120-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-120-280.webp", w: 280 }, { src: "/images/cars/car-120-400.webp", w: 400 }] },
+  "/images/cars/car-121-400.webp": { full: "/images/cars/car-121-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-121-280.webp", w: 280 }, { src: "/images/cars/car-121-400.webp", w: 400 }] },
+  "/images/cars/car-122-400.webp": { full: "/images/cars/car-122-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-122-280.webp", w: 280 }, { src: "/images/cars/car-122-400.webp", w: 400 }] },
+  "/images/cars/car-123-400.webp": { full: "/images/cars/car-123-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-123-280.webp", w: 280 }, { src: "/images/cars/car-123-400.webp", w: 400 }] },
+  "/images/cars/car-124-400.webp": { full: "/images/cars/car-124-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-124-280.webp", w: 280 }, { src: "/images/cars/car-124-400.webp", w: 400 }] },
+  "/images/cars/car-125-400.webp": { full: "/images/cars/car-125-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-125-280.webp", w: 280 }, { src: "/images/cars/car-125-400.webp", w: 400 }] },
+  "/images/cars/car-126-400.webp": { full: "/images/cars/car-126-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-126-280.webp", w: 280 }, { src: "/images/cars/car-126-400.webp", w: 400 }] },
+  "/images/cars/car-127-400.webp": { full: "/images/cars/car-127-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-127-280.webp", w: 280 }, { src: "/images/cars/car-127-400.webp", w: 400 }] },
+  "/images/cars/car-128-400.webp": { full: "/images/cars/car-128-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-128-280.webp", w: 280 }, { src: "/images/cars/car-128-400.webp", w: 400 }] },
+  "/images/cars/car-129-400.webp": { full: "/images/cars/car-129-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-129-280.webp", w: 280 }, { src: "/images/cars/car-129-400.webp", w: 400 }] },
+  "/images/cars/car-130-400.webp": { full: "/images/cars/car-130-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-130-280.webp", w: 280 }, { src: "/images/cars/car-130-400.webp", w: 400 }] },
+  "/images/cars/car-131-400.webp": { full: "/images/cars/car-131-400.webp", fullWidth: 400, variants: [{ src: "/images/cars/car-131-280.webp", w: 280 }, { src: "/images/cars/car-131-400.webp", w: 400 }] },
+  "/images/cars/0-1200.webp": { full: "/images/cars/0-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/0-280.webp", w: 280 }, { src: "/images/cars/0-640.webp", w: 640 }, { src: "/images/cars/0-1200.webp", w: 1200 }] },
+  "/images/cars/i-1200.webp": { full: "/images/cars/i-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/i-280.webp", w: 280 }, { src: "/images/cars/i-640.webp", w: 640 }, { src: "/images/cars/i-1200.webp", w: 1200 }] },
+  "/images/cars/new-arcfox-2-1200.webp": { full: "/images/cars/new-arcfox-2-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/new-arcfox-2-280.webp", w: 280 }, { src: "/images/cars/new-arcfox-2-640.webp", w: 640 }, { src: "/images/cars/new-arcfox-2-1200.webp", w: 1200 }] },
+  "/images/cars/9-12-1200.webp": { full: "/images/cars/9-12-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/9-12-280.webp", w: 280 }, { src: "/images/cars/9-12-640.webp", w: 640 }, { src: "/images/cars/9-12-1200.webp", w: 1200 }] },
+  "/images/cars/wvfrtffgyu-1200.webp": { full: "/images/cars/wvfrtffgyu-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/wvfrtffgyu-280.webp", w: 280 }, { src: "/images/cars/wvfrtffgyu-640.webp", w: 640 }, { src: "/images/cars/wvfrtffgyu-1200.webp", w: 1200 }] },
+  "/images/cars/hero-ev-2-1200.webp": { full: "/images/cars/hero-ev-2-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/hero-ev-2-280.webp", w: 280 }, { src: "/images/cars/hero-ev-2-640.webp", w: 640 }, { src: "/images/cars/hero-ev-2-1200.webp", w: 1200 }] },
+  "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-hdf45a0cc14-1200.webp": { full: "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-hdf45a0cc14-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-hdf45a0cc14-280.webp", w: 280 }, { src: "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-hdf45a0cc14-640.webp", w: 640 }, { src: "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-hdf45a0cc14-1200.webp", w: 1200 }] },
+  "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-1200.webp": { full: "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-280.webp", w: 280 }, { src: "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-640.webp", w: 640 }, { src: "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-1200.webp", w: 1200 }] },
+  "/images/cars/lixiang-l9-ultra-2025-li-auto-l6-1-1200.webp": { full: "/images/cars/lixiang-l9-ultra-2025-li-auto-l6-1-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/lixiang-l9-ultra-2025-li-auto-l6-1-280.webp", w: 280 }, { src: "/images/cars/lixiang-l9-ultra-2025-li-auto-l6-1-640.webp", w: 640 }, { src: "/images/cars/lixiang-l9-ultra-2025-li-auto-l6-1-1200.webp", w: 1200 }] },
+  "/images/cars/lotus-eletre-900-i-1-1200.webp": { full: "/images/cars/lotus-eletre-900-i-1-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/lotus-eletre-900-i-1-280.webp", w: 280 }, { src: "/images/cars/lotus-eletre-900-i-1-640.webp", w: 640 }, { src: "/images/cars/lotus-eletre-900-i-1-1200.webp", w: 1200 }] },
+  "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-1200.webp": { full: "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-280.webp", w: 280 }, { src: "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-640.webp", w: 640 }, { src: "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-1200.webp", w: 1200 }] },
+  "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-09b6c89723c-1200.webp": { full: "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-09b6c89723c-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-09b6c89723c-280.webp", w: 280 }, { src: "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-09b6c89723c-640.webp", w: 640 }, { src: "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-09b6c89723c-1200.webp", w: 1200 }] },
+  "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-3afae8ac0b-1200.webp": { full: "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-3afae8ac0b-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-3afae8ac0b-280.webp", w: 280 }, { src: "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-3afae8ac0b-640.webp", w: 640 }, { src: "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-3afae8ac0b-1200.webp", w: 1200 }] },
+  "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-67611178-1200.webp": { full: "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-67611178-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-67611178-280.webp", w: 280 }, { src: "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-67611178-640.webp", w: 640 }, { src: "/images/cars/denza-z9gt-i-z9-gibrid-v-tope-dopy-67611178-1200.webp", w: 1200 }] },
+  "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-7888-1200.webp": { full: "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-7888-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-7888-280.webp", w: 280 }, { src: "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-7888-640.webp", w: 640 }, { src: "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-7888-1200.webp", w: 1200 }] },
+  "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-2-1200.webp": { full: "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-2-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-2-280.webp", w: 280 }, { src: "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-2-640.webp", w: 640 }, { src: "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-2-1200.webp", w: 1200 }] },
+  "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-3-1200.webp": { full: "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-3-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-3-280.webp", w: 280 }, { src: "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-3-640.webp", w: 640 }, { src: "/images/cars/huawei-m9-6mest-gibrid-ultra-vse-dopy-r22-aito-3-1200.webp", w: 1200 }] },
+  "/images/cars/lixiang-l9-ultra-2025-kartinki24-ru-various-ca-1200.webp": { full: "/images/cars/lixiang-l9-ultra-2025-kartinki24-ru-various-ca-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/lixiang-l9-ultra-2025-kartinki24-ru-various-ca-280.webp", w: 280 }, { src: "/images/cars/lixiang-l9-ultra-2025-kartinki24-ru-various-ca-640.webp", w: 640 }, { src: "/images/cars/lixiang-l9-ultra-2025-kartinki24-ru-various-ca-1200.webp", w: 1200 }] },
+  "/images/cars/lixiang-l9-ultra-2025-li-auto-l6-2-1200.webp": { full: "/images/cars/lixiang-l9-ultra-2025-li-auto-l6-2-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/lixiang-l9-ultra-2025-li-auto-l6-2-280.webp", w: 280 }, { src: "/images/cars/lixiang-l9-ultra-2025-li-auto-l6-2-640.webp", w: 640 }, { src: "/images/cars/lixiang-l9-ultra-2025-li-auto-l6-2-1200.webp", w: 1200 }] },
+  "/images/cars/lixiang-l9-ultra-2025-li-auto-l9-19-1200.webp": { full: "/images/cars/lixiang-l9-ultra-2025-li-auto-l9-19-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/lixiang-l9-ultra-2025-li-auto-l9-19-280.webp", w: 280 }, { src: "/images/cars/lixiang-l9-ultra-2025-li-auto-l9-19-640.webp", w: 640 }, { src: "/images/cars/lixiang-l9-ultra-2025-li-auto-l9-19-1200.webp", w: 1200 }] },
+  "/images/cars/lotus-eletre-900-0-0-1200.webp": { full: "/images/cars/lotus-eletre-900-0-0-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/lotus-eletre-900-0-0-280.webp", w: 280 }, { src: "/images/cars/lotus-eletre-900-0-0-640.webp", w: 640 }, { src: "/images/cars/lotus-eletre-900-0-0-1200.webp", w: 1200 }] },
+  "/images/cars/lotus-eletre-900-1780526528-1667-high-1200.webp": { full: "/images/cars/lotus-eletre-900-1780526528-1667-high-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/lotus-eletre-900-1780526528-1667-high-280.webp", w: 280 }, { src: "/images/cars/lotus-eletre-900-1780526528-1667-high-640.webp", w: 640 }, { src: "/images/cars/lotus-eletre-900-1780526528-1667-high-1200.webp", w: 1200 }] },
+  "/images/cars/lotus-eletre-900-i-1200.webp": { full: "/images/cars/lotus-eletre-900-i-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/lotus-eletre-900-i-280.webp", w: 280 }, { src: "/images/cars/lotus-eletre-900-i-640.webp", w: 640 }, { src: "/images/cars/lotus-eletre-900-i-1200.webp", w: 1200 }] },
+  "/images/cars/xiaomi-su7-ultra-123-1200.webp": { full: "/images/cars/xiaomi-su7-ultra-123-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/xiaomi-su7-ultra-123-280.webp", w: 280 }, { src: "/images/cars/xiaomi-su7-ultra-123-640.webp", w: 640 }, { src: "/images/cars/xiaomi-su7-ultra-123-1200.webp", w: 1200 }] },
+  "/images/cars/xiaomi-su7-ultra-f41087207afb4934abf1faeae0cea-1200.webp": { full: "/images/cars/xiaomi-su7-ultra-f41087207afb4934abf1faeae0cea-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/xiaomi-su7-ultra-f41087207afb4934abf1faeae0cea-280.webp", w: 280 }, { src: "/images/cars/xiaomi-su7-ultra-f41087207afb4934abf1faeae0cea-640.webp", w: 640 }, { src: "/images/cars/xiaomi-su7-ultra-f41087207afb4934abf1faeae0cea-1200.webp", w: 1200 }] },
+  "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-1-1200.webp": { full: "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-1-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-1-280.webp", w: 280 }, { src: "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-1-640.webp", w: 640 }, { src: "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-1-1200.webp", w: 1200 }] },
+  "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-2-1200.webp": { full: "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-2-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-2-280.webp", w: 280 }, { src: "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-2-640.webp", w: 640 }, { src: "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-2-1200.webp", w: 1200 }] },
+  "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-3-1200.webp": { full: "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-3-1200.webp", fullWidth: 1200, variants: [{ src: "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-3-280.webp", w: 280 }, { src: "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-3-640.webp", w: 640 }, { src: "/images/cars/xiaomi-yu7-max-bez-dopov-1200x900-3-1200.webp", w: 1200 }] },
+};

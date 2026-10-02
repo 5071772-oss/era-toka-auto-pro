@@ -1,7 +1,7 @@
 
 import { Reveal } from "./Reveal";
 import { Section, SectionHeading } from "./ui";
-const GEO_IMG = "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/era-toka-auto-pro/Era-Toka/new-arcfox-2.webp";
+const GEO_IMG = "/images/cars/new-arcfox-2-1200.webp";
 
 
 const REGIONS = ["Китай", "Европа", "Америка", "Корея", "Япония", "ОАЭ"];
