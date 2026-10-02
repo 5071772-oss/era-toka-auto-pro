@@ -12,7 +12,7 @@ import { LeadForm } from "@/components/site/LeadForm";
 import { Faq, FAQ_ITEMS } from "@/components/site/Faq";
 import { FinalCta } from "@/components/site/FinalCta";
 import { Footer } from "@/components/site/Footer";
-import { EXPERT, PHONE_FORMATTED, TELEGRAM_URL } from "@/lib/brand";
+import { EXPERT, PHONE_FORMATTED, TELEGRAM_DIRECT_URL } from "@/lib/brand";
 import { SITE_URL, absoluteUrl } from "@/lib/site";
 import { getCatalogList } from "@/lib/chatium-catalog";
 import { pickHomeCars } from "@/lib/home-cars";
@@ -54,7 +54,7 @@ function StructuredData() {
     description: DESCRIPTION,
     founder: { "@type": "Person", name: EXPERT },
     telephone: PHONE_FORMATTED,
-    sameAs: [TELEGRAM_URL],
+    sameAs: [TELEGRAM_DIRECT_URL],
     areaServed: { "@type": "Country", name: "Россия" },
   };
 
