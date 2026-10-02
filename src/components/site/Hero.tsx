@@ -5,7 +5,7 @@ const HERO_IMG = "/images/cars/hero-ev-2-1200.webp";
 const VECTOR_CAR = "/images/cars/new-arcfox-2-1200.webp";
 
 
-const BADGES = ["BEV", "HEV", "PHEV", "EREV", "Китай", "Европа", "Америка", "Корея"];
+const BADGES = ["BEV", "HEV", "PHEV", "EREV", "Китай", "Европа", "Америка", "Корея", "ОАЭ"];
 
 export function Hero() {
   return (
@@ -44,7 +44,7 @@ export function Hero() {
         </p>
 
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-          Китай, Европа, Америка и Корея. Полный цикл сопровождения: от консультации и выбора модели
+          Китай, Европа, Америка, Корея и ОАЭ. Полный цикл сопровождения: от консультации и выбора модели
           до логистики, таможни, документов и передачи автомобиля.
         </p>
 

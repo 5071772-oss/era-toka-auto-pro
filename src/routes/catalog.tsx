@@ -15,7 +15,7 @@ export const Route = createFileRoute("/catalog")({
   head: ({ loaderData }) => {
     const count = loaderData?.cars.length ?? 0;
     const title = `Каталог электромобилей и гибридов — ${count} ${pluralModels(count)} | ЭРА ТОКА`;
-    const description = `Каталог из ${count} ${pluralModels(count)} электромобилей и гибридов из Китая: Zeekr, Geely, Voyah, Lixiang, Xiaomi, Huawei Aito, BYD, Avatr. Характеристики, цены и сроки поставки под ключ.`;
+    const description = `Каталог из ${count} ${pluralModels(count)} электромобилей и гибридов: Zeekr, Geely, Voyah, Lixiang, Xiaomi, Huawei Aito, BYD, Avatr. Китай, Европа, Америка, Корея и ОАЭ. Характеристики, цены и сроки поставки под ключ.`;
     return {
       meta: [
         { title },
